@@ -25,6 +25,15 @@ public class Users {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "foto")
+    private byte[] foto;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "noHp")
+    private String noHp;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

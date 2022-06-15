@@ -14,6 +14,9 @@ public class Product {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "nama")
+    private String nama;
+
     @Column(name = "image", unique = false, nullable = false, length = 100000)
     private byte[] image;
 

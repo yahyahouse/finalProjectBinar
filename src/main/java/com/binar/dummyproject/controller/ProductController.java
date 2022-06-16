@@ -27,6 +27,8 @@ import java.util.Map;
 @RequestMapping("/product")
 public class ProductController{
 
+    private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
+
     @Autowired
     private ProductService productService;
 
@@ -144,5 +146,21 @@ public class ProductController{
             @PathVariable("id") long id){
         productService.deleteProduct(id);
         return ResponseEntity.accepted().body("Deleted product "+id+" success");
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(content = {
+                    @Content(examples = {})
+            }, responseCode = "202", description = "Success show products")
+    })
+    @Operation(summary = "Get product by seller username")
+    @GetMapping(value = "/seller/get-product-seller/{username}")
+    public ResponseEntity<List<Product>> getProductByUserId(@PathVariable("username") String username){
+        List<Product> users = productService.getProductByUsername(username);
+        for (Product usr : users){
+            LOG.info("{}      {}     {}      {}    {}     {}    {}   ", usr.getNama(), usr.getDeskripsi(), usr.getAddress(),
+                    usr.getImage(), usr.getPrice(), usr.getUserId().getUserId(), usr.getUserId().getUsername());
+        }
+        return ResponseEntity.accepted().body(productService.getProductByUsername(username));
     }
 }

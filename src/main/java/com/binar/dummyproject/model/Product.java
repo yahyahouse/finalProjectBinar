@@ -31,5 +31,9 @@ public class Product implements Serializable {
     @Column(name = "address")
     private String address;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users userId;
+
 }
 

@@ -2,13 +2,11 @@ package com.binar.dummyproject.model;
 
 import javax.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 
-@Setter
-@Getter
+@Data
 @Entity(name = "product")
 public class Product implements Serializable {
     @Id

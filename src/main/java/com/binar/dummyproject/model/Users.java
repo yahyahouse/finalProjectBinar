@@ -4,13 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Setter
 @Getter
 @Entity(name = "users")
-public class Users {
+public class Users implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "user_id")
@@ -26,7 +30,7 @@ public class Users {
     private String email;
 
     @Column(name = "foto")
-    private byte[] foto;
+    private String foto;
 
     @Column(name = "address")
     private String address;
@@ -40,10 +44,13 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
 
-    public Users(String username, String email, String password) {
+    public Users(String username, String email, String password, String foto, String address, String noHp) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.foto = foto;
+        this.address = address;
+        this.noHp = noHp;
     }
 
     public Users() {

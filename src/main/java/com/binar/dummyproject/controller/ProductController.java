@@ -54,22 +54,25 @@ public class ProductController{
                     "\"price\":\"250000\"," +
                     "\"address\":\"Jl. Rumah\"," +
                     "\"image\":\"0\"" +
+                    "\"userId\":\"1\"" +
                     "}")
             @RequestBody Map<String, Object> product){
-
     productService.saveProduct(product.get("nama").toString(), product.get("deskripsi").toString(), Integer.valueOf(product.get("price").toString()),
-            product.get("adress").toString(), product.get("image").toString());
+            product.get("address").toString(), product.get("image").toString(), Integer.valueOf(product.get("userId").toString()));
 
     Map<String, Object> responseBody = new HashMap<>();
     responseBody.put("nama", product.get("nama"));
     responseBody.put("deskripsi", product.get("deskripsi"));
     responseBody.put("price", product.get("price"));
-    responseBody.put("adress", product.get("adress"));
+    responseBody.put("address", product.get("address"));
     responseBody.put("image", product.get("image"));
+    responseBody.put("userId", product.get("userId"));
 
     MultiValueMap<String, String> headers = new HttpHeaders();
     headers.put("dummyProject", Arrays.asList("halo"));
-    return ResponseEntity.ok().body(responseBody);
+        return ResponseEntity.ok()
+                .header("dummyProject", "Test")
+                .body(responseBody);
     }
 
     @ApiResponses(value = {
@@ -115,19 +118,21 @@ public class ProductController{
                     "\"price\":\"250000\"," +
                     "\"address\":\"Jl. Rumah\"," +
                     "\"image\":\"0\"" +
+                    "\"userId\":\"1\"" +
                     "}")
             @RequestBody Map<String, Object> product){
 
         productService.saveProduct(product.get("nama").toString(), product.get("deskripsi").toString(), Integer.valueOf(product.get("price").toString()),
-                product.get("adress").toString(), product.get("image").toString());
+                product.get("address").toString(), product.get("image").toString(), Integer.valueOf(product.get("userId").toString()));
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("id", product.get("id"));
         responseBody.put("nama", product.get("nama"));
         responseBody.put("deskripsi", product.get("deskripsi"));
         responseBody.put("price", product.get("price"));
-        responseBody.put("adress", product.get("adress"));
+        responseBody.put("address", product.get("address"));
         responseBody.put("image", product.get("image"));
+        responseBody.put("userId", product.get("userId"));
 
         MultiValueMap<String, String> headers = new HttpHeaders();
         headers.put("dummyProject", Arrays.asList("halo"));

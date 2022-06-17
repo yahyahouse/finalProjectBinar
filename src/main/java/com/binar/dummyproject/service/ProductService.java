@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface ProductService {
-    void saveProduct (String nama, String deskripsi, Integer price, String address, String image);
+    void saveProduct (String nama, String deskripsi, Integer price, String address, String image, Integer userId);
     void deleteProduct (long id);
     void updateProduct (long id, String nama, String deskripsi, Integer price, String address, String image);
     List<Product> getAllProduct();

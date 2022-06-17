@@ -43,4 +43,18 @@ public class Users {
     public Users() {
 
     }
+
+    public Users(String username, String email, String password){
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Users(String username, String email, String password, String address, String noHp) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.noHp = noHp;
+    }
 }

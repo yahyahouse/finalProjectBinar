@@ -13,14 +13,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Tag(name = "Product", description = "API for processing various operations with Product entity")
 @RestController
@@ -41,7 +39,8 @@ public class ProductController{
                             "\"deskripsi\":\"Ini untuk melihat waktu\"," +
                             "\"price\":\"250000\"," +
                             "\"address\":\"Jl. Rumah\"," +
-                            "\"image\":\"0\"" +
+                            "\"image\":\"0\"," +
+                            "\"userId\":\"1\"" +
                             "}")
             )})
     })
@@ -53,7 +52,7 @@ public class ProductController{
                     "\"deskripsi\":\"Ini untuk melihat waktu\"," +
                     "\"price\":\"250000\"," +
                     "\"address\":\"Jl. Rumah\"," +
-                    "\"image\":\"0\"" +
+                    "\"image\":\"0\"," +
                     "\"userId\":\"1\"" +
                     "}")
             @RequestBody Map<String, Object> product){
@@ -117,7 +116,7 @@ public class ProductController{
                     "\"deskripsi\":\"Ini untuk melihat waktu\"," +
                     "\"price\":\"250000\"," +
                     "\"address\":\"Jl. Rumah\"," +
-                    "\"image\":\"0\"" +
+                    "\"image\":\"0\"," +
                     "\"userId\":\"1\"" +
                     "}")
             @RequestBody Map<String, Object> product){
@@ -146,11 +145,19 @@ public class ProductController{
     })
     @Operation(summary = "Delete a product")
     @DeleteMapping("/seller/delete-product/{id}")
-    public ResponseEntity<String> deleteProductById(
+    public ResponseEntity<Map<String, Object>> deleteProductById(
             @Parameter(description = "add id to delete the product item")
             @PathVariable("id") long id){
-        productService.deleteProduct(id);
-        return ResponseEntity.accepted().body("Deleted product "+id+" success");
+        Optional<Product> product = productService.deleteProductById(id);
+
+        Map<String, Object> response = new HashMap<>();
+        if(product.isPresent()){
+            response.put("success", true);
+            response.put("deletedData", product);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
     }
 
     @ApiResponses(value = {

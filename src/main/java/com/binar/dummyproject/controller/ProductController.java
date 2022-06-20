@@ -93,51 +93,49 @@ public class ProductController{
         return ResponseEntity.accepted().body(productService.getAllProduct());
     }
 
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "203", description = "Product updated",
-//                    content = {@Content(
-//                            mediaType = "application/json",
-//                            schema =@Schema(example = "{" +
-//                                    "\"productId\":\"1\"," +
-//                                    "\"productName\":\"Jam tangan\"," +
-//                                    "\"productDescription\":\"Ini untuk melihat waktu\"," +
-//                                    "\"productPrice\":\"250000\"," +
-//                                    "\"address\":\"Jl. Rumah\"," +
-//                                    "\"productImage\":\"0\"," +
-//                                    "\"userId\":\"1\"" +
-//                                    "}")
-//                    )})
-//    })
-//    @Operation(summary = "Update existing product by seller")
-//    @PutMapping("/seller/update-product")
-//    public ResponseEntity<Map<String, Object>> updateProduct (
-//            @Schema(example = "{" +
-//                    "\"productId\":\"1\"," +
-//                    "\"productName\":\"Jam tangan\"," +
-//                    "\"productDescription\":\"Ini untuk melihat waktu\"," +
-//                    "\"productPrice\":\"250000\"," +
-//                    "\"address\":\"Jl. Rumah\"," +
-//                    "\"productImage\":\"0\"," +
-//                    "\"userId\":\"1\"" +
-//                    "}")
-//            @RequestBody Map<String, Object> product){
-//
-//        productService.updateProduct(product.get("productId").toString(), product.get("productName").toString(), product.get("productDescription").toString(), Integer.valueOf(product.get("productPrice").toString()),
-//                product.get("address").toString(), product.get("productImage").toString(), Integer.valueOf(product.get("userId").toString()));
-//
-//        Map<String, Object> responseBody = new HashMap<>();
-//        responseBody.put("productId", product.get("productId"));
-//        responseBody.put("productName", product.get("productName"));
-//        responseBody.put("productDescription", product.get("productDescription"));
-//        responseBody.put("productPrice", product.get("productPrice"));
-//        responseBody.put("address", product.get("address"));
-//        responseBody.put("productImage", product.get("productImage"));
-//        responseBody.put("userId", product.get("userId"));
-//
-//        MultiValueMap<String, String> headers = new HttpHeaders();
-//        headers.put("dummyProject", Arrays.asList("halo"));
-//        return ResponseEntity.ok().body(responseBody);
-//    }
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "203", description = "Product updated",
+                    content = {@Content(
+                            mediaType = "application/json",
+                            schema =@Schema(example = "{" +
+                                    "\"productId\":\"1\"," +
+                                    "\"productName\":\"Jam tangan\"," +
+                                    "\"productDescription\":\"Ini untuk melihat waktu\"," +
+                                    "\"productPrice\":\"250000\"," +
+                                    "\"address\":\"Jl. Rumah\"," +
+                                    "\"productImage\":\"0\"," +
+                                    "\"userId\":\"1\"" +
+                                    "}")
+                    )})
+    })
+    @Operation(summary = "Update existing product by seller")
+    @PutMapping("/seller/update-product")
+    public ResponseEntity<Map<String, Object>> updateProduct (
+            @Schema(example = "{" +
+                    "\"productId\":\"1\"," +
+                    "\"productName\":\"Jam tangan\"," +
+                    "\"productDescription\":\"Ini untuk melihat waktu\"," +
+                    "\"productPrice\":\"250000\"," +
+                    "\"address\":\"Jl. Rumah\"," +
+                    "\"productImage\":\"0\"" +
+                    "}")
+            @RequestBody Map<String, Object> product){
+
+        productService.updateProduct(Long.valueOf(product.get("productId").toString()), product.get("productName").toString(), product.get("productDescription").toString(),
+                Integer.valueOf(product.get("productPrice").toString()), product.get("address").toString(), product.get("productImage").toString());
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("productId", product.get("productId"));
+        responseBody.put("productName", product.get("productName"));
+        responseBody.put("productDescription", product.get("productDescription"));
+        responseBody.put("productPrice", product.get("productPrice"));
+        responseBody.put("address", product.get("address"));
+        responseBody.put("productImage", product.get("productImage"));
+
+        MultiValueMap<String, String> headers = new HttpHeaders();
+        headers.put("dummyProject", Arrays.asList("halo"));
+        return ResponseEntity.ok().body(responseBody);
+    }
 
     @ApiResponses(value = {
             @ApiResponse( content = {

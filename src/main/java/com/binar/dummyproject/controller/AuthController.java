@@ -6,6 +6,7 @@ import com.binar.dummyproject.enumeration.ERole;
 import com.binar.dummyproject.model.*;
 import com.binar.dummyproject.repository.RoleRepository;
 import com.binar.dummyproject.repository.UsersRepository;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +44,13 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody Map<String, Object> login) {
+    public ResponseEntity<JwtResponse> authenticateUser(
+            @Valid
+            @Schema(example = "{" +
+                    "\"username\":\"seller\"," +
+                    "\"password\":\"seller\"" +
+                    "}")
+            @RequestBody Map<String, Object> login) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(login.get("username"), login.get("password"))
         );

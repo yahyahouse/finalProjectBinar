@@ -4,11 +4,12 @@ import com.binar.dummyproject.model.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface ProductService {
     void saveProduct (String nama, String deskripsi, Integer price, String address, String image, Integer userId);
-    void deleteProduct (long id);
+    Optional<Product> deleteProductById(Long id);
     void updateProduct (long id, String nama, String deskripsi, Integer price, String address, String image);
     List<Product> getAllProduct();
     List<Product> getProductByUsername (String username);

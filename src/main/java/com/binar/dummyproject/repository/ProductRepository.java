@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface ProductRepository extends JpaRepository <Product, Integer> {
+public interface ProductRepository extends JpaRepository <Product, Long> {
 
     @Modifying
     @Query(value = "update product set nama=:nama, image=:image, deskripsi=:deskripsi," +

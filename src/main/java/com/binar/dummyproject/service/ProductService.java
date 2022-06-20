@@ -1,6 +1,7 @@
 package com.binar.dummyproject.service;
 
 import com.binar.dummyproject.model.Product;
+import com.binar.dummyproject.model.Users;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

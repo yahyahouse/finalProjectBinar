@@ -52,8 +52,7 @@ public class AuthController {
                     "}")
             @RequestBody Map<String, Object> login) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(login.get("username"), login.get("password"))
-        );
+                new UsernamePasswordAuthenticationToken(login.get("username"), login.get("password")));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -69,7 +68,18 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<MessageResponse> registerUser(
+            @Valid
+            @Schema(example = "{" +
+                    "\"username\":\"seller\"," +
+                    "\"email\":\"seller@gmail.com\"," +
+                    "\"password\":\"seller\"," +
+                    "\"address\":\"Jl. Mermaidman\"," +
+                    "\"foto\":\"1\"," +
+                    "\"noHP\":\"0877777773\"," +
+                    "\"role\":[\"SELLER\"]" +
+                    "}")
+            @RequestBody SignupRequest signupRequest) {
         Boolean usernameExist = usersRepository.existsByUsername(signupRequest.getUsername());
         if(Boolean.TRUE.equals(usernameExist)) {
             return ResponseEntity.badRequest()

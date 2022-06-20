@@ -31,7 +31,7 @@ public class ProductController{
     private ProductService productService;
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "New product added",
+            @ApiResponse(responseCode = "200", description = "New product added",
             content = {@Content(
                     mediaType = "application/json",
                     schema =@Schema(example = "{" +
@@ -69,7 +69,7 @@ public class ProductController{
 
     MultiValueMap<String, String> headers = new HttpHeaders();
     headers.put("dummyProject", Arrays.asList("halo"));
-        return ResponseEntity.ok()
+    return ResponseEntity.ok()
                 .header("dummyProject", "Test")
                 .body(responseBody);
     }
@@ -103,7 +103,8 @@ public class ProductController{
                                     "\"deskripsi\":\"Ini untuk melihat waktu\"," +
                                     "\"price\":\"250000\"," +
                                     "\"address\":\"Jl. Rumah\"," +
-                                    "\"image\":\"0\"" +
+                                    "\"image\":\"0\"," +
+                                    "\"userId\":\"1\"" +
                                     "}")
                     )})
     })

@@ -17,6 +17,11 @@ public class UsersServiceImpl implements UsersService{
     UsersRepository usersRepository;
 
     @Override
+    public Users updateUsers(Integer userId, String username, String address, String phone) {
+        return usersRepository.updateUser(username, address, phone, userId);
+    }
+
+    @Override
     public Users getByUsername(String username) {
         return usersRepository.findByUsername(username);
     }

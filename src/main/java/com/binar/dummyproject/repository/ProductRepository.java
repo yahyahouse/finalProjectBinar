@@ -15,18 +15,18 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository <Product, Long> {
 
     @Modifying
-    @Query(value = "update product set nama=:nama, image=:image, deskripsi=:deskripsi," +
-            "price=:price, address=:address where id=:id", nativeQuery = true)
-    void updateProduct (@Param("nama") String nama,
-                        @Param("image") String image,
-                        @Param("deskripsi") String deskripsi,
-                        @Param("price") Integer price,
+    @Query(value = "update product set product_name=:product_name, product_image=:product_image, product_description=:product_description," +
+            "product_price=:product_price, address=:address where product_id=:product_id", nativeQuery = true)
+    void updateProduct (@Param("product_name") String productName,
+                        @Param("product_image") String productImage,
+                        @Param("product_description") String productDescription,
+                        @Param("product_price") Integer productPrice,
                         @Param("address") String address,
-                        @Param("id") long id);
+                        @Param("product_id") Long productId);
 
     @Modifying
-    @Query(value = "delete from product where id =:id", nativeQuery = true)
-    void deleteProductById(@Param("id") long id);
+    @Query(value = "delete from product where product_id =:product_id", nativeQuery = true)
+    void deleteProductById(@Param("product_id") Long product_id);
 
     @Modifying
     @Query(value = "select * from product p " +

@@ -29,14 +29,17 @@ public class Users implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "foto")
-    private String foto;
+    @Column(name = "users_image")
+    private String usersImage;
 
     @Column(name = "address")
     private String address;
 
-    @Column(name = "noHp")
-    private String noHp;
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "phone")
+    private String phone;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -44,13 +47,14 @@ public class Users implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
 
-    public Users(String username, String email, String password, String foto, String address, String noHp) {
+    public Users(String username, String email, String password, String usersImage, String city, String address, String phone) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.foto = foto;
+        this.usersImage = usersImage;
+        this.city = city;
         this.address = address;
-        this.noHp = noHp;
+        this.phone = phone;
     }
 
     public Users() {

@@ -170,8 +170,8 @@ public class ProductController{
         productService.getProductByUsername(username);
         return ResponseEntity.accepted().body(productService.getProductByUsername(username));
     }
-
-    @GetMapping("/buyer/get-product-sortedBy-productName")
+    
+    @GetMapping("/seller/get-product-sortedBy-productName")
     public ResponseEntity<Map<String, Object>> getAllProductPage(
             @RequestParam(required = false) String productName,
             @RequestParam(defaultValue = "0") int page,

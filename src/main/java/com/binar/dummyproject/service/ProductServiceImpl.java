@@ -16,13 +16,13 @@ public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
 
     @Override
-    public void saveProduct(String nama, String deskripsi, Integer price, String address, String image, Integer userId) {
+    public void saveProduct(String productName, String productDescription, Integer productPrice, String address, String productImage, Integer userId) {
         Product product = new Product();
-        product.setNama(nama);
-        product.setDeskripsi(deskripsi);
-        product.setPrice(price);
+        product.setProductName(productName);
+        product.setProductDescription(productDescription);
+        product.setProductPrice(productPrice);
         product.setAddress(address);
-        product.setImage(image);
+        product.setProductImage(productImage);
         Users users = new Users();
         users.setUserId(userId);
         product.setUserId(users);
@@ -37,9 +37,10 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProduct(long id, String nama, String deskripsi, Integer price, String address, String image) {
-        productRepository.updateProduct(nama, image, deskripsi, price, address, id);
+    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, String address, String productImage) {
+        productRepository.updateProduct(productName, productImage, productDescription, productPrice, productDescription, productId);
     }
+
 
     @Override
     public List<Product> getAllProduct() {

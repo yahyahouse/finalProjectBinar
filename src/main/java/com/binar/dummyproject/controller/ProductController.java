@@ -10,6 +10,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -165,5 +169,27 @@ public class ProductController{
     public ResponseEntity<List<Product>> getProductByUserId(@PathVariable("username") String username){
         productService.getProductByUsername(username);
         return ResponseEntity.accepted().body(productService.getProductByUsername(username));
+    }
+
+    @GetMapping("/buyer/get-product-sortedBy-productName")
+    public ResponseEntity<Map<String, Object>> getAllProductPage(
+            @RequestParam(required = false) String productName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size
+    ) {
+        try {
+            Pageable paging = PageRequest.of(page, size, Sort.by("productName"));
+
+            Page<Product> productPage = productService.getAllProductPage(productName, paging);
+            List<Product> products = productPage.getContent();
+            Map<String, Object> response = new HashMap<>();
+            response.put("products", products);
+            response.put("currentPage", productPage.getNumber());
+            response.put("totalProducts", productPage.getTotalElements());
+            response.put("totalPages", productPage.getTotalPages());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -4,6 +4,8 @@ import com.binar.dummyproject.model.Product;
 import com.binar.dummyproject.model.Users;
 import com.binar.dummyproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,4 +54,11 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findProductByUsername(username);
     }
 
+    @Override
+    public Page<Product> getAllProductPage(String productName, Pageable pageable) {
+        if (productName == null)
+            return productRepository.findAll(pageable);
+        else
+            return productRepository.findByProductName(productName, pageable);
+    }
 }

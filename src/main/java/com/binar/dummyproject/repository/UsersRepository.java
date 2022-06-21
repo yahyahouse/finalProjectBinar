@@ -1,10 +1,12 @@
 package com.binar.dummyproject.repository;
 
 import com.binar.dummyproject.model.Users;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +17,20 @@ import java.util.List;
 public interface UsersRepository extends JpaRepository <Users, Integer> {
 
     @Modifying
-    @Query(value = "update users set username= :username, address= :address, phone= :phone " +
+    @Query(value = "update users set username= :username, address= :address, phone= :phone, city= :city " +
             "where user_id= :user_id", nativeQuery = true)
-    Users updateUser(
+    void updateUser(
             @Param("username") String username,
             @Param("address") String address,
             @Param("phone") String noHP,
+            @Param("city") String city,
+            @Param("user_id") Integer userId
+    );
+
+    @Modifying
+    @Query(value = "update users set password=:password where user_id=:user_id", nativeQuery = true)
+    void updatePassword(
+            @Param("password") String password,
             @Param("user_id") Integer userId
     );
 

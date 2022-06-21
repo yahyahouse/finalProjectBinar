@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -77,6 +78,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .hasAuthority(ERole.SELLER.name())
                 .antMatchers("/users/buyer/**")
                 .hasAuthority(ERole.BUYER.name())
+                .antMatchers("/users/public/**")
+                .hasAnyAuthority(ERole.BUYER.name(), ERole.SELLER.name())
                 .anyRequest()
                 .authenticated();
 

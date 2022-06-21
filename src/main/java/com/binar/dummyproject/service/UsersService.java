@@ -10,7 +10,8 @@ import java.util.Optional;
 
 @Service
 public interface UsersService {
-    public Users updateUsers (Integer userId, String username, String address, String phone);
+    public void updateUsersProfile (Integer userId, String username, String address, String phone, String city);
     public Users getByUsername(String username);
     Optional<Users> getUser(SingularAttribute<AbstractPersistable, Serializable> id);
+    public void updateUsersPassword(String password, Integer userId);
 }

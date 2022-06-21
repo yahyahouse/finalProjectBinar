@@ -9,8 +9,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,8 +22,6 @@ import java.util.*;
 @RestController
 @RequestMapping("/product")
 public class ProductController{
-
-    private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductService productService;
@@ -45,7 +41,7 @@ public class ProductController{
             )})
     })
     @Operation(summary = "Add a new product by seller")
-    @PostMapping("/seller/add-product")
+    @PostMapping("/seller/add-product/")
     public ResponseEntity<Map<String, Object>> addProduct (
             @Schema(example = "{" +
                     "\"productName\":\"Jam tangan\"," +
@@ -167,11 +163,7 @@ public class ProductController{
     @Operation(summary = "Get product by seller username")
     @GetMapping(value = "/seller/get-product-seller/{username}")
     public ResponseEntity<List<Product>> getProductByUserId(@PathVariable("username") String username){
-        List<Product> users = productService.getProductByUsername(username);
-        for (Product usr : users){
-            LOG.info("{}      {}     {}      {}    {}     {}    {}   ", usr.getProductName(), usr.getProductDescription(), usr.getAddress(),
-                    usr.getProductImage(), usr.getProductPrice(), usr.getUserId().getUserId(), usr.getUserId().getUsername());
-        }
+        productService.getProductByUsername(username);
         return ResponseEntity.accepted().body(productService.getProductByUsername(username));
     }
 }

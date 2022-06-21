@@ -1,7 +1,6 @@
 package com.binar.dummyproject.service;
 
 import com.binar.dummyproject.model.Product;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

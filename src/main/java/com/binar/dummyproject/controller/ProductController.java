@@ -41,7 +41,7 @@ public class ProductController{
             )})
     })
     @Operation(summary = "Add a new product by seller")
-    @PostMapping("/seller/add-product/")
+    @PostMapping("/seller/add-product")
     public ResponseEntity<Map<String, Object>> addProduct (
             @Schema(example = "{" +
                     "\"productName\":\"Jam tangan\"," +

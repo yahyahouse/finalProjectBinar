@@ -11,7 +11,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
-
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -25,8 +24,8 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(Long id, String username, String email,
+                           String password, List<GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -99,8 +98,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode(){
         return Objects.hash(id);
     }
-
 }

@@ -4,13 +4,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Setter
 @Getter
 @Entity(name = "users")
-public class Users {
+public class Users implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "user_id")
@@ -25,14 +29,17 @@ public class Users {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "foto")
-    private byte[] foto;
+    @Column(name = "users_image")
+    private String usersImage;
 
     @Column(name = "address")
     private String address;
 
-    @Column(name = "noHp")
-    private String noHp;
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "phone")
+    private String phone;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
@@ -40,21 +47,17 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
 
+    public Users(String username, String email, String password, String usersImage, String city, String address, String phone) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.usersImage = usersImage;
+        this.city = city;
+        this.address = address;
+        this.phone = phone;
+    }
+
     public Users() {
 
-    }
-
-    public Users(String username, String email, String password){
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Users(String username, String email, String password, String address, String noHp) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-        this.noHp = noHp;
     }
 }

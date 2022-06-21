@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Component
 public class JwtUtils {
-    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JwtUtils.class);
 
     @Value("${jwtSecret}")
     private String jwtSecret;
@@ -39,17 +39,18 @@ public class JwtUtils {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException e) {
-            logger.error("Invalid JWT Signature: {}", e.getMessage());
+            LOG.error("Invalid JWT Signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
-            logger.error("Invalid JWT Token: {}", e.getMessage());
+            LOG.error("Invalid JWT Token: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
-            logger.error("JWT token is expired: {}", e.getMessage());
+            LOG.error("JWT token is expired: {}", e.getMessage());
         } catch (UnsupportedJwtException e) {
-            logger.error("JWT token is unsupported: {}", e.getMessage());
+            LOG.error("JWT token is unsupported: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
-            logger.error("JWT claims string is empty: {}", e.getMessage());
+            LOG.error("JWT claims string is empty: {}", e.getMessage());
         }
 
         return false;
     }
 }
+

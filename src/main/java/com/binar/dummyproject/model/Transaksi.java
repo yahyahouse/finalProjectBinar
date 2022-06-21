@@ -1,6 +1,5 @@
 package com.binar.dummyproject.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,6 @@
 package com.binar.dummyproject.model;
 
-import com.binar.dummyproject.Enumeration.ERole;
+import com.binar.dummyproject.enumeration.ERole;
 import lombok.Getter;
 import lombok.Setter;
 

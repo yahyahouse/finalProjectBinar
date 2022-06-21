@@ -1,10 +1,12 @@
 package com.binar.dummyproject.controller;
 
-import com.binar.dummyproject.Enumeration.ERole;
 import com.binar.dummyproject.config.JwtUtils;
+import com.binar.dummyproject.config.SignupRequest;
+import com.binar.dummyproject.enumeration.ERole;
 import com.binar.dummyproject.model.*;
 import com.binar.dummyproject.repository.RoleRepository;
 import com.binar.dummyproject.repository.UsersRepository;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -41,11 +43,16 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/auth/signin")
-    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody Map<String, Object> login) {
+    @PostMapping("/signin")
+    public ResponseEntity<JwtResponse> authenticateUser(
+            @Valid
+            @Schema(example = "{" +
+                    "\"username\":\"seller\"," +
+                    "\"password\":\"seller\"" +
+                    "}")
+            @RequestBody Map<String, Object> login) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(login.get("username"), login.get("password"))
-        );
+                new UsernamePasswordAuthenticationToken(login.get("username"), login.get("password")));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -60,22 +67,41 @@ public class AuthController {
                 roles));
     }
 
-    @PostMapping("/auth/signup")
-    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
-        Boolean isUsernameExist = usersRepository.existsByUsername(signupRequest.getUsername());
-        if(Boolean.TRUE.equals(isUsernameExist)) {
+    @PostMapping("/signup")
+    public ResponseEntity<MessageResponse> registerUser(
+            @Valid
+            @Schema(example = "{" +
+                    "\"username\":\"seller\"," +
+                    "\"email\":\"seller@gmail.com\"," +
+                    "\"password\":\"seller\"," +
+                    "\"address\":\"Jl. Mermaidman\"," +
+                    "\"usersImage\":\"1\"," +
+                    "\"city\":\"Ambon\"," +
+                    "\"phone\":\"0877777773\"," +
+                    "\"role\":[\"SELLER\"]" +
+                    "}")
+            @RequestBody SignupRequest signupRequest) {
+        Boolean usernameExist = usersRepository.existsByUsername(signupRequest.getUsername());
+        if(Boolean.TRUE.equals(usernameExist)) {
             return ResponseEntity.badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
-        Boolean isEmailExist = usersRepository.existsByEmail(signupRequest.getEmail());
-        if(Boolean.TRUE.equals(isEmailExist)) {
+
+        Boolean emailExist = usersRepository.existsByEmail(signupRequest.getEmail());
+        if(Boolean.TRUE.equals(emailExist)) {
             return ResponseEntity.badRequest()
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
+        Boolean noHPExist = usersRepository.existsByPhone(signupRequest.getPhone());
+        if(Boolean.TRUE.equals(noHPExist)) {
+            return ResponseEntity.badRequest()
+                    .body(new MessageResponse("Error: Phone Number is already taken!"));
+        }
+
         Users users = new Users(signupRequest.getUsername(), signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()),
-                signupRequest.getAddress(), signupRequest.getNoHp());
+                passwordEncoder.encode(signupRequest.getPassword()), signupRequest.getUsersImage(), signupRequest.getAddress(),
+                signupRequest.getPhone(), signupRequest.getCity());
 
         Set<String> strRoles = signupRequest.getRole();
         Set<Roles> roles = new HashSet<>();
@@ -89,7 +115,6 @@ public class AuthController {
                 Roles roles1 = roleRepository.findByName(ERole.valueOf(role))
                         .orElseThrow(() -> new RuntimeException("Error: Role " + role + " is not found"));
                 roles.add(roles1);
-
             });
         }
         users.setRoles(roles);

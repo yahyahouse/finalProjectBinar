@@ -1,32 +1,37 @@
 package com.binar.dummyproject.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
-@Setter
-@Getter
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
 @Entity(name = "product")
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "product_id", nullable = false)
+    private Long productId;
 
-    @Column(name = "nama")
-    private String nama;
+    @Column(name = "product_name")
+    private String productName;
 
-    @Column(name = "image", unique = false, nullable = false, length = 100000)
-    private byte[] image;
+    @Column(name = "product_image", unique = false, nullable = false, length = 100000)
+    private String productImage;
 
-    @Column(name = "deskripsi")
-    private String deskripsi;
+    @Column(name = "product_description")
+    private String productDescription;
 
-    @Column(name = "price")
-    private Integer price;
+    @Column(name = "product_price")
+    private Integer productPrice;
 
     @Column(name = "address")
     private String address;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users userId;
+
 }
+

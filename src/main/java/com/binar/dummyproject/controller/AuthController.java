@@ -45,10 +45,9 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<JwtResponse> authenticateUser(
-            @Valid
-            @Schema(example = "{" +
-                    "\"username\":\"seller\"," +
-                    "\"password\":\"seller\"" +
+            @Schema (example = "{" +
+                    "\"username\":\"sellerTest\"," +
+                    "\"password\":\"sellerTest\"" +
                     "}")
             @RequestBody Map<String, Object> login) {
         Authentication authentication = authenticationManager.authenticate(
@@ -100,8 +99,8 @@ public class AuthController {
         }
 
         Users users = new Users(signupRequest.getUsername(), signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()), signupRequest.getUsersImage(), signupRequest.getAddress(),
-                signupRequest.getPhone(), signupRequest.getCity());
+                passwordEncoder.encode(signupRequest.getPassword()), signupRequest.getUsersImage(), signupRequest.getCity(),
+                signupRequest.getAddress(), signupRequest.getPhone());
 
         Set<String> strRoles = signupRequest.getRole();
         Set<Roles> roles = new HashSet<>();

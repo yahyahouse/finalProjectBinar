@@ -1,7 +1,6 @@
 package com.binar.dummyproject.service;
 
 import com.binar.dummyproject.model.Product;
-import com.binar.dummyproject.model.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

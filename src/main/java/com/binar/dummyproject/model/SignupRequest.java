@@ -1,10 +1,14 @@
 package com.binar.dummyproject.model;
 
+import lombok.Data;
+import org.springframework.lang.Nullable;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+@Data
 public class SignupRequest {
 
     @NotBlank
@@ -26,47 +30,11 @@ public class SignupRequest {
     @Size(max = 40)
     private String address;
 
+    @Nullable
+    private String usersImage;
+
     @NotBlank
     @Size(max = 40)
-    private String noHp;
+    private String phone;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<String> getRole() {
-        return role;
-    }
-
-    public void setRole(Set<String> role) {
-        this.role = role;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getNoHp() {
-        return noHp;
-    }
 }

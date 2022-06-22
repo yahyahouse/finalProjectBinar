@@ -9,9 +9,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +27,6 @@ import java.util.*;
 @RequestMapping("/product")
 public class ProductController{
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
-
     @Autowired
     private ProductService productService;
 
@@ -35,11 +35,11 @@ public class ProductController{
             content = {@Content(
                     mediaType = "application/json",
                     schema =@Schema(example = "{" +
-                            "\"nama\":\"Jam tangan\"," +
-                            "\"deskripsi\":\"Ini untuk melihat waktu\"," +
-                            "\"price\":\"250000\"," +
+                            "\"productName\":\"Jam tangan\"," +
+                            "\"productDescription\":\"Ini untuk melihat waktu\"," +
+                            "\"productPrice\":\"250000\"," +
                             "\"address\":\"Jl. Rumah\"," +
-                            "\"image\":\"0\"," +
+                            "\"productImage\":\"0\"," +
                             "\"userId\":\"1\"" +
                             "}")
             )})
@@ -48,23 +48,23 @@ public class ProductController{
     @PostMapping("/seller/add-product")
     public ResponseEntity<Map<String, Object>> addProduct (
             @Schema(example = "{" +
-                    "\"nama\":\"Jam tangan\"," +
-                    "\"deskripsi\":\"Ini untuk melihat waktu\"," +
-                    "\"price\":\"250000\"," +
+                    "\"productName\":\"Jam tangan\"," +
+                    "\"productDescription\":\"Ini untuk melihat waktu\"," +
+                    "\"productPrice\":\"250000\"," +
                     "\"address\":\"Jl. Rumah\"," +
-                    "\"image\":\"0\"," +
+                    "\"productImage\":\"0\"," +
                     "\"userId\":\"1\"" +
                     "}")
             @RequestBody Map<String, Object> product){
-    productService.saveProduct(product.get("nama").toString(), product.get("deskripsi").toString(), Integer.valueOf(product.get("price").toString()),
-            product.get("address").toString(), product.get("image").toString(), Integer.valueOf(product.get("userId").toString()));
+    productService.saveProduct(product.get("productName").toString(), product.get("productDescription").toString(), Integer.valueOf(product.get("productPrice").toString()),
+            product.get("address").toString(), product.get("productImage").toString(), Integer.valueOf(product.get("userId").toString()));
 
     Map<String, Object> responseBody = new HashMap<>();
-    responseBody.put("nama", product.get("nama"));
-    responseBody.put("deskripsi", product.get("deskripsi"));
-    responseBody.put("price", product.get("price"));
+    responseBody.put("productName", product.get("productName"));
+    responseBody.put("productDescription", product.get("productDescription"));
+    responseBody.put("productPrice", product.get("productPrice"));
     responseBody.put("address", product.get("address"));
-    responseBody.put("image", product.get("image"));
+    responseBody.put("productImage", product.get("productImage"));
     responseBody.put("userId", product.get("userId"));
 
     MultiValueMap<String, String> headers = new HttpHeaders();
@@ -79,11 +79,11 @@ public class ProductController{
             content = {@Content(
                     mediaType = "application/json",
                     schema = @Schema(example = "{" +
-                            "\"nama\":\"Jam tangan\"," +
-                            "\"deskripsi\":\"Ini untuk melihat waktu\"," +
-                            "\"price\":\"250000\"," +
+                            "\"productName\":\"Jam tangan\"," +
+                            "\"productDescription\":\"Ini untuk melihat waktu\"," +
+                            "\"productPrice\":\"250000\"," +
                             "\"address\":\"Jl. Rumah\"," +
-                            "\"image\":\"0\"" +
+                            "\"productImage\":\"0\"" +
                             "}")
             )})
     })
@@ -98,12 +98,12 @@ public class ProductController{
                     content = {@Content(
                             mediaType = "application/json",
                             schema =@Schema(example = "{" +
-                                    "\"id\":\"1\"," +
-                                    "\"nama\":\"Jam tangan\"," +
-                                    "\"deskripsi\":\"Ini untuk melihat waktu\"," +
-                                    "\"price\":\"250000\"," +
+                                    "\"productId\":\"1\"," +
+                                    "\"productName\":\"Jam tangan\"," +
+                                    "\"productDescription\":\"Ini untuk melihat waktu\"," +
+                                    "\"productPrice\":\"250000\"," +
                                     "\"address\":\"Jl. Rumah\"," +
-                                    "\"image\":\"0\"," +
+                                    "\"productImage\":\"0\"," +
                                     "\"userId\":\"1\"" +
                                     "}")
                     )})
@@ -112,27 +112,25 @@ public class ProductController{
     @PutMapping("/seller/update-product")
     public ResponseEntity<Map<String, Object>> updateProduct (
             @Schema(example = "{" +
-                    "\"id\":\"1\"," +
-                    "\"nama\":\"Jam tangan\"," +
-                    "\"deskripsi\":\"Ini untuk melihat waktu\"," +
-                    "\"price\":\"250000\"," +
+                    "\"productId\":\"1\"," +
+                    "\"productName\":\"Jam tangan\"," +
+                    "\"productDescription\":\"Ini untuk melihat waktu\"," +
+                    "\"productPrice\":\"250000\"," +
                     "\"address\":\"Jl. Rumah\"," +
-                    "\"image\":\"0\"," +
-                    "\"userId\":\"1\"" +
+                    "\"productImage\":\"0\"" +
                     "}")
             @RequestBody Map<String, Object> product){
 
-        productService.saveProduct(product.get("nama").toString(), product.get("deskripsi").toString(), Integer.valueOf(product.get("price").toString()),
-                product.get("address").toString(), product.get("image").toString(), Integer.valueOf(product.get("userId").toString()));
+        productService.updateProduct(Long.valueOf(product.get("productId").toString()), product.get("productName").toString(), product.get("productDescription").toString(),
+                Integer.valueOf(product.get("productPrice").toString()), product.get("address").toString(), product.get("productImage").toString());
 
         Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("id", product.get("id"));
-        responseBody.put("nama", product.get("nama"));
-        responseBody.put("deskripsi", product.get("deskripsi"));
-        responseBody.put("price", product.get("price"));
+        responseBody.put("productId", product.get("productId"));
+        responseBody.put("productName", product.get("productName"));
+        responseBody.put("productDescription", product.get("productDescription"));
+        responseBody.put("productPrice", product.get("productPrice"));
         responseBody.put("address", product.get("address"));
-        responseBody.put("image", product.get("image"));
-        responseBody.put("userId", product.get("userId"));
+        responseBody.put("productImage", product.get("productImage"));
 
         MultiValueMap<String, String> headers = new HttpHeaders();
         headers.put("dummyProject", Arrays.asList("halo"));
@@ -145,11 +143,11 @@ public class ProductController{
             }, responseCode = "204", description = "Success deleted a product")
     })
     @Operation(summary = "Delete a product")
-    @DeleteMapping("/seller/delete-product/{id}")
+    @DeleteMapping("/seller/delete-product/{productId}")
     public ResponseEntity<Map<String, Object>> deleteProductById(
             @Parameter(description = "add id to delete the product item")
-            @PathVariable("id") long id){
-        Optional<Product> product = productService.deleteProductById(id);
+            @PathVariable("productId") Long productId){
+        Optional<Product> product = productService.deleteProductById(productId);
 
         Map<String, Object> response = new HashMap<>();
         if(product.isPresent()){
@@ -169,11 +167,29 @@ public class ProductController{
     @Operation(summary = "Get product by seller username")
     @GetMapping(value = "/seller/get-product-seller/{username}")
     public ResponseEntity<List<Product>> getProductByUserId(@PathVariable("username") String username){
-        List<Product> users = productService.getProductByUsername(username);
-        for (Product usr : users){
-            LOG.info("{}      {}     {}      {}    {}     {}    {}   ", usr.getNama(), usr.getDeskripsi(), usr.getAddress(),
-                    usr.getImage(), usr.getPrice(), usr.getUserId().getUserId(), usr.getUserId().getUsername());
-        }
+        productService.getProductByUsername(username);
         return ResponseEntity.accepted().body(productService.getProductByUsername(username));
+    }
+    
+    @GetMapping("/seller/get-product-sortedBy-productName")
+    public ResponseEntity<Map<String, Object>> getAllProductPage(
+            @RequestParam(required = false) String productName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size
+    ) {
+        try {
+            Pageable paging = PageRequest.of(page, size, Sort.by("productName"));
+
+            Page<Product> productPage = productService.getAllProductPage(productName, paging);
+            List<Product> products = productPage.getContent();
+            Map<String, Object> response = new HashMap<>();
+            response.put("products", products);
+            response.put("currentPage", productPage.getNumber());
+            response.put("totalProducts", productPage.getTotalElements());
+            response.put("totalPages", productPage.getTotalPages());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.validation.constraints.*;
 
 @Setter
@@ -30,10 +29,13 @@ public class SignupRequest {
     @Size(min = 6, max = 50)
     private String address;
 
-    private String foto;
+    private String usersImage;
 
     @NotBlank
     @Size(min = 9, max = 13)
-    private String noHP;
+    private String phone;
+
+    @NotBlank
+    private String city;
 
 }

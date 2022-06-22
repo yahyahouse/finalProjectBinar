@@ -4,6 +4,8 @@ import com.binar.dummyproject.model.Product;
 import com.binar.dummyproject.model.Users;
 import com.binar.dummyproject.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,13 +18,13 @@ public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
 
     @Override
-    public void saveProduct(String nama, String deskripsi, Integer price, String address, String image, Integer userId) {
+    public void saveProduct(String productName, String productDescription, Integer productPrice, String address, String productImage, Integer userId) {
         Product product = new Product();
-        product.setNama(nama);
-        product.setDeskripsi(deskripsi);
-        product.setPrice(price);
+        product.setProductName(productName);
+        product.setProductDescription(productDescription);
+        product.setProductPrice(productPrice);
         product.setAddress(address);
-        product.setImage(image);
+        product.setProductImage(productImage);
         Users users = new Users();
         users.setUserId(userId);
         product.setUserId(users);
@@ -37,9 +39,10 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProduct(long id, String nama, String deskripsi, Integer price, String address, String image) {
-        productRepository.updateProduct(nama, image, deskripsi, price, address, id);
+    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, String address, String productImage) {
+        productRepository.updateProduct(productName, productImage, productDescription, productPrice, productDescription, productId);
     }
+
 
     @Override
     public List<Product> getAllProduct() {
@@ -51,4 +54,11 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findProductByUsername(username);
     }
 
+    @Override
+    public Page<Product> getAllProductPage(String productName, Pageable pageable) {
+        if (productName == null)
+            return productRepository.findAll(pageable);
+        else
+            return productRepository.findByProductName(productName, pageable);
+    }
 }

@@ -63,7 +63,7 @@ public class AuthController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(),
+                userDetails.getUserId(), userDetails.getUsername(), userDetails.getEmail(),
                 roles));
     }
 
@@ -75,8 +75,9 @@ public class AuthController {
                     "\"email\":\"seller@gmail.com\"," +
                     "\"password\":\"seller\"," +
                     "\"address\":\"Jl. Mermaidman\"," +
-                    "\"foto\":\"1\"," +
-                    "\"noHP\":\"0877777773\"," +
+                    "\"usersImage\":\"1\"," +
+                    "\"city\":\"Ambon\"," +
+                    "\"phone\":\"0877777773\"," +
                     "\"role\":[\"SELLER\"]" +
                     "}")
             @RequestBody SignupRequest signupRequest) {
@@ -92,15 +93,15 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
-        Boolean noHPExist = usersRepository.existsByNoHp(signupRequest.getNoHP());
+        Boolean noHPExist = usersRepository.existsByPhone(signupRequest.getPhone());
         if(Boolean.TRUE.equals(noHPExist)) {
             return ResponseEntity.badRequest()
                     .body(new MessageResponse("Error: Phone Number is already taken!"));
         }
 
         Users users = new Users(signupRequest.getUsername(), signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()), signupRequest.getFoto(), signupRequest.getAddress(),
-                signupRequest.getNoHP());
+                passwordEncoder.encode(signupRequest.getPassword()), signupRequest.getUsersImage(), signupRequest.getAddress(),
+                signupRequest.getPhone(), signupRequest.getCity());
 
         Set<String> strRoles = signupRequest.getRole();
         Set<Roles> roles = new HashSet<>();
@@ -119,5 +120,6 @@ public class AuthController {
         users.setRoles(roles);
         usersRepository.save(users);
         return ResponseEntity.ok(new MessageResponse("User registered successfully"));
+
     }
 }

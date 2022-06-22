@@ -80,6 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .hasAuthority(ERole.BUYER.name())
                 .antMatchers("/users/public/**")
                 .hasAnyAuthority(ERole.BUYER.name(), ERole.SELLER.name())
+                .antMatchers("/wishlist/**")
+                .hasAnyAuthority(ERole.BUYER.name(), ERole.SELLER.name())
                 .anyRequest()
                 .authenticated();
 

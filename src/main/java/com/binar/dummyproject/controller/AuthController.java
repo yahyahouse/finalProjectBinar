@@ -46,12 +46,15 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity<JwtResponse> authenticateUser(
             @Schema (example = "{" +
-                    "\"username\":\"sellerTest\"," +
-                    "\"password\":\"sellerTest\"" +
+                    "\"email\":\"userTest@gmail.com\"," +
+                    "\"password\":\"userTest\"" +
                     "}")
             @RequestBody Map<String, Object> login) {
+
+        Users users = usersRepository.findUsersByEmail(login.get("email").toString());
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(login.get("username"), login.get("password")));
+                new UsernamePasswordAuthenticationToken(users.getUsername(), login.get("password")));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
@@ -70,14 +73,10 @@ public class AuthController {
     public ResponseEntity<MessageResponse> registerUser(
             @Valid
             @Schema(example = "{" +
-                    "\"username\":\"seller\"," +
-                    "\"email\":\"seller@gmail.com\"," +
-                    "\"password\":\"seller\"," +
-                    "\"address\":\"Jl. Mermaidman\"," +
-                    "\"usersImage\":\"1\"," +
-                    "\"city\":\"Ambon\"," +
-                    "\"phone\":\"0877777773\"," +
-                    "\"role\":[\"SELLER\"]" +
+                    "\"username\":\"userTest\"," +
+                    "\"email\":\"userTest@gmail.com\"," +
+                    "\"password\":\"userTest\"," +
+                    "\"role\":[\"SELLER\", \"BUYER\"]" +
                     "}")
             @RequestBody SignupRequest signupRequest) {
         Boolean usernameExist = usersRepository.existsByUsername(signupRequest.getUsername());
@@ -92,15 +91,8 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
-        Boolean noHPExist = usersRepository.existsByPhone(signupRequest.getPhone());
-        if(Boolean.TRUE.equals(noHPExist)) {
-            return ResponseEntity.badRequest()
-                    .body(new MessageResponse("Error: Phone Number is already taken!"));
-        }
-
         Users users = new Users(signupRequest.getUsername(), signupRequest.getEmail(),
-                passwordEncoder.encode(signupRequest.getPassword()), signupRequest.getUsersImage(), signupRequest.getCity(),
-                signupRequest.getAddress(), signupRequest.getPhone());
+                passwordEncoder.encode(signupRequest.getPassword()));
 
         Set<String> strRoles = signupRequest.getRole();
         Set<Roles> roles = new HashSet<>();

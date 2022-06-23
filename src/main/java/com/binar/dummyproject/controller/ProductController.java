@@ -117,7 +117,7 @@ public class ProductController{
                     "\"productDescription\":\"Ini untuk melihat waktu\"," +
                     "\"productPrice\":\"250000\"," +
                     "\"address\":\"Jl. Rumah\"," +
-                    "\"productImage\":\"0\"" +
+                    "\"productImage\":\"\"" +
                     "}")
             @RequestBody Map<String, Object> product){
 

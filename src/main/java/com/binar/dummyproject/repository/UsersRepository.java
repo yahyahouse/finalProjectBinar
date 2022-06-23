@@ -14,13 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UsersRepository extends JpaRepository <Users, Integer> {
 
     @Modifying
-    @Query(value = "update users set username= :username, address= :address, phone= :phone, city= :city " +
+    @Query(value = "update users set username= :username, address= :address, phone= :phone, city= :city, users_image=:users_image " +
             "where user_id= :user_id", nativeQuery = true)
     void updateUser(
             @Param("username") String username,
             @Param("address") String address,
             @Param("phone") String noHP,
             @Param("city") String city,
+            @Param("users_image") String usersImage,
             @Param("user_id") Integer userId
     );
 
@@ -32,7 +33,7 @@ public interface UsersRepository extends JpaRepository <Users, Integer> {
     );
 
     public Users findByUsername(String username);
+    public Users findUsersByEmail(String email);
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
-    Boolean existsByPhone(String phone);
 }

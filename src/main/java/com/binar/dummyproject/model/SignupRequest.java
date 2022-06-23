@@ -26,15 +26,4 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
-    @NotBlank
-    @Size(max = 40)
-    private String address;
-
-    @Nullable
-    private String usersImage;
-
-    @NotBlank
-    @Size(max = 40)
-    private String phone;
-
 }

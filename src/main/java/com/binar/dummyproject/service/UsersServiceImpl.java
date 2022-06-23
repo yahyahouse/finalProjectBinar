@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,10 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public void updateUsersPassword(String password, Integer userId) {
         usersRepository.updatePassword(passwordEncoder.encode(password), userId);
+    }
+
+    @Override
+    public List<Users> getUsersByUserId(Integer userId) {
+        return usersRepository.findUsersByUserId(userId);
     }
 }

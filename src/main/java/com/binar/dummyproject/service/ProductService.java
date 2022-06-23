@@ -15,6 +15,7 @@ public interface ProductService {
     Optional<Product> deleteProductById(Long productId);
     void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String address, String productImage);
     List<Product> getAllProduct();
+    List<Product> getProductByProductId(Long productId);
     List<Product> getProductByUsername (String username);
     Page<Product> getAllProductPage(String productName, Pageable pageable);
 }

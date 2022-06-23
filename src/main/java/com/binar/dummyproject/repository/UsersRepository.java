@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Repository
 @Transactional
@@ -31,6 +33,10 @@ public interface UsersRepository extends JpaRepository <Users, Integer> {
             @Param("password") String password,
             @Param("user_id") Integer userId
     );
+
+    @Modifying
+    @Query(value = "select * from users u where u.user_id =:user_id", nativeQuery = true)
+    List<Users> findUsersByUserId(@Param("user_id") Integer userId);
 
     public Users findByUsername(String username);
     public Users findUsersByEmail(String email);

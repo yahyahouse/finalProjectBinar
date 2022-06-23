@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,4 +15,5 @@ public interface UsersService {
     public Users getByUsername(String username);
     Optional<Users> getUser(SingularAttribute<AbstractPersistable, Serializable> id);
     public void updateUsersPassword(String password, Integer userId);
+    public List<Users> getUsersByUserId (Integer userId);
 }

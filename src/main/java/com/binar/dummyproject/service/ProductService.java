@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
-
     void saveProduct (String productName, String productDescription, Integer productPrice, String address, String productImage, Integer userId);
     Optional<Product> deleteProductById(Long productId);
     void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String address, String productImage);

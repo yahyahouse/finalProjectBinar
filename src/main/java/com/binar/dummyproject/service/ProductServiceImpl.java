@@ -61,4 +61,9 @@ public class ProductServiceImpl implements ProductService{
         else
             return productRepository.findByProductName(productName, pageable);
     }
+
+    @Override
+    public List<Product> getProductByProductId(Long productId){
+        return productRepository.findProductByProductId(productId);
+    }
 }

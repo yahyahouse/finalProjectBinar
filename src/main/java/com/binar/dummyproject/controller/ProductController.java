@@ -117,7 +117,7 @@ public class ProductController{
                     "\"productDescription\":\"Ini untuk melihat waktu\"," +
                     "\"productPrice\":\"250000\"," +
                     "\"address\":\"Jl. Rumah\"," +
-                    "\"productImage\":\"0\"" +
+                    "\"productImage\":\"\"" +
                     "}")
             @RequestBody Map<String, Object> product){
 
@@ -170,6 +170,7 @@ public class ProductController{
         productService.getProductByUsername(username);
         return ResponseEntity.accepted().body(productService.getProductByUsername(username));
     }
+
     
     @GetMapping("/seller/get-product-sortedBy-productName")
     public ResponseEntity<Map<String, Object>> getAllProductPage(

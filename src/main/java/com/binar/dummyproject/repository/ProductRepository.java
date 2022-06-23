@@ -1,6 +1,7 @@
 package com.binar.dummyproject.repository;
 
 import com.binar.dummyproject.model.Product;
+import com.binar.dummyproject.model.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,6 +30,11 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
     @Modifying
     @Query(value = "delete from product where product_id =:product_id", nativeQuery = true)
     void deleteProductById(@Param("product_id") Long productId);
+
+    @Modifying
+    @Query(value = "select * from product p where p.product_id =:product_id", nativeQuery = true)
+    List<Product> findProductByProductId(@Param("product_id") Long product_id);
+
 
     @Modifying
     @Query(value = "select * from product p " +

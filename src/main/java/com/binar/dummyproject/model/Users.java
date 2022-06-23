@@ -44,14 +44,10 @@ public class Users implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
 
-    public Users(String username, String email, String password, String usersImage, String city, String address, String phone) {
+    public Users(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.usersImage = usersImage;
-        this.city = city;
-        this.address = address;
-        this.phone = phone;
     }
 
     public Users() {

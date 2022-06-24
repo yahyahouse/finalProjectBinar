@@ -74,11 +74,6 @@ public class ProductController{
                 .body(responseBody);
     }
 
-    @Operation(summary = "Show all products by seller")
-    @GetMapping("/seller/show-products")
-    public ResponseEntity<List<Product>> allProduct(){
-        return ResponseEntity.accepted().body(productService.getAllProduct());
-    }
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "203", description = "Product updated",

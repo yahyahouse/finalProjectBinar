@@ -1,6 +1,5 @@
 package com.binar.dummyproject.service;
 
-import com.binar.dummyproject.enumeration.ECategory;
 import com.binar.dummyproject.model.Product;
 import com.binar.dummyproject.model.Users;
 import com.binar.dummyproject.repository.ProductRepository;
@@ -19,12 +18,12 @@ public class ProductServiceImpl implements ProductService{
     private ProductRepository productRepository;
 
     @Override
-    public void saveProduct(String productName, String productDescription, Integer productPrice, ECategory category, String productImage, Integer userId) {
+    public void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory, String productImage, Integer userId) {
         Product product = new Product();
         product.setProductName(productName);
         product.setProductDescription(productDescription);
         product.setProductPrice(productPrice);
-        product.setCategory(category);
+        product.setProductCategory(productCategory);
         product.setProductImage(productImage);
         Users users = new Users();
         users.setUserId(userId);
@@ -40,8 +39,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, ECategory category, String productImage) {
-        productRepository.updateProduct(productName, productImage, productDescription, productPrice, category, productId);
+    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, String productCategory, String productImage) {
+        productRepository.updateProduct(productName, productImage, productDescription, productPrice, productCategory, productId);
     }
 
 

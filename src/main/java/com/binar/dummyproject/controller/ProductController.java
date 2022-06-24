@@ -1,6 +1,5 @@
 package com.binar.dummyproject.controller;
 
-import com.binar.dummyproject.enumeration.ECategory;
 import com.binar.dummyproject.model.Product;
 import com.binar.dummyproject.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +38,7 @@ public class ProductController{
                             "\"productName\":\"Jam tangan\"," +
                             "\"productDescription\":\"Ini untuk melihat waktu\"," +
                             "\"productPrice\":\"250000\"," +
-                            "\"category\":\"HOBI\"," +
+                            "\"productCategory\":\"Hobi\"," +
                             "\"productImage\":\"https://freeimage.host/i/hbrKHF\"," +
                             "\"userId\":\"1\"" +
                             "}")
@@ -52,19 +51,19 @@ public class ProductController{
                     "\"productName\":\"Jam tangan\"," +
                     "\"productDescription\":\"Ini untuk melihat waktu\"," +
                     "\"productPrice\":\"250000\"," +
-                    "\"category\":\"HOBI\"," +
+                    "\"productCategory\":\"Hobi\"," +
                     "\"productImage\":\"https://freeimage.host/i/hbrKHF\"," +
                     "\"userId\":\"1\"" +
                     "}")
             @RequestBody Map<String, Object> product){
     productService.saveProduct(product.get("productName").toString(), product.get("productDescription").toString(), Integer.valueOf(product.get("productPrice").toString()),
-            ECategory.valueOf(product.get("category").toString()), product.get("productImage").toString(), Integer.valueOf(product.get("userId").toString()));
+            (product.get("productCategory").toString()), product.get("productImage").toString(), Integer.valueOf(product.get("userId").toString()));
 
     Map<String, Object> responseBody = new HashMap<>();
     responseBody.put("productName", product.get("productName"));
     responseBody.put("productDescription", product.get("productDescription"));
     responseBody.put("productPrice", product.get("productPrice"));
-    responseBody.put("category", product.get("category"));
+    responseBody.put("productCategory", product.get("productCategory"));
     responseBody.put("productImage", product.get("productImage"));
     responseBody.put("userId", product.get("userId"));
 
@@ -90,7 +89,7 @@ public class ProductController{
                                     "\"productName\":\"Jam tangan\"," +
                                     "\"productDescription\":\"Ini untuk melihat waktu\"," +
                                     "\"productPrice\":\"250000\"," +
-                                    "\"category\":\"HOBI\"," +
+                                    "\"productCategory\":\"Hobi\"," +
                                     "\"productImage\":\"https://freeimage.host/i/hbrKHF\"," +
                                     "\"userId\":\"1\"" +
                                     "}")
@@ -104,20 +103,20 @@ public class ProductController{
                     "\"productName\":\"Jam tangan\"," +
                     "\"productDescription\":\"Ini untuk melihat waktu\"," +
                     "\"productPrice\":\"250000\"," +
-                    "\"category\":\"ELEKTRONIK\"," +
+                    "\"productCategory\":\"Hobi\"," +
                     "\"productImage\":\"https://freeimage.host/i/hbrKHF\"" +
                     "}")
             @RequestBody Map<String, Object> product){
 
         productService.updateProduct(Long.valueOf(product.get("productId").toString()), product.get("productName").toString(), product.get("productDescription").toString(),
-                Integer.valueOf(product.get("productPrice").toString()), ECategory.valueOf((product.get("category").toString())), product.get("productImage").toString());
+                Integer.valueOf(product.get("productPrice").toString()), (product.get("productCategory").toString()), product.get("productImage").toString());
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("productId", product.get("productId"));
         responseBody.put("productName", product.get("productName"));
         responseBody.put("productDescription", product.get("productDescription"));
         responseBody.put("productPrice", product.get("productPrice"));
-        responseBody.put("category", product.get("category"));
+        responseBody.put("productCategory", product.get("productCategory"));
         responseBody.put("productImage", product.get("productImage"));
 
         MultiValueMap<String, String> headers = new HttpHeaders();

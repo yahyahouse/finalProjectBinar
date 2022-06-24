@@ -2,12 +2,9 @@ package com.binar.dummyproject.model;
 
 import javax.persistence.*;
 
-import com.binar.dummyproject.enumeration.ECategory;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @Entity(name = "product")
@@ -29,9 +26,9 @@ public class Product implements Serializable {
     @Column(name = "product_price")
     private Integer productPrice;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private ECategory category;
+    @Column(name = "product_category")
+    private String productCategory;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

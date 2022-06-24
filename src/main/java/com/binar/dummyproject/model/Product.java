@@ -26,8 +26,9 @@ public class Product implements Serializable {
     @Column(name = "product_price")
     private Integer productPrice;
 
-    @Column(name = "address")
-    private String address;
+    @Column(name = "product_category")
+    private String productCategory;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id")

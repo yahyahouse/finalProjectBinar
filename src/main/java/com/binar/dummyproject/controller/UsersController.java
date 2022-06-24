@@ -30,13 +30,13 @@ public class UsersController {
     @PutMapping("public/update-users-profile")
     public ResponseEntity<Map<String, Object>> updateUsersProfile(
             @Schema(example = "{" +
-                    "\"userId\":\"22\"," +
-                    "\"username\":\"sellerR\"," +
+                    "\"userId\":\"1\"," +
+                    "\"username\":\"userTest\"," +
                     "\"address\":\"Jl. Mermaidman\"," +
                     "\"usersImage\":\"https://freeimage.host/i/hiui1p\"," +
                     "\"city\":\"Ambon\"," +
                     "\"phone\":\"0877777773\"," +
-                    "\"role\":[\"SELLER\"]" +
+                    "\"role\":[\"SELLER\", \"BUYER\"]" +
                     "}")
             @RequestBody Map<String, Object> usersProfile){
         usersService.updateUsersProfile(Integer.valueOf(usersProfile.get("userId").toString()), usersProfile.get("username").toString(),
@@ -50,7 +50,7 @@ public class UsersController {
         response.put("phone", usersProfile.get("phone"));
         response.put("city", usersProfile.get("city"));
         response.put("usersImage", usersProfile.get("usersImage"));
-        return ResponseEntity.ok().body(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "users change password")

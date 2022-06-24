@@ -7,6 +7,7 @@ import com.binar.dummyproject.model.*;
 import com.binar.dummyproject.repository.RoleRepository;
 import com.binar.dummyproject.repository.UsersRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Tag(name = "Auth", description = "API for processing various operations with Auth entity")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")

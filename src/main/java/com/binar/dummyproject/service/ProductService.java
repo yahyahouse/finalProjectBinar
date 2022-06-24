@@ -1,5 +1,6 @@
 package com.binar.dummyproject.service;
 
+import com.binar.dummyproject.enumeration.ECategory;
 import com.binar.dummyproject.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,9 +11,9 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
-    void saveProduct (String productName, String productDescription, Integer productPrice, String address, String productImage, Integer userId);
+    void saveProduct (String productName, String productDescription, Integer productPrice, ECategory category, String productImage, Integer userId);
     Optional<Product> deleteProductById(Long productId);
-    void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String address, String productImage);
+    void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, ECategory category, String productImage);
     List<Product> getAllProduct();
     List<Product> getProductByProductId(Long productId);
     List<Product> getProductByUsername (String username);

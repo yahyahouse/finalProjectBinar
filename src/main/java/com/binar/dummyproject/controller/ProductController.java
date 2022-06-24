@@ -1,5 +1,6 @@
 package com.binar.dummyproject.controller;
 
+import com.binar.dummyproject.enumeration.ECategory;
 import com.binar.dummyproject.model.Product;
 import com.binar.dummyproject.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,8 +39,8 @@ public class ProductController{
                             "\"productName\":\"Jam tangan\"," +
                             "\"productDescription\":\"Ini untuk melihat waktu\"," +
                             "\"productPrice\":\"250000\"," +
-                            "\"address\":\"Jl. Rumah\"," +
-                            "\"productImage\":\"0\"," +
+                            "\"category\":\"HOBI\"," +
+                            "\"productImage\":\"https://freeimage.host/i/hbrKHF\"," +
                             "\"userId\":\"1\"" +
                             "}")
             )})
@@ -51,19 +52,19 @@ public class ProductController{
                     "\"productName\":\"Jam tangan\"," +
                     "\"productDescription\":\"Ini untuk melihat waktu\"," +
                     "\"productPrice\":\"250000\"," +
-                    "\"address\":\"Jl. Rumah\"," +
-                    "\"productImage\":\"0\"," +
+                    "\"category\":\"HOBI\"," +
+                    "\"productImage\":\"https://freeimage.host/i/hbrKHF\"," +
                     "\"userId\":\"1\"" +
                     "}")
             @RequestBody Map<String, Object> product){
     productService.saveProduct(product.get("productName").toString(), product.get("productDescription").toString(), Integer.valueOf(product.get("productPrice").toString()),
-            product.get("address").toString(), product.get("productImage").toString(), Integer.valueOf(product.get("userId").toString()));
+            ECategory.valueOf(product.get("category").toString()), product.get("productImage").toString(), Integer.valueOf(product.get("userId").toString()));
 
     Map<String, Object> responseBody = new HashMap<>();
     responseBody.put("productName", product.get("productName"));
     responseBody.put("productDescription", product.get("productDescription"));
     responseBody.put("productPrice", product.get("productPrice"));
-    responseBody.put("address", product.get("address"));
+    responseBody.put("category", product.get("category"));
     responseBody.put("productImage", product.get("productImage"));
     responseBody.put("userId", product.get("userId"));
 
@@ -74,19 +75,6 @@ public class ProductController{
                 .body(responseBody);
     }
 
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "Get all product",
-            content = {@Content(
-                    mediaType = "application/json",
-                    schema = @Schema(example = "{" +
-                            "\"productName\":\"Jam tangan\"," +
-                            "\"productDescription\":\"Ini untuk melihat waktu\"," +
-                            "\"productPrice\":\"250000\"," +
-                            "\"address\":\"Jl. Rumah\"," +
-                            "\"productImage\":\"0\"" +
-                            "}")
-            )})
-    })
     @Operation(summary = "Show all products by seller")
     @GetMapping("/seller/show-products")
     public ResponseEntity<List<Product>> allProduct(){
@@ -102,8 +90,8 @@ public class ProductController{
                                     "\"productName\":\"Jam tangan\"," +
                                     "\"productDescription\":\"Ini untuk melihat waktu\"," +
                                     "\"productPrice\":\"250000\"," +
-                                    "\"address\":\"Jl. Rumah\"," +
-                                    "\"productImage\":\"0\"," +
+                                    "\"category\":\"HOBI\"," +
+                                    "\"productImage\":\"https://freeimage.host/i/hbrKHF\"," +
                                     "\"userId\":\"1\"" +
                                     "}")
                     )})
@@ -116,20 +104,20 @@ public class ProductController{
                     "\"productName\":\"Jam tangan\"," +
                     "\"productDescription\":\"Ini untuk melihat waktu\"," +
                     "\"productPrice\":\"250000\"," +
-                    "\"address\":\"Jl. Rumah\"," +
-                    "\"productImage\":\"\"" +
+                    "\"category\":\"ELEKTRONIK\"," +
+                    "\"productImage\":\"https://freeimage.host/i/hbrKHF\"" +
                     "}")
             @RequestBody Map<String, Object> product){
 
         productService.updateProduct(Long.valueOf(product.get("productId").toString()), product.get("productName").toString(), product.get("productDescription").toString(),
-                Integer.valueOf(product.get("productPrice").toString()), product.get("address").toString(), product.get("productImage").toString());
+                Integer.valueOf(product.get("productPrice").toString()), ECategory.valueOf((product.get("category").toString())), product.get("productImage").toString());
 
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("productId", product.get("productId"));
         responseBody.put("productName", product.get("productName"));
         responseBody.put("productDescription", product.get("productDescription"));
         responseBody.put("productPrice", product.get("productPrice"));
-        responseBody.put("address", product.get("address"));
+        responseBody.put("category", product.get("category"));
         responseBody.put("productImage", product.get("productImage"));
 
         MultiValueMap<String, String> headers = new HttpHeaders();

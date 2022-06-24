@@ -14,7 +14,7 @@ public class Wishlist implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wishlist_id", nullable = false)
-    private Long id;
+    private Long wishlistId;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

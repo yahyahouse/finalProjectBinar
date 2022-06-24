@@ -60,4 +60,7 @@ public class Users implements Serializable {
     public Users() {
 
     }
+
+    public Users(String username, String email, String encode) {
+    }
 }

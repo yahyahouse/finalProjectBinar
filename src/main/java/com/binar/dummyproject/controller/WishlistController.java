@@ -17,10 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Tag(name = "Wishlist", description = "API for processing various operations with Wishlist entity")
 @RestController
@@ -71,5 +68,17 @@ public class WishlistController {
         }else {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(content = {
+                    @Content(examples = {})
+            }, responseCode = "202", description = "Success show wishlist by user id")
+    })
+    @Operation(summary = "Get wishlist by user id")
+    @GetMapping(value = "/get-wishlist-user/{userId}")
+    public ResponseEntity<List<Wishlist>> getProductByUserId(@PathVariable("userId") Integer userId){
+        wishlistService.getWishlistsByUserId(userId);
+        return ResponseEntity.accepted().body(wishlistService.getWishlistsByUserId(userId));
     }
 }

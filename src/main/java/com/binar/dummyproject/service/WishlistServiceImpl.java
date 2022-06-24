@@ -7,6 +7,7 @@ import com.binar.dummyproject.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,10 @@ public class WishlistServiceImpl implements WishlistService{
         Optional<Wishlist> delWishlist = wishlistRepository.findById(wishlistId);
         wishlistRepository.deleteWishlistByProductIdAndUserId(wishlistId);
         return delWishlist;
+    }
+
+    @Override
+    public List<Wishlist> getWishlistsByUserId(Integer userId) {
+        return wishlistRepository.getWishlistsByUserId(userId);
     }
 }

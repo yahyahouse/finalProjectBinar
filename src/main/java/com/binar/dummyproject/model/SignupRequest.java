@@ -1,15 +1,16 @@
-package com.binar.dummyproject.config;
+package com.binar.dummyproject.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import org.springframework.lang.Nullable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
-import javax.validation.constraints.*;
-
-@Setter
-@Getter
+@Data
 public class SignupRequest {
+
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;

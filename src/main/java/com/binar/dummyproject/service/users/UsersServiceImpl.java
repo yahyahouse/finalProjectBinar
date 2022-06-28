@@ -1,7 +1,7 @@
-package com.binar.dummyproject.service;
+package com.binar.dummyproject.service.users;
 
 import com.binar.dummyproject.model.Users;
-import com.binar.dummyproject.repository.UsersRepository;
+import com.binar.dummyproject.repository.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,8 +22,8 @@ public class UsersServiceImpl implements UsersService{
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void updateUsersProfile(Integer userId, String username, String address, String phone, String city, String usersImage) {
-        usersRepository.updateUser(username, address, phone, city, usersImage, userId);
+    public void updateUsersProfile(Integer userId, String username, String address, String phone, String city) {
+        usersRepository.updateUser(username, address, phone, city, userId);
     }
 
     @Override
@@ -45,4 +45,5 @@ public class UsersServiceImpl implements UsersService{
     public List<Users> getUsersByUserId(Integer userId) {
         return usersRepository.findUsersByUserId(userId);
     }
+
 }

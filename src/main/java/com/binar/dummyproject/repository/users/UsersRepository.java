@@ -1,4 +1,4 @@
-package com.binar.dummyproject.repository;
+package com.binar.dummyproject.repository.users;
 
 import com.binar.dummyproject.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,14 +16,13 @@ import java.util.List;
 public interface UsersRepository extends JpaRepository <Users, Integer> {
 
     @Modifying
-    @Query(value = "update users set username= :username, address= :address, phone= :phone, city= :city, users_image=:users_image " +
+    @Query(value = "update users set username= :username, address= :address, phone= :phone, city= :city " +
             "where user_id= :user_id", nativeQuery = true)
     void updateUser(
             @Param("username") String username,
             @Param("address") String address,
             @Param("phone") String noHP,
             @Param("city") String city,
-            @Param("users_image") String usersImage,
             @Param("user_id") Integer userId
     );
 

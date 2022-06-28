@@ -1,7 +1,7 @@
 package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.Product;
-import com.binar.dummyproject.service.ProductService;
+import com.binar.dummyproject.service.product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

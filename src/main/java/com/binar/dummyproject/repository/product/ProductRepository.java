@@ -1,4 +1,4 @@
-package com.binar.dummyproject.repository;
+package com.binar.dummyproject.repository.product;
 
 import com.binar.dummyproject.model.Product;
 import org.springframework.data.domain.Page;

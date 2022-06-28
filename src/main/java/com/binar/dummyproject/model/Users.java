@@ -26,9 +26,6 @@ public class Users implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "users_image")
-    private String usersImage;
-
     @Column(name = "address")
     private String address;
 
@@ -37,6 +34,13 @@ public class Users implements Serializable {
 
     @Column(name = "phone")
     private String phone;
+
+    @Column(name = "users_image_name")
+    private String usersImageName;
+
+    @Lob
+    @Column(name = "users_image_file")
+    private byte[] usersImageFile;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",

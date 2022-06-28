@@ -1,8 +1,10 @@
-package com.binar.dummyproject.service;
+package com.binar.dummyproject.service.product;
 
 import com.binar.dummyproject.model.Product;
+import com.binar.dummyproject.model.ProductImage;
 import com.binar.dummyproject.model.Users;
-import com.binar.dummyproject.repository.ProductRepository;
+import com.binar.dummyproject.repository.product.ProductImageRepository;
+import com.binar.dummyproject.repository.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,19 +19,35 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductImageRepository productImageRepository;
+
     @Override
-    public void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory, String productImage, Integer userId) {
+    public void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory,
+                            Integer userId, Long productId) {
         Product product = new Product();
+        product.setProductId(productId);
         product.setProductName(productName);
         product.setProductDescription(productDescription);
         product.setProductPrice(productPrice);
         product.setProductCategory(productCategory);
-        product.setProductImage(productImage);
         Users users = new Users();
         users.setUserId(userId);
         product.setUserId(users);
         productRepository.save(product);
     }
+
+    @Override
+    public void saveProdductImage(Long productId, String productImageName, byte[] productImageFile) {
+        ProductImage productImage = new ProductImage();
+        productImage.setProductImageName(productImageName);
+        productImage.setProductImageFile(productImageFile);
+        Product product = new Product();
+        product.setProductId(productId);
+        productImage.setProductId(product);
+        productImageRepository.save(productImage);
+    }
+
 
     @Override
     public Optional<Product> deleteProductById(Long id) {

@@ -1,4 +1,4 @@
-package com.binar.dummyproject.service;
+package com.binar.dummyproject.service.product;
 
 import com.binar.dummyproject.model.Product;
 import org.springframework.data.domain.Page;
@@ -10,7 +10,8 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
-    void saveProduct (String productName, String productDescription, Integer productPrice, String productCategory, String productImage, Integer userId);
+    void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory, Integer userId, Long productId);
+    void saveProdductImage(Long productId, String productImageName, byte[] productImageFile);
     Optional<Product> deleteProductById(Long productId);
     void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory, String productImage);
     List<Product> getAllProduct();

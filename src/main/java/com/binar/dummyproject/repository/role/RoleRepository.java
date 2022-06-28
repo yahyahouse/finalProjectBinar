@@ -1,4 +1,4 @@
-package com.binar.dummyproject.repository;
+package com.binar.dummyproject.repository.role;
 
 import com.binar.dummyproject.enumeration.ERole;
 import com.binar.dummyproject.model.Roles;

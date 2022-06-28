@@ -1,7 +1,7 @@
 package com.binar.dummyproject.service.product;
 
-import com.binar.dummyproject.model.Product;
-import com.binar.dummyproject.model.ProductImage;
+import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.product.ProductImage;
 import com.binar.dummyproject.model.Users;
 import com.binar.dummyproject.repository.product.ProductImageRepository;
 import com.binar.dummyproject.repository.product.ProductRepository;

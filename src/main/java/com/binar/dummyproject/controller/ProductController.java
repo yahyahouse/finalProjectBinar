@@ -1,9 +1,10 @@
 package com.binar.dummyproject.controller;
 
-import com.binar.dummyproject.model.Product;
-import com.binar.dummyproject.model.ProductImage;
+import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.product.ProductImage;
 import com.binar.dummyproject.model.UploadResponse;
 import com.binar.dummyproject.model.Users;
+import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.service.product.ProductService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -42,16 +43,17 @@ public class ProductController{
             "api_secret", "5KfEb789PD2SosIE12zXehlidwM"));
 
     @Operation(summary = "Add a new product by seller")
-    @PostMapping("/seller/add-product")
-    public ResponseEntity<Map<String, Object>> addProduct(@RequestParam("files") MultipartFile[] files,
-                                                          @RequestParam("product_name") String productName,
-                                                          @RequestParam("product_description") String productDescription,
-                                                          @RequestParam("product_price") Integer productPrice,
-                                                          @RequestParam("product_category") String productCategory,
-                                                          @RequestParam("userId") Integer userId,
-                                                          @RequestParam("productId") Long productId)
+    @PostMapping("/seller/add-product/{userId}")
+    public ResponseEntity<Map<String, Object>> addProduct(
+            @PathVariable("userId") Integer userId,
+            @RequestParam("files") MultipartFile[] files,
+            @RequestParam("product_name") String productName,
+            @RequestParam("product_description") String productDescription,
+            @RequestParam("product_price") Integer productPrice,
+            @RequestParam("product_category") String productCategory,
+            @RequestParam("productId") Long productId)
             throws IOException{
-        Map<String, Object> response = new HashMap<>();
+
         Integer size = files.length;
         String[] url = new String[size];
         for(int i = 0; i<size; i++){
@@ -78,14 +80,12 @@ public class ProductController{
             Users users = new Users();
             users.setUserId(userId);
             product.setUserId(users);
-            response.put("success", true);
-            response.put("responses", responses);
-            response.put("data", product);
             productService.saveProduct(productName, productDescription, productPrice, productCategory, userId, productId);
             productService.saveProdductImage(productId, files[i].getOriginalFilename(), files[i].getBytes());
 
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity(new ProductResponse(userId, productId, productName, productDescription,
+                productPrice, productCategory, Arrays.asList(url)), HttpStatus.OK);
     }
 
 

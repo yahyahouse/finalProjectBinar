@@ -1,4 +1,4 @@
-package com.binar.dummyproject.model;
+package com.binar.dummyproject.model.product;
 
 import lombok.Data;
 

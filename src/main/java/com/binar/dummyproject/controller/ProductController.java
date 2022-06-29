@@ -153,7 +153,7 @@ public class ProductController{
         return ResponseEntity.accepted().body(productService.getProductByUsername(username));
     }
 
-    
+    @Operation(summary = "Get product pagination")
     @GetMapping("/seller/get-product-page")
     public ResponseEntity<Map<String, Object>> getAllProductPage(
             @RequestParam(required = false) String productName,

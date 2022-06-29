@@ -1,6 +1,5 @@
 package com.binar.dummyproject.model.product;
 
-import com.binar.dummyproject.model.Users;
 import lombok.Data;
 
 import java.util.List;

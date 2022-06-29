@@ -61,7 +61,6 @@ public class ProductServiceImpl implements ProductService{
         productRepository.updateProduct(productName, productImage, productDescription, productPrice, productCategory, productId);
     }
 
-
     @Override
     public List<Product> getAllProduct() {
         return productRepository.findAll();

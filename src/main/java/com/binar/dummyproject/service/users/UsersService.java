@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 public interface UsersService {
-    public void updateUsersProfile (Integer userId, String username, String address, String phone, String city);
+    public void updateUsersProfile (Integer userId, String username, String address, String phone, String city, String usersImage);
     public Users getByUsername(String username);
     Optional<Users> getUser(SingularAttribute<AbstractPersistable, Serializable> id);
     public void updateUsersPassword(String password, Integer userId);

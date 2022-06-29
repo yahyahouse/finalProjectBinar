@@ -55,15 +55,21 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<Product> getAllProductPage(String productName, Pageable pageable) {
-        if (productName == null)
-            return productRepository.findAll(pageable);
-        else
-            return productRepository.findByProductName(productName, pageable);
+    public List<Product> getProductByProductId(Long productId){
+        return productRepository.findProductByProductId(productId);
     }
 
     @Override
-    public List<Product> getProductByProductId(Long productId){
-        return productRepository.findProductByProductId(productId);
+    public Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable) {
+        if (productName == null && productCategory == null){
+            return productRepository.findAll(pageable);
+        } else if (productName == null) {
+            return productRepository.findByProductCategoryContaining(productCategory, pageable);
+        } else if (productCategory == null) {
+            return productRepository.findByProductNameContaining(productName, pageable);
+        } else {
+            return productRepository.findByProductNameContainingAndProductCategoryContaining(productName, productCategory, pageable);
+        }
+
     }
 }

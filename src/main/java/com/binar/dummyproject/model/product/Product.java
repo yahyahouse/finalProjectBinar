@@ -1,7 +1,8 @@
-package com.binar.dummyproject.model;
+package com.binar.dummyproject.model.product;
 
 import javax.persistence.*;
 
+import com.binar.dummyproject.model.users.Users;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,15 +11,12 @@ import java.io.Serializable;
 @Entity(name = "product")
 public class Product implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id", nullable = false)
     private Long productId;
 
     @Column(name = "product_name")
     private String productName;
-
-    @Column(name = "product_image", unique = false, nullable = false, length = 100000)
-    private String productImage;
 
     @Column(name = "product_description")
     private String productDescription;
@@ -28,7 +26,6 @@ public class Product implements Serializable {
 
     @Column(name = "product_category")
     private String productCategory;
-
 
     @ManyToOne
     @JoinColumn(name = "user_id")

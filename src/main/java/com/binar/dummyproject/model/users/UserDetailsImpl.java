@@ -1,4 +1,4 @@
-package com.binar.dummyproject.model;
+package com.binar.dummyproject.model.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;

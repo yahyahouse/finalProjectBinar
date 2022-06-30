@@ -1,8 +1,8 @@
-package com.binar.dummyproject.service;
+package com.binar.dummyproject.service.users;
 
-import com.binar.dummyproject.model.UserDetailsImpl;
-import com.binar.dummyproject.model.Users;
-import com.binar.dummyproject.repository.UsersRepository;
+import com.binar.dummyproject.model.users.UserDetailsImpl;
+import com.binar.dummyproject.model.users.Users;
+import com.binar.dummyproject.repository.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
     UsersRepository usersRepository;
 

@@ -1,5 +1,6 @@
-package com.binar.dummyproject.model;
+package com.binar.dummyproject.model.users;
 
+import com.binar.dummyproject.model.Roles;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,9 +27,6 @@ public class Users implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "users_image")
-    private String usersImage;
-
     @Column(name = "address")
     private String address;
 
@@ -43,6 +41,13 @@ public class Users implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
+
+    @Column(name = "image_name")
+    private String imageName;
+
+
+    @Column(name ="url",columnDefinition="VARCHAR(10000)")
+    private String url;
 
     public Users(String username, String email, String password) {
         this.username = username;

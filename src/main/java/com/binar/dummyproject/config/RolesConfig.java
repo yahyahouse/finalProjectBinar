@@ -2,7 +2,7 @@ package com.binar.dummyproject.config;
 
 import com.binar.dummyproject.enumeration.ERole;
 import com.binar.dummyproject.model.Roles;
-import com.binar.dummyproject.repository.RoleRepository;
+import com.binar.dummyproject.repository.role.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;

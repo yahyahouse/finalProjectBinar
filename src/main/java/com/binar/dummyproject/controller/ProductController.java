@@ -147,6 +147,7 @@ public class ProductController{
     public ResponseEntity<Map<String, Object>> deleteProductById(
             @Parameter(description = "add id to delete the product item")
             @PathVariable("productId") Long productId){
+        productService.deleteProductImage(productId);
         Optional<Product> product = productService.deleteProductById(productId);
 
         Map<String, Object> response = new HashMap<>();

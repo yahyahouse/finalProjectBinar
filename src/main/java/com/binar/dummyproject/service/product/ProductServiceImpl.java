@@ -22,6 +22,9 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductImageRepository productImageRepository;
 
+    /*
+    Service untuk Product
+     */
     @Override
     public void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory,
                             Integer userId, Long productId) {
@@ -36,18 +39,6 @@ public class ProductServiceImpl implements ProductService{
         product.setUserId(users);
         productRepository.save(product);
     }
-
-    @Override
-    public void saveProdductImage(Long productId, String productImageName, byte[] productImageFile) {
-        ProductImage productImage = new ProductImage();
-        productImage.setProductImageName(productImageName);
-        productImage.setProductImageFile(productImageFile);
-        Product product = new Product();
-        product.setProductId(productId);
-        productImage.setProductId(product);
-        productImageRepository.save(productImage);
-    }
-
 
     @Override
     public Optional<Product> deleteProductById(Long id) {
@@ -82,5 +73,26 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public List<Product> getProductByProductId(Long productId){
         return productRepository.findProductByProductId(productId);
+    }
+
+    /*
+    Service untuk product image
+     */
+    @Override
+    public void saveProdductImage(Long productId, String productImageName, byte[] productImageFile) {
+        ProductImage productImage = new ProductImage();
+        productImage.setProductImageName(productImageName);
+        productImage.setProductImageFile(productImageFile);
+        Product product = new Product();
+        product.setProductId(productId);
+        productImage.setProductId(product);
+        productImageRepository.save(productImage);
+    }
+
+    @Override
+    public Optional<ProductImage> deleteProductImage(Long id) {
+        Optional<ProductImage> delImage = productImageRepository.findById(id);
+        productImageRepository.deleteProductImage(id);
+        return delImage;
     }
 }

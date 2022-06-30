@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Entity(name = "product")
 public class Product implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id", nullable = false)
     private Long productId;
 

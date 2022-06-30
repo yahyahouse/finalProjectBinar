@@ -1,6 +1,6 @@
 package com.binar.dummyproject.repository;
 
-import com.binar.dummyproject.model.Product;
+import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.Wishlist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

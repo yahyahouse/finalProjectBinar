@@ -1,6 +1,6 @@
 package com.binar.dummyproject.controller;
 
-import com.binar.dummyproject.model.Product;
+import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.Wishlist;
 import com.binar.dummyproject.service.WishlistService;
 import io.swagger.v3.oas.annotations.Operation;

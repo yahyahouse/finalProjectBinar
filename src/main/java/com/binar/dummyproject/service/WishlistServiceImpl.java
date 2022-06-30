@@ -1,8 +1,7 @@
 package com.binar.dummyproject.service;
-
-import com.binar.dummyproject.model.Product;
 import com.binar.dummyproject.model.Users;
 import com.binar.dummyproject.model.Wishlist;
+import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

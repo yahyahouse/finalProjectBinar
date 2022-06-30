@@ -22,9 +22,10 @@ public class UsersServiceImpl implements UsersService{
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void updateUsersProfile(Integer userId, String username, String address, String phone, String city, String usersImage) {
-        usersRepository.updateUser(username, address, phone, city, usersImage, userId);
+    public void updateUsersProfile(Integer userId, String username, String address, String phone, String city) {
+        usersRepository.updateUser(username, address, phone, city, userId);
     }
+
 
     @Override
     public Users getByUsername(String username) {
@@ -44,6 +45,11 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public List<Users> getUsersByUserId(Integer userId) {
         return usersRepository.findUsersByUserId(userId);
+    }
+
+    @Override
+    public Users findByUserId(Integer userId) {
+        return usersRepository.findByUserId(userId);
     }
 
 }

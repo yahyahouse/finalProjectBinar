@@ -11,12 +11,20 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
+    /*
+    Service untuk Product
+     */
     void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory, Integer userId, Long productId);
-    void saveProdductImage(Long productId, String productImageName, byte[] productImageFile);
     Optional<Product> deleteProductById(Long productId);
-    void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory, String productImage);
+    void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory);
     List<Product> getAllProduct();
     List<Product> getProductByProductId(Long productId);
     List<Product> getProductByUsername (String username);
-    Page<Product> getAllProductPage(String productName, Pageable pageable);
+    Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable);
+
+    /*
+    Service untuk productImage
+     */
+    void saveProdductImage(Long productId, String productImageName, byte[] productImageFile);
+    Optional<ProductImage> deleteProductImage(Long productId);
 }

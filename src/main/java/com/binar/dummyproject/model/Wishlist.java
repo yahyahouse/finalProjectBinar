@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Getter
 @Entity(name = "wishlist")
 public class Wishlist implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wishlist_id", nullable = false)

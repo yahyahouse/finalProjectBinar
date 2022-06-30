@@ -1,6 +1,5 @@
 package com.binar.dummyproject.service;
 
-import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.Wishlist;
 import org.springframework.stereotype.Service;
 
@@ -15,3 +14,4 @@ public interface WishlistService {
     List<Wishlist> getWishlistsByUserId (Integer userId);
 
 }
+

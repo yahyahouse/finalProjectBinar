@@ -22,6 +22,9 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductImageRepository productImageRepository;
 
+    /*
+    Service untuk Product
+     */
     @Override
     public void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory,
                             Integer userId, Long productId) {
@@ -38,18 +41,6 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void saveProdductImage(Long productId, String productImageName, byte[] productImageFile) {
-        ProductImage productImage = new ProductImage();
-        productImage.setProductImageName(productImageName);
-        productImage.setProductImageFile(productImageFile);
-        Product product = new Product();
-        product.setProductId(productId);
-        productImage.setProductId(product);
-        productImageRepository.save(productImage);
-    }
-
-
-    @Override
     public Optional<Product> deleteProductById(Long id) {
         Optional<Product> delProduct = productRepository.findById(id);
         productRepository.deleteProductById(id);
@@ -57,8 +48,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, String productCategory, String productImage) {
-        productRepository.updateProduct(productName, productImage, productDescription, productPrice, productCategory, productId);
+    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, String productCategory) {
+        productRepository.updateProduct(productName, productDescription, productPrice, productCategory, productId);
     }
 
     @Override
@@ -72,15 +63,43 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Page<Product> getAllProductPage(String productName, Pageable pageable) {
-        if (productName == null)
-            return productRepository.findAll(pageable);
-        else
-            return productRepository.findByProductName(productName, pageable);
+    public List<Product> getProductByProductId(Long productId){
+        return productRepository.findProductByProductId(productId);
     }
 
     @Override
-    public List<Product> getProductByProductId(Long productId){
-        return productRepository.findProductByProductId(productId);
+    public Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable) {
+        if (productName == null && productCategory == null){
+            return productRepository.findAll(pageable);
+        } else if (productName == null) {
+            return productRepository.findByProductCategoryContaining(productCategory, pageable);
+        } else if (productCategory == null) {
+            return productRepository.findByProductNameContaining(productName, pageable);
+        } else {
+            return productRepository.findByProductNameContainingAndProductCategoryContaining(productName, productCategory, pageable);
+        }
+
+    }
+
+
+    /*
+    Service untuk product image
+     */
+    @Override
+    public void saveProdductImage(Long productId, String productImageName, byte[] productImageFile) {
+        ProductImage productImage = new ProductImage();
+        productImage.setProductImageName(productImageName);
+        productImage.setProductImageFile(productImageFile);
+        Product product = new Product();
+        product.setProductId(productId);
+        productImage.setProductId(product);
+        productImageRepository.save(productImage);
+    }
+
+    @Override
+    public Optional<ProductImage> deleteProductImage(Long id) {
+        Optional<ProductImage> delImage = productImageRepository.findById(id);
+        productImageRepository.deleteProductImage(id);
+        return delImage;
     }
 }

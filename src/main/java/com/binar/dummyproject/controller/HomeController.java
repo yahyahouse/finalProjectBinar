@@ -1,7 +1,6 @@
 package com.binar.dummyproject.controller;
 
-import com.binar.dummyproject.model.UploadResponse;
-import com.binar.dummyproject.model.product.ProductResponse;
+import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.service.product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +21,7 @@ public class HomeController {
 
     @Operation(summary = "Show all products")
     @GetMapping("/show-products")
-    public ResponseEntity<ProductResponse> allProduct(){
+    public ResponseEntity<Product> allProduct(){
         return new ResponseEntity(productService.getAllProduct(), HttpStatus.OK);
     }
 }

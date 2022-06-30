@@ -4,22 +4,13 @@ import com.binar.dummyproject.model.UploadResponse;
 import com.binar.dummyproject.model.Users;
 import com.binar.dummyproject.repository.users.UsersRepository;
 import com.binar.dummyproject.service.users.UsersService;
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Tag(name = "Users", description = "API for processing various operations with Users entity")

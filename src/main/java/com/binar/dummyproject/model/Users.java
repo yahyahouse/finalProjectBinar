@@ -35,18 +35,22 @@ public class Users implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "users_image_name")
-    private String usersImageName;
-
-    @Lob
-    @Column(name = "users_image_file")
-    private byte[] usersImageFile;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
+
+    @Column(name = "image_name")
+    private String imageName;
+
+    @Lob
+    @Column(name = "image_file")
+    private byte[] imageFile;
+
+    @Column(name ="url")
+    private String url;
+
 
     public Users(String username, String email, String password) {
         this.username = username;

@@ -16,4 +16,5 @@ public interface UsersService {
     Optional<Users> getUser(SingularAttribute<AbstractPersistable, Serializable> id);
     public void updateUsersPassword(String password, Integer userId);
     public List<Users> getUsersByUserId (Integer userId);
+    Users findByUserId (Integer userId);
 }

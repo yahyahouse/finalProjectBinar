@@ -26,6 +26,7 @@ public interface UsersRepository extends JpaRepository <Users, Integer> {
             @Param("user_id") Integer userId
     );
 
+
     @Modifying
     @Query(value = "update users set password=:password where user_id=:user_id", nativeQuery = true)
     void updatePassword(
@@ -37,6 +38,7 @@ public interface UsersRepository extends JpaRepository <Users, Integer> {
     @Query(value = "select * from users u where u.user_id =:user_id", nativeQuery = true)
     List<Users> findUsersByUserId(@Param("user_id") Integer userId);
 
+    Users findByUserId(Integer userId);
     public Users findByUsername(String username);
     public Users findUsersByEmail(String email);
     Boolean existsByUsername(String username);

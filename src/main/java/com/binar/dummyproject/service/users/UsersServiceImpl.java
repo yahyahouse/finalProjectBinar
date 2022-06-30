@@ -26,6 +26,7 @@ public class UsersServiceImpl implements UsersService{
         usersRepository.updateUser(username, address, phone, city, userId);
     }
 
+
     @Override
     public Users getByUsername(String username) {
         return usersRepository.findByUsername(username);
@@ -44,6 +45,11 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public List<Users> getUsersByUserId(Integer userId) {
         return usersRepository.findUsersByUserId(userId);
+    }
+
+    @Override
+    public Users findByUserId(Integer userId) {
+        return usersRepository.findByUserId(userId);
     }
 
 }

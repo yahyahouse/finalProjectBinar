@@ -16,8 +16,8 @@ public class ProductImage {
     @Column(name = "product_image_name")
     private String productImageName;
 
-    @Column(name = "product_image_file")
-    private byte[] productImageFile;
+    @Column(name ="url",columnDefinition="VARCHAR(10000)")
+    private String url;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -27,8 +27,7 @@ public class ProductImage {
 
     }
 
-    public ProductImage(String productImageName, byte[] productImageFile){
+    public ProductImage(String productImageName){
         this.productImageName = productImageName;
-        this.productImageFile = productImageFile;
     }
 }

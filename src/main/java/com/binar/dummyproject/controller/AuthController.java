@@ -4,6 +4,8 @@ import com.binar.dummyproject.config.JwtUtils;
 import com.binar.dummyproject.config.SignupRequest;
 import com.binar.dummyproject.enumeration.ERole;
 import com.binar.dummyproject.model.*;
+import com.binar.dummyproject.model.users.UserDetailsImpl;
+import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.repository.role.RoleRepository;
 import com.binar.dummyproject.repository.users.UsersRepository;
 import io.swagger.v3.oas.annotations.media.Schema;

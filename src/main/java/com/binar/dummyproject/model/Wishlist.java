@@ -2,6 +2,7 @@ package com.binar.dummyproject.model;
 
 
 import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.users.Users;
 import lombok.Getter;
 import lombok.Setter;
 

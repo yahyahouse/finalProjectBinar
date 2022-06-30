@@ -25,6 +25,6 @@ public interface ProductService {
     /*
     Service untuk productImage
      */
-    void saveProdductImage(Long productId, String productImageName, byte[] productImageFile);
+    void saveProdductImage(Long productId, String productImageName, String url);
     Optional<ProductImage> deleteProductImage(Long productId);
 }

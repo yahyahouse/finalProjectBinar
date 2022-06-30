@@ -1,7 +1,7 @@
 package com.binar.dummyproject.service.users;
 
-import com.binar.dummyproject.model.UserDetailsImpl;
-import com.binar.dummyproject.model.Users;
+import com.binar.dummyproject.model.users.UserDetailsImpl;
+import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.repository.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

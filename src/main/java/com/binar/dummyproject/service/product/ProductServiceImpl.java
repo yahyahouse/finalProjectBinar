@@ -2,7 +2,7 @@ package com.binar.dummyproject.service.product;
 
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.product.ProductImage;
-import com.binar.dummyproject.model.Users;
+import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.repository.product.ProductImageRepository;
 import com.binar.dummyproject.repository.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,10 +86,10 @@ public class ProductServiceImpl implements ProductService{
     Service untuk product image
      */
     @Override
-    public void saveProdductImage(Long productId, String productImageName, byte[] productImageFile) {
+    public void saveProdductImage(Long productId, String productImageName, String url) {
         ProductImage productImage = new ProductImage();
         productImage.setProductImageName(productImageName);
-        productImage.setProductImageFile(productImageFile);
+        productImage.setUrl(url);
         Product product = new Product();
         product.setProductId(productId);
         productImage.setProductId(product);

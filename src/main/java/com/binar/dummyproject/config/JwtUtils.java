@@ -1,6 +1,6 @@
 package com.binar.dummyproject.config;
 
-import com.binar.dummyproject.model.UserDetailsImpl;
+import com.binar.dummyproject.model.users.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

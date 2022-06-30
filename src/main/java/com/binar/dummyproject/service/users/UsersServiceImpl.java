@@ -1,6 +1,6 @@
 package com.binar.dummyproject.service.users;
 
-import com.binar.dummyproject.model.Users;
+import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.repository.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -25,7 +25,6 @@ public class UsersServiceImpl implements UsersService{
     public void updateUsersProfile(Integer userId, String username, String address, String phone, String city) {
         usersRepository.updateUser(username, address, phone, city, userId);
     }
-
 
     @Override
     public Users getByUsername(String username) {

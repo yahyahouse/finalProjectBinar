@@ -3,7 +3,7 @@ package com.binar.dummyproject.controller;
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.product.ProductImage;
 import com.binar.dummyproject.model.UploadResponse;
-import com.binar.dummyproject.model.Users;
+import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.service.product.ProductService;
 import com.cloudinary.Cloudinary;
@@ -72,12 +72,12 @@ public class ProductController{
             product.setProductCategory(productCategory);
             ProductImage productImage = new ProductImage();
             productImage.setProductImageName(files[i].getOriginalFilename());
-            productImage.setProductImageFile(files[i].getBytes());
+            productImage.setUrl(url[i]);
             Users users = new Users();
             users.setUserId(userId);
             product.setUserId(users);
             productService.saveProduct(productName, productDescription, productPrice, productCategory, userId, productId);
-            productService.saveProdductImage(productId, files[i].getOriginalFilename(), files[i].getBytes());
+            productService.saveProdductImage(productId, files[i].getOriginalFilename(), url[i]);
 
         }
         return new ResponseEntity(new ProductResponse(userId, productId, productName, productDescription,
@@ -110,7 +110,7 @@ public class ProductController{
             UploadResponse responses = new UploadResponse();
             responses.setMessage("Success upload images");
             responses.setUrl(url);
-            productService.saveProdductImage(productId, files[i].getOriginalFilename(), files[i].getBytes());
+            productService.saveProdductImage(productId, files[i].getOriginalFilename(), url[i]);
             productService.updateProduct(productId, productName, productDescription, productPrice, productCategory);
         }
         return new ResponseEntity(new ProductResponse(userId, productId, productName, productDescription,

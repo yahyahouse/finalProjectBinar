@@ -1,16 +1,24 @@
 package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.UploadResponse;
-import com.binar.dummyproject.model.Users;
+import com.binar.dummyproject.model.users.Users;
+import com.binar.dummyproject.model.users.UsersResponse;
 import com.binar.dummyproject.repository.users.UsersRepository;
 import com.binar.dummyproject.service.users.UsersService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Map;
 
 @Tag(name = "Users", description = "API for processing various operations with Users entity")
@@ -32,7 +40,6 @@ public class UsersController {
             "cloud_name", "dummyprojectbinar",
             "api_key", "221166829538913",
             "api_secret", "5KfEb789PD2SosIE12zXehlidwM"));
-
 //    @Operation(summary = "Update users profile")
 //    @PutMapping("/public/update-users-profile")
 //    public ResponseEntity<Map<String, Object>> updateUsersProfile(
@@ -71,7 +78,7 @@ public class UsersController {
     @Operation(summary = "Update users profile")
     @PostMapping(value = "/public/update-users-profile",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<UploadResponse> updateUsersProfile(
+    public ResponseEntity<UsersResponse> updateUsersProfile(
             @RequestParam("userId")Integer userId,
             @RequestParam("username")String username,
             @RequestParam("users_image") MultipartFile usersImage,
@@ -98,11 +105,11 @@ public class UsersController {
         users.setAddress(address);
         users.setCity(city);
         users.setPhone(phone);
-        users.setUrl(String.valueOf(url));
-        users.setImageFile(usersImage.getBytes());
+        users.setUrl(url[0]);
         users.setImageName(usersImage.getOriginalFilename());
         usersRepository.save(users);
 
-        return new ResponseEntity(response, HttpStatus.OK);
+        return new ResponseEntity(new UsersResponse(userId, username, address,
+                city, phone, url), HttpStatus.OK);
     }
 }

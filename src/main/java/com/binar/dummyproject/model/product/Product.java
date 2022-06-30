@@ -2,7 +2,7 @@ package com.binar.dummyproject.model.product;
 
 import javax.persistence.*;
 
-import com.binar.dummyproject.model.Users;
+import com.binar.dummyproject.model.users.Users;
 import lombok.Data;
 
 import java.io.Serializable;

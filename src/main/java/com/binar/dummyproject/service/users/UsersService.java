@@ -1,6 +1,6 @@
 package com.binar.dummyproject.service.users;
 
-import com.binar.dummyproject.model.Users;
+import com.binar.dummyproject.model.users.Users;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.stereotype.Service;
 

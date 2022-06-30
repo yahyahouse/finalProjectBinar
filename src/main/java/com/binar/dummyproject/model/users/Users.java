@@ -1,5 +1,6 @@
-package com.binar.dummyproject.model;
+package com.binar.dummyproject.model.users;
 
+import com.binar.dummyproject.model.Roles;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,13 +45,9 @@ public class Users implements Serializable {
     @Column(name = "image_name")
     private String imageName;
 
-    @Lob
-    @Column(name = "image_file")
-    private byte[] imageFile;
 
-    @Column(name ="url")
+    @Column(name ="url",columnDefinition="VARCHAR(10000)")
     private String url;
-
 
     public Users(String username, String email, String password) {
         this.username = username;

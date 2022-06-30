@@ -16,7 +16,7 @@ public interface ProductService {
      */
     void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory, Integer userId, Long productId);
     Optional<Product> deleteProductById(Long productId);
-    void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory, String productImage);
+    void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory);
     List<Product> getAllProduct();
     List<Product> getProductByProductId(Long productId);
     List<Product> getProductByUsername (String username);

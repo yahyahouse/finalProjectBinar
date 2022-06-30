@@ -48,8 +48,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, String productCategory, String productImage) {
-        productRepository.updateProduct(productName, productImage, productDescription, productPrice, productCategory, productId);
+    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, String productCategory) {
+        productRepository.updateProduct(productName, productDescription, productPrice, productCategory, productId);
     }
 
     @Override

@@ -20,7 +20,7 @@ public interface ProductService {
     List<Product> getAllProduct();
     List<Product> getProductByProductId(Long productId);
     List<Product> getProductByUsername (String username);
-    Page<Product> getAllProductPage(String productName, Pageable pageable);
+    Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable);
 
     /*
     Service untuk productImage

@@ -40,6 +40,13 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
             " where u.username =:username", nativeQuery = true)
     List<Product> findProductByUsername (String username);
 
-    Page<Product> findByProductName(String productName, Pageable pageable);
+    Page<Product> findByProductNameContaining(String productName, Pageable pageable);
+
+    Page<Product> findByProductCategoryContaining(String productCategory, Pageable pageable);
+
+    Page<Product> findByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable);
+
+    Page<Product> findByProductNameContainingAndProductCategoryContaining(String productName, String productCategory, Pageable pageable);
+
 
 }

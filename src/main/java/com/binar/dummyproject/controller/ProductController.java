@@ -143,21 +143,21 @@ public class ProductController{
         return ResponseEntity.accepted().body(productService.getProductByUsername(username));
     }
 
-
-    @GetMapping("/seller/get-product-sortedBy-productName")
+    @GetMapping("/seller/get-product-page")
     public ResponseEntity<Map<String, Object>> getAllProductPage(
             @RequestParam(required = false) String productName,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "3") int size
+            @RequestParam(required = false) String productCategory,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size
     ) {
         try {
-            Pageable paging = PageRequest.of(page, size, Sort.by("productName"));
+            Pageable paging = PageRequest.of(page - 1, size, Sort.by("productPrice"));
 
-            Page<Product> productPage = productService.getAllProductPage(productName, paging);
+            Page<Product> productPage = productService.getAllProductPageByProductNameAndProductCategory(productName, productCategory, paging);
             List<Product> products = productPage.getContent();
             Map<String, Object> response = new HashMap<>();
             response.put("products", products);
-            response.put("currentPage", productPage.getNumber());
+            response.put("currentPage", productPage.getNumber() + 1);
             response.put("totalProducts", productPage.getTotalElements());
             response.put("totalPages", productPage.getTotalPages());
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -165,5 +165,4 @@ public class ProductController{
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

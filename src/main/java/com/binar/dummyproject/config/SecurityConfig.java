@@ -1,7 +1,7 @@
 package com.binar.dummyproject.config;
 
 import com.binar.dummyproject.enumeration.ERole;
-import com.binar.dummyproject.service.UserDetailsServiceImpl;
+import com.binar.dummyproject.service.users.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

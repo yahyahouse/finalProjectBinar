@@ -1,6 +1,6 @@
-package com.binar.dummyproject.repository;
+package com.binar.dummyproject.repository.product;
 
-import com.binar.dummyproject.model.Product;
+import com.binar.dummyproject.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

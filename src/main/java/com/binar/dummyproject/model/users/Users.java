@@ -42,8 +42,6 @@ public class Users implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Roles> roles = new HashSet<>();
 
-    @Column(name = "image_name")
-    private String imageName;
 
     @Column(name ="url",columnDefinition="VARCHAR(10000)")
     private String url;

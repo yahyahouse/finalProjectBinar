@@ -10,6 +10,9 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -119,19 +122,15 @@ public class ProductController{
 
     @Operation(summary = "Delete a product")
     @DeleteMapping("/seller/delete-product/{productId}")
-    public ResponseEntity<Map<String, Object>> deleteProductById(
+    public ResponseEntity<Product> deleteProductById(
             @Parameter(description = "add id to delete the product item")
             @PathVariable("productId") Long productId){
-        productService.deleteProductImage(productId);
-        Optional<Product> product = productService.deleteProductById(productId);
-
-        Map<String, Object> response = new HashMap<>();
-        if(product.isPresent()){
-            response.put("success", true);
-            response.put("deletedData", product);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        Optional<ProductImage> product = productService.deleteProductImage(productId);
+        Optional<Product> productImage = productService.deleteProductById(productId);
+        if(productImage.isPresent()){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 

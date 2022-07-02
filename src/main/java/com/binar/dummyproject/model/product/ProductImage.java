@@ -1,5 +1,7 @@
 package com.binar.dummyproject.model.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,7 +11,7 @@ import javax.persistence.*;
 public class ProductImage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_image_id")
     private Long productImageId;
 
@@ -19,7 +21,8 @@ public class ProductImage {
     @Column(name ="url",columnDefinition="VARCHAR(10000)")
     private String url;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinColumn(name = "product_id")
     private Product productId;
 

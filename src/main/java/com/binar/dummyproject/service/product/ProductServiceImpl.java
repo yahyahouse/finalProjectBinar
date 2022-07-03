@@ -58,6 +58,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
+    public List<Product> getAllProductProp() {
+        return productRepository.getAllProductProp();
+    }
+
+    @Override
     public List<Product> getProductByUsername(String username) {
         return productRepository.findProductByUsername(username);
     }
@@ -101,5 +106,10 @@ public class ProductServiceImpl implements ProductService{
         Optional<ProductImage> delImage = productImageRepository.findById(id);
         productImageRepository.deleteProductImage(id);
         return delImage;
+    }
+
+    @Override
+    public List<ProductImage> findAllData() {
+        return productImageRepository.findAll();
     }
 }

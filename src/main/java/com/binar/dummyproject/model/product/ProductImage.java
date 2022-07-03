@@ -1,13 +1,13 @@
 package com.binar.dummyproject.model.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "product_image")
 public class ProductImage {
 
     @Id
@@ -21,9 +21,9 @@ public class ProductImage {
     @Column(name ="url",columnDefinition="VARCHAR(10000)")
     private String url;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonBackReference
     private Product productId;
 
     public ProductImage(){

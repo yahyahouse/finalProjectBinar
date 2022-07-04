@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-@Entity(name = "Transaction")
-public class Transaction {
+@Entity(name = "Offer")
+public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transaction_id", nullable = false)
-    private Long transactionId;
+    @Column(name = "offer_id", nullable = false)
+    private Long offerId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -26,11 +26,11 @@ public class Transaction {
     @JoinColumn(name = "product_id")
     private Product productId;
 
-    @Column(name = "offer")
-    private Long offer;
+    @Column(name = "offer_price")
+    private Double offerPrice;
 
-    @Column(name = "status_transaction")
-    private String statusTransaction;
+    @Column(name = "offer_status")
+    private String offerStatus;
 
     @Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime localDateTime;

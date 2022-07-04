@@ -1,7 +1,7 @@
 package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.Wishlist;
-import com.binar.dummyproject.service.WishlistService;
+import com.binar.dummyproject.service.wishlist.WishlistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -1,4 +1,4 @@
-package com.binar.dummyproject.repository;
+package com.binar.dummyproject.repository.wishlist;
 
 import com.binar.dummyproject.model.Wishlist;
 import org.springframework.data.jpa.repository.JpaRepository;

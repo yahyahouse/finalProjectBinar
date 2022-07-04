@@ -23,6 +23,5 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Long
     @Query(value = "select distinct on (i.product_id) i.product_id, p.user_id, i.product_image_id, i.url, p.product_id, p.product_category, p.product_description, p.product_name, p.product_price " +
             "from product p join product_image i on i.product_id = p.product_id", nativeQuery = true)
     List<ProductImage> getAllData();
-
-
+    
 }

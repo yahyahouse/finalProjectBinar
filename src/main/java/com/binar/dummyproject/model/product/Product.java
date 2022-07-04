@@ -3,8 +3,10 @@ package com.binar.dummyproject.model.product;
 import javax.persistence.*;
 
 import com.binar.dummyproject.model.users.Users;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -40,6 +42,5 @@ public class Product implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users userId;
-
 }
 

@@ -1,15 +1,17 @@
 package com.binar.dummyproject.model.product;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "product_image")
 public class ProductImage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_image_id")
     private Long productImageId;
 
@@ -19,8 +21,9 @@ public class ProductImage {
     @Column(name ="url",columnDefinition="VARCHAR(10000)")
     private String url;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonBackReference
     private Product productId;
 
     public ProductImage(){

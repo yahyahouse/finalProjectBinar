@@ -17,6 +17,10 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository <Product, Long> {
 
     @Modifying
+    @Query(value = "select * from product p join product_image i on p.product_id=i.product_id", nativeQuery = true)
+    List<Product> getAllProductProp();
+
+    @Modifying
     @Query(value = "update product set product_name=:product_name, product_description=:product_description," +
             "product_price=:product_price, product_category=:product_category where product_id=:product_id", nativeQuery = true)
     void updateProduct (@Param("product_name") String productName,
@@ -33,7 +37,6 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
     @Query(value = "select * from product p where p.product_id =:product_id", nativeQuery = true)
     List<Product> findProductByProductId(@Param("product_id") Long productId);
 
-
     @Modifying
     @Query(value = "select * from product p " +
             "join users u on u.user_id = p.user_id" +
@@ -47,6 +50,5 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
     Page<Product> findByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable);
 
     Page<Product> findByProductNameContainingAndProductCategoryContaining(String productName, String productCategory, Pageable pageable);
-
 
 }

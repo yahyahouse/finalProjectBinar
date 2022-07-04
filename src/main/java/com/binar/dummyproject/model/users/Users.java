@@ -45,7 +45,6 @@ public class Users implements Serializable {
     @Column(name = "image_name")
     private String imageName;
 
-
     @Column(name ="url",columnDefinition="VARCHAR(10000)")
     private String url;
 

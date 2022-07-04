@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Tag(name = "Users", description = "API for processing various operations with Users entity")
@@ -109,7 +110,15 @@ public class UsersController {
         users.setImageName(usersImage.getOriginalFilename());
         usersRepository.save(users);
 
+
         return new ResponseEntity(new UsersResponse(userId, username, address,
                 city, phone, url), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get detail user")
+    @GetMapping(value = "/seller/get-product-seller/{userId}")
+    public ResponseEntity<List<Users>> getProductByUserId(@PathVariable("userId") Integer userId){
+        usersService.getUsersByUserId(userId);
+        return ResponseEntity.accepted().body(usersService.getUsersByUserId(userId));
     }
 }

@@ -18,6 +18,7 @@ public interface ProductService {
     Optional<Product> deleteProductById(Long productId);
     void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory);
     List<Product> getAllProduct();
+    List<Product> getAllProductProp();
     List<Product> getProductByProductId(Long productId);
     List<Product> getProductByUsername (String username);
     Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable);
@@ -27,4 +28,5 @@ public interface ProductService {
      */
     void saveProdductImage(Long productId, String productImageName, String url);
     Optional<ProductImage> deleteProductImage(Long productId);
+    List<ProductImage> findAllData();
 }

@@ -1,4 +1,4 @@
-package com.binar.dummyproject.service;
+package com.binar.dummyproject.service.wishlist;
 
 import com.binar.dummyproject.model.Wishlist;
 import org.springframework.stereotype.Service;

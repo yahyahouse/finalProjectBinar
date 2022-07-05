@@ -134,4 +134,11 @@ public class ProductController{
         }
     }
 
+    @Operation(summary = "Get product by seller username")
+    @GetMapping(value = "/seller/get-product-seller/{username}")
+    public ResponseEntity<List<Product>> getProductByUserId(@PathVariable("username") String username){
+        productService.getProductByUsername(username);
+        return ResponseEntity.accepted().body(productService.getProductByUsername(username));
+    }
+
 }

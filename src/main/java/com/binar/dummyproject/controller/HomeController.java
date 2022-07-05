@@ -37,14 +37,7 @@ public class HomeController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    @Operation(summary = "Get product by seller username")
-    @GetMapping(value = "/seller/get-product-seller/{username}")
-    public ResponseEntity<List<Product>> getProductByUserId(@PathVariable("username") String username){
-        productService.getProductByUsername(username);
-        return ResponseEntity.accepted().body(productService.getProductByUsername(username));
-    }
-
-    @GetMapping("/seller/get-product-page")
+    @GetMapping("/get-product-page")
     public ResponseEntity<Map<String, Object>> getAllProductPage(
             @RequestParam(required = false) String productName,
             @RequestParam(required = false) String productCategory,

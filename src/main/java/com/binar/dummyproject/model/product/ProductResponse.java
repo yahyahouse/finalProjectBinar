@@ -3,6 +3,7 @@ package com.binar.dummyproject.model.product;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class ProductResponse {
@@ -28,6 +29,20 @@ public class ProductResponse {
         this.productPrice = productPrice;
         this.productCategory = productCategory;
         this.url = url;
+
+    }
+
+    public ProductResponse(Product product){
+        this.userId = product.getUserId().getUserId();
+        this.productId = product.getProductId();
+        this.productName = product.getProductName();
+        this.productDescription = product.getProductDescription();
+        this.productPrice = product.getProductPrice();
+        this.productCategory = product.getProductCategory();
+        this.url = product.getProductImages()
+                .stream()
+                .map(ProductImage::getUrl)
+                .collect(Collectors.toList());
 
     }
 }

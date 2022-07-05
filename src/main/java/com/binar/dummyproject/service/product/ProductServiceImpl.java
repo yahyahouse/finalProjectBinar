@@ -86,6 +86,16 @@ public class ProductServiceImpl implements ProductService{
 
     }
 
+    @Override
+    public List<Product> getProductDetailByid(Long productId) {
+        return productRepository.getDetailProductById(productId);
+    }
+
+    @Override
+    public Product getProductById(Long productId) {
+        return productRepository.findProductById(productId);
+    }
+
 
     /*
     Service untuk product image

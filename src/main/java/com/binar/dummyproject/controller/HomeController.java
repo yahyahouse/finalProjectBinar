@@ -1,6 +1,7 @@
 package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.service.product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Tag(name = "Home", description = "API for access homepage")
 @RestController
@@ -28,13 +30,13 @@ public class HomeController {
 
     @Operation(summary = "Show all products")
     @GetMapping("/show-products")
-    public ResponseEntity<Map<String, Object>> allProduct(){
+    public ResponseEntity<ProductResponse> allProduct(){
         List<Map<String, Object>> result = new ArrayList<>();
         List<Product> product = productService.getAllProduct();
-        Map<String, Object> response = new HashMap<>();
-        response.put("data", product);
-        result.add(response);
-        return new ResponseEntity(result, HttpStatus.OK);
+        List<ProductResponse> productResponse =
+                product.stream().map(product1 -> new ProductResponse(product1)).collect(
+                        Collectors.toList());
+        return new ResponseEntity(productResponse, HttpStatus.OK);
     }
 
     @Operation(summary = "Show all products sort and filter")

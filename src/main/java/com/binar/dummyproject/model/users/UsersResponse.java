@@ -22,4 +22,13 @@ public class UsersResponse {
         this.url = url;
     }
 
+    public UsersResponse(Users users){
+        this.userId = users.getUserId();
+        this.username = users.getUsername();
+        this.address = users.getAddress();
+        this.city = users.getCity();
+        this.phone = users.getPhone();
+        this.url = users.getUrl().split(",");
+    }
+
 }

@@ -55,4 +55,12 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
 
     Page<Product> findByProductNameContainingAndProductCategoryContaining(String productName, String productCategory, Pageable pageable);
 
+    @Modifying
+    @Query(value="select p.user_id,p.product_id, p.product_category, p.product_description, p.product_name, p.product_price, i.url from product p " +
+            "join product_image i on i.product_id= p.product_id " +
+            "where p.product_id=:productId", nativeQuery = true)
+    List<Product> getDetailProductById (Long productId);
+
+    @Query(value = "select * from product p where p.product_id =:productId", nativeQuery = true)
+    Product findProductById(Long productId);
 }

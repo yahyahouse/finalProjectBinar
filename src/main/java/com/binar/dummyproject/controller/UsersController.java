@@ -116,7 +116,7 @@ public class UsersController {
     }
 
     @Operation(summary = "Get detail user")
-    @GetMapping(value = "/seller/get-product-seller/{userId}")
+    @GetMapping(value = "/get-user-detail/{userId}")
     public ResponseEntity<List<Users>> getProductByUserId(@PathVariable("userId") Integer userId){
         usersService.getUsersByUserId(userId);
         return ResponseEntity.accepted().body(usersService.getUsersByUserId(userId));

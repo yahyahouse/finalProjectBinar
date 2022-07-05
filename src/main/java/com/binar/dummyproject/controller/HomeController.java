@@ -37,6 +37,7 @@ public class HomeController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @Operation(summary = "Show all products sort and filter")
     @GetMapping("/get-product-page")
     public ResponseEntity<Map<String, Object>> getAllProductPage(
             @RequestParam(required = false) String productName,

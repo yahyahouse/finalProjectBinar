@@ -10,15 +10,8 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -132,6 +125,13 @@ public class ProductController{
         }else{
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+    }
+
+    @Operation(summary = "Get product by seller username")
+    @GetMapping(value = "/seller/get-product-seller/{username}")
+    public ResponseEntity<List<Product>> getProductByUserId(@PathVariable("username") String username){
+        productService.getProductByUsername(username);
+        return ResponseEntity.accepted().body(productService.getProductByUsername(username));
     }
 
 }

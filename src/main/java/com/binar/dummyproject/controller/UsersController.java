@@ -1,6 +1,7 @@
 package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.UploadResponse;
+import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.model.users.UsersResponse;
 import com.binar.dummyproject.repository.users.UsersRepository;
@@ -21,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Tag(name = "Users", description = "API for processing various operations with Users entity")
 @RestController
@@ -117,8 +119,11 @@ public class UsersController {
 
     @Operation(summary = "Get detail user")
     @GetMapping(value = "/get-user-detail/{userId}")
-    public ResponseEntity<List<Users>> getProductByUserId(@PathVariable("userId") Integer userId){
-        usersService.getUsersByUserId(userId);
-        return ResponseEntity.accepted().body(usersService.getUsersByUserId(userId));
+    public ResponseEntity<UsersResponse> getUsersDetailById(@PathVariable("userId") Integer userId){
+        List<Users> users = usersService.getUsersByUserId(userId);
+        List<UsersResponse> usersResponses =
+                users.stream().map(users1 -> new UsersResponse(users1))
+                        .collect(Collectors.toList());
+        return new ResponseEntity(usersResponses, HttpStatus.OK);
     }
 }

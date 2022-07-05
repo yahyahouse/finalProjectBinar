@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Tag(name = "Product", description = "API for processing various operations with Product entity")
 @RestController
@@ -37,7 +38,7 @@ public class ProductController{
 
     @Operation(summary = "Add a new product by seller")
     @PostMapping("/seller/add-product/{userId}")
-    public ResponseEntity<Map<String, Object>> addProduct(
+    public ResponseEntity<ProductResponse> addProduct(
             @PathVariable("userId") Integer userId,
             @RequestParam("files") MultipartFile[] files,
             @RequestParam("product_name") String productName,
@@ -83,7 +84,7 @@ public class ProductController{
 
     @Operation(summary = "Update existing product by seller")
     @PutMapping("/seller/update-product/{userId}/{productId}")
-    public ResponseEntity<Map<String, Object>> updateProduct (
+    public ResponseEntity<ProductResponse> updateProduct (
             @PathVariable("userId") Integer userId,
             @PathVariable("productId") Long productId,
             @RequestParam("files") MultipartFile[] files,
@@ -129,9 +130,23 @@ public class ProductController{
 
     @Operation(summary = "Get product by seller userId")
     @GetMapping(value = "/seller/get-product-seller/{userId}")
-    public ResponseEntity<List<Product>> getProductByUserId(@PathVariable("userId") Integer userId){
-        productService.getProductByUserId(userId);
-        return ResponseEntity.accepted().body(productService.getProductByUserId(userId));
+    public ResponseEntity<ProductResponse> getProductByUserId(@PathVariable("userId") Integer userId){
+        List<Product> product = productService.getProductByUserId(userId);
+        List<ProductResponse> productResponse =
+                product.stream().map(product1 -> new ProductResponse(product1)).collect(
+                        Collectors.toList());
+        return new ResponseEntity(productResponse, HttpStatus.OK);
     }
+
+    @Operation(summary = "Get detail product")
+    @GetMapping(value = "/buyer/get-detail-product/{productId}")
+    public ResponseEntity<ProductResponse> getDetailProductById(@PathVariable("productId") Long productId){
+        List<Product> products = productService.getProductDetailByid(productId);
+        List<ProductResponse> productResponse =
+                products.stream().map(product1 -> new ProductResponse(product1)).collect(
+                        Collectors.toList());
+        return new ResponseEntity(productResponse, HttpStatus.OK);
+    }
+
 
 }

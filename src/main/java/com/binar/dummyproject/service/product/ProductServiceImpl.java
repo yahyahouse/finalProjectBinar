@@ -63,13 +63,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getProductByUsername(String username) {
-        return productRepository.findProductByUsername(username);
+    public List<Product> getProductByProductId(Long productId){
+        return productRepository.findProductByProductId(productId);
     }
 
     @Override
-    public List<Product> getProductByProductId(Long productId){
-        return productRepository.findProductByProductId(productId);
+    public List<Product> getProductByUserId(Integer userId) {
+        return productRepository.findProductByUserId(userId);
     }
 
     @Override

@@ -14,5 +14,7 @@ public interface OfferService {
                    String offerStatus, LocalDateTime localDateTime);
     List<Offer> getOfferBySeller(Integer userId, Long productId);
 
-    List<Offer> getOfferByStatusDiminati(Long offerId);
+    List<Offer> getOfferDetailByOfferId(Long offerId);
+
+    List<Offer> getOfferByStatusDiminatiAndUserId(Long userId);
 }

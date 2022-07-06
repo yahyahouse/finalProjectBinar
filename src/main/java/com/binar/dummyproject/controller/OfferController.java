@@ -3,6 +3,7 @@ package com.binar.dummyproject.controller;
 import com.binar.dummyproject.model.offer.Offer;
 import com.binar.dummyproject.model.offer.OfferResponse;
 import com.binar.dummyproject.model.offer.OfferResponseNew;
+import com.binar.dummyproject.model.offer.OfferResponseProduct;
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.model.users.Users;
@@ -84,21 +85,21 @@ public class OfferController {
 
         return new ResponseEntity(new OfferResponse(offer), HttpStatus.OK);
     }
-//    @Operation(summary = "Get offer detail")
-//    @GetMapping(value = "/buyer/get-detail-product/{offerId}")
-//    public ResponseEntity<ProductResponse> getDetailProductById(@PathVariable("offerId") Long offerId){
-//        List<Offer> offer = productService.getProductDetailByid(offerId);
-//        List<ProductResponse> productResponse =
-//                products.stream().map(product1 -> new ProductResponse(product1)).collect(
-//                        Collectors.toList());
-//        return new ResponseEntity(productResponse, HttpStatus.OK);
-//    }
+    @Operation(summary = "Get list offer by user id")
+    @GetMapping(value = "/buyer/get-list-offer/{userId}")
+    public ResponseEntity<ProductResponse> getListOfferByUserId(@PathVariable("userId") Long userId){
+        List<Offer> offer = offerService.getOfferByStatusDiminatiAndUserId(userId);
+        List<OfferResponseProduct> OfferResponseProduct =
+                offer.stream().map(product1 -> new OfferResponseProduct(product1)).collect(
+                        Collectors.toList());
+        return new ResponseEntity(OfferResponseProduct, HttpStatus.OK);
+    }
 
     @Operation(summary = "Get detail product diminati by offerId")
     @GetMapping(value = "/buyer/get-diminati/{offerId}")
     public ResponseEntity<ProductResponse> getDetailOfferById(
             @PathVariable("offerId") Long offerId){
-        List<Offer> offer = offerService.getOfferByStatusDiminati(offerId);
+        List<Offer> offer = offerService.getOfferDetailByOfferId(offerId);
         List<OfferResponseNew> offerResponseNew =
                 offer.stream().map(offernew -> new OfferResponseNew(offernew))
                         .collect(Collectors.toList());

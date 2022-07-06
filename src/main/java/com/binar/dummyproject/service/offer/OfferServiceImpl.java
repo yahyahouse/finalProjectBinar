@@ -49,7 +49,12 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<Offer> getOfferByStatusDiminati(Long offerId) {
-        return offerRepository.getOfferByStatusDiminati(offerId);
+    public List<Offer> getOfferDetailByOfferId(Long offerId) {
+        return offerRepository.getOfferDetailByOfferId(offerId);
+    }
+
+    @Override
+    public List<Offer> getOfferByStatusDiminatiAndUserId(Long userId) {
+        return offerRepository.getOfferByStatusDiminatiAndUserId(userId);
     }
 }

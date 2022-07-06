@@ -147,10 +147,9 @@ public class ProductController{
     public ResponseEntity<ProductResponse> getDetailProductById(@PathVariable("productId") Long productId){
         List<Product> products = productService.getProductDetailByid(productId);
         List<ProductDetailResponse> productDetailResponses =
-                products.stream().map(product1 -> new ProductDetailResponse(product1)).collect(
+                products.stream().map(productnew -> new ProductDetailResponse(productnew)).collect(
                         Collectors.toList());
         return new ResponseEntity(productDetailResponses, HttpStatus.OK);
     }
-
 
 }

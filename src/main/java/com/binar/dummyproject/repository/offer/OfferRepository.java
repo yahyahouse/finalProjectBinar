@@ -19,4 +19,7 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
             "from offer inner join(select product_id from product where product.user_id =user_id)p on offer" +
                     ".product_id =p.product_id ", nativeQuery = true)
     List<Offer> getOfferBySeller(Integer userId, Long productId);
+
+    @Query(value = "select * from offer where offer_status like 'Diminati%' and offer_id=:offerId",nativeQuery = true)
+    List<Offer> getOfferByStatusDiminati(Long offerId);
 }

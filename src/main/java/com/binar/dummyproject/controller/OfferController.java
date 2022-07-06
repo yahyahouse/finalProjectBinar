@@ -2,8 +2,11 @@ package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.offer.Offer;
 import com.binar.dummyproject.model.offer.OfferResponse;
+import com.binar.dummyproject.model.offer.OfferResponseNew;
 import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.model.users.Users;
+import com.binar.dummyproject.model.users.UsersResponse;
 import com.binar.dummyproject.service.offer.OfferService;
 import com.binar.dummyproject.service.product.ProductService;
 import com.binar.dummyproject.service.users.UsersService;
@@ -80,5 +83,25 @@ public class OfferController {
         offerService.saveOffer(offerId, userId, productId, offerPrice, offerStatus, dateTime);
 
         return new ResponseEntity(new OfferResponse(offer), HttpStatus.OK);
+    }
+//    @Operation(summary = "Get offer detail")
+//    @GetMapping(value = "/buyer/get-detail-product/{offerId}")
+//    public ResponseEntity<ProductResponse> getDetailProductById(@PathVariable("offerId") Long offerId){
+//        List<Offer> offer = productService.getProductDetailByid(offerId);
+//        List<ProductResponse> productResponse =
+//                products.stream().map(product1 -> new ProductResponse(product1)).collect(
+//                        Collectors.toList());
+//        return new ResponseEntity(productResponse, HttpStatus.OK);
+//    }
+
+    @Operation(summary = "Get product diminati by userId")
+    @GetMapping(value = "/buyer/get-diminati/{offerId}")
+    public ResponseEntity<ProductResponse> getDetailOfferById(
+            @PathVariable("offerId") Long offerId){
+        List<Offer> offer = offerService.getOfferByStatusDiminati(offerId);
+        List<OfferResponseNew> offerResponseNew =
+                offer.stream().map(offernew -> new OfferResponseNew(offernew))
+                        .collect(Collectors.toList());
+        return new ResponseEntity(offerResponseNew, HttpStatus.OK);
     }
 }

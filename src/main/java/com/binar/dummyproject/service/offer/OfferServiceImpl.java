@@ -47,4 +47,9 @@ public class OfferServiceImpl implements OfferService {
     public List<Offer> getOfferBySeller(Integer userId, Long productId) {
         return offerRepository.getOfferBySeller(userId, productId);
     }
+
+    @Override
+    public List<Offer> getOfferByStatusDiminati(Long offerId) {
+        return offerRepository.getOfferByStatusDiminati(offerId);
+    }
 }

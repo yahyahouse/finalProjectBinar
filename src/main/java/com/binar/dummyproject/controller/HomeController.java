@@ -31,7 +31,6 @@ public class HomeController {
     @Operation(summary = "Show all products")
     @GetMapping("/show-products")
     public ResponseEntity<ProductResponse> allProduct(){
-        List<Map<String, Object>> result = new ArrayList<>();
         List<Product> product = productService.getAllProduct();
         List<ProductResponse> productResponse =
                 product.stream().map(product1 -> new ProductResponse(product1)).collect(
@@ -53,7 +52,10 @@ public class HomeController {
             Page<Product> productPage = productService.getAllProductPageByProductNameAndProductCategory(productName, productCategory, paging);
             List<Product> products = productPage.getContent();
             Map<String, Object> response = new HashMap<>();
-            response.put("products", products);
+            List<ProductResponse> productResponse =
+                    products.stream().map(product1 -> new ProductResponse(product1)).collect(
+                            Collectors.toList());
+            response.put("products", productResponse);
             response.put("currentPage", productPage.getNumber() + 1);
             response.put("totalProducts", productPage.getTotalElements());
             response.put("totalPages", productPage.getTotalPages());

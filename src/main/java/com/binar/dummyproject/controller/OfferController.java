@@ -94,7 +94,7 @@ public class OfferController {
 //        return new ResponseEntity(productResponse, HttpStatus.OK);
 //    }
 
-    @Operation(summary = "Get product diminati by userId")
+    @Operation(summary = "Get detail product diminati by offerId")
     @GetMapping(value = "/buyer/get-diminati/{offerId}")
     public ResponseEntity<ProductResponse> getDetailOfferById(
             @PathVariable("offerId") Long offerId){

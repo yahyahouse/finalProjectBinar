@@ -10,10 +10,10 @@ public class UsersResponse {
     private String address;
     private String city;
     private String phone;
-    private String[] url;
+    private String url;
 
     public UsersResponse(Integer userId, String username, String address, String city,
-                         String phone, String[] url) {
+                         String phone, String url) {
         this.userId = userId;
         this.username = username;
         this.address = address;
@@ -28,7 +28,7 @@ public class UsersResponse {
         this.address = users.getAddress();
         this.city = users.getCity();
         this.phone = users.getPhone();
-        this.url = users.getUrl().split(",");
+        this.url = users.getUrl();
     }
 
 }

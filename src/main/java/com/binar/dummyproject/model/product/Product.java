@@ -29,6 +29,9 @@ public class Product implements Serializable {
     @Column(name = "product_category")
     private String productCategory;
 
+    @Column(name = "product_status")
+    private String productStatus;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     @JsonManagedReference

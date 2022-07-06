@@ -1,7 +1,6 @@
 package com.binar.dummyproject.model;
 
 import lombok.Data;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

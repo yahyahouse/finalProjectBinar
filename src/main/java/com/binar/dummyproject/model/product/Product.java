@@ -1,10 +1,13 @@
-package com.binar.dummyproject.model;
+package com.binar.dummyproject.model.product;
 
 import javax.persistence.*;
 
+import com.binar.dummyproject.model.users.Users;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity(name = "product")
@@ -17,9 +20,6 @@ public class Product implements Serializable {
     @Column(name = "product_name")
     private String productName;
 
-    @Column(name = "product_image", unique = false, nullable = false, length = 100000)
-    private String productImage;
-
     @Column(name = "product_description")
     private String productDescription;
 
@@ -29,10 +29,13 @@ public class Product implements Serializable {
     @Column(name = "product_category")
     private String productCategory;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    @JsonManagedReference
+    private List<ProductImage> productImages;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users userId;
-
 }
 

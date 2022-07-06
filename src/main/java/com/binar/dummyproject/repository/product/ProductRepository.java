@@ -1,6 +1,6 @@
-package com.binar.dummyproject.repository;
+package com.binar.dummyproject.repository.product;
 
-import com.binar.dummyproject.model.Product;
+import com.binar.dummyproject.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,10 +17,13 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository <Product, Long> {
 
     @Modifying
-    @Query(value = "update product set product_name=:product_name, product_image=:product_image, product_description=:product_description," +
+    @Query(value = "select * from product p join product_image i on p.product_id=i.product_id", nativeQuery = true)
+    List<Product> getAllProductProp();
+
+    @Modifying
+    @Query(value = "update product set product_name=:product_name, product_description=:product_description," +
             "product_price=:product_price, product_category=:product_category where product_id=:product_id", nativeQuery = true)
     void updateProduct (@Param("product_name") String productName,
-                        @Param("product_image") String productImage,
                         @Param("product_description") String productDescription,
                         @Param("product_price") Integer productPrice,
                         @Param("product_category") String productCategory,
@@ -32,8 +35,11 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
 
     @Modifying
     @Query(value = "select * from product p where p.product_id =:product_id", nativeQuery = true)
-    List<Product> findProductByProductId(@Param("product_id") Long product_id);
+    List<Product> findProductByProductId(@Param("product_id") Long productId);
 
+    @Modifying
+    @Query(value = "select * from product p where p.user_id=:user_id", nativeQuery = true)
+    List<Product> findProductByUserId (@Param("user_id") Integer userId);
 
     @Modifying
     @Query(value = "select * from product p " +
@@ -49,4 +55,12 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
 
     Page<Product> findByProductNameContainingAndProductCategoryContaining(String productName, String productCategory, Pageable pageable);
 
+    @Modifying
+    @Query(value="select p.user_id,p.product_id, p.product_category, p.product_description, p.product_name, p.product_price, i.url from product p " +
+            "join product_image i on i.product_id= p.product_id " +
+            "where p.product_id=:productId", nativeQuery = true)
+    List<Product> getDetailProductById (Long productId);
+
+    @Query(value = "select * from product p where p.product_id =:productId", nativeQuery = true)
+    Product findProductById(Long productId);
 }

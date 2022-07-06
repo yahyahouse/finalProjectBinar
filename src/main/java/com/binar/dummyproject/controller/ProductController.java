@@ -1,6 +1,7 @@
 package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.product.ProductDetailResponse;
 import com.binar.dummyproject.model.product.ProductImage;
 import com.binar.dummyproject.model.UploadResponse;
 import com.binar.dummyproject.model.users.Users;
@@ -45,6 +46,7 @@ public class ProductController{
             @RequestParam("product_description") String productDescription,
             @RequestParam("product_price") Integer productPrice,
             @RequestParam("product_category") String productCategory,
+            @RequestParam(defaultValue = "Available", required = false) String productStatus,
             @RequestParam("productId") Long productId)
             throws IOException{
         Integer size = files.length;
@@ -73,12 +75,12 @@ public class ProductController{
             Users users = new Users();
             users.setUserId(userId);
             product.setUserId(users);
-            productService.saveProduct(productName, productDescription, productPrice, productCategory, userId, productId);
+            productService.saveProduct(productName, productDescription, productPrice, productCategory, productStatus, userId, productId);
             productService.saveProdductImage(productId, files[i].getOriginalFilename(), url[i]);
 
         }
         return new ResponseEntity(new ProductResponse(userId, productId, productName, productDescription,
-                productPrice, productCategory, Arrays.asList(url)), HttpStatus.OK);
+                productPrice, productCategory, productStatus, Arrays.asList(url)), HttpStatus.OK);
     }
 
 
@@ -90,6 +92,7 @@ public class ProductController{
             @RequestParam("files") MultipartFile[] files,
             @RequestParam("product_name") String productName,
             @RequestParam("product_description") String productDescription,
+            @RequestParam("product_status") String productStatus,
             @RequestParam("product_price") Integer productPrice,
             @RequestParam("product_category") String productCategory)
         throws IOException{
@@ -108,10 +111,11 @@ public class ProductController{
             responses.setMessage("Success upload images");
             responses.setUrl(url);
             productService.saveProdductImage(productId, files[i].getOriginalFilename(), url[i]);
-            productService.updateProduct(productId, productName, productDescription, productPrice, productCategory);
+            productService.updateProduct(productId, productName, productDescription, productPrice, productCategory,
+                    productStatus);
         }
         return new ResponseEntity(new ProductResponse(userId, productId, productName, productDescription,
-                productPrice, productCategory, Arrays.asList(url)), HttpStatus.OK);
+                productPrice, productCategory, productStatus, Arrays.asList(url)), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete a product")
@@ -142,10 +146,10 @@ public class ProductController{
     @GetMapping(value = "/buyer/get-detail-product/{productId}")
     public ResponseEntity<ProductResponse> getDetailProductById(@PathVariable("productId") Long productId){
         List<Product> products = productService.getProductDetailByid(productId);
-        List<ProductResponse> productResponse =
-                products.stream().map(product1 -> new ProductResponse(product1)).collect(
+        List<ProductDetailResponse> productDetailResponses =
+                products.stream().map(product1 -> new ProductDetailResponse(product1)).collect(
                         Collectors.toList());
-        return new ResponseEntity(productResponse, HttpStatus.OK);
+        return new ResponseEntity(productDetailResponses, HttpStatus.OK);
     }
 
 

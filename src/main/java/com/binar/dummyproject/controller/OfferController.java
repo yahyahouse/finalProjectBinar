@@ -65,7 +65,7 @@ public class OfferController {
             @PathVariable("productId") Long productId,
             @RequestParam("offerId") Long offerId,
             @RequestParam("offer_price") Double offerPrice,
-            @RequestParam("offer_status") String offerStatus) {
+            @RequestParam(defaultValue = "Diminati", required = false) String offerStatus) {
 
         Users users = usersService.findByUserId(userId);
         Product product = productService.getProductById(productId);

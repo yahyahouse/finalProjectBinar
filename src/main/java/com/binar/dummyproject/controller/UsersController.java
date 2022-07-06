@@ -109,12 +109,11 @@ public class UsersController {
         users.setCity(city);
         users.setPhone(phone);
         users.setUrl(url[0]);
-        users.setImageName(usersImage.getOriginalFilename());
         usersRepository.save(users);
 
 
         return new ResponseEntity(new UsersResponse(userId, username, address,
-                city, phone, url), HttpStatus.OK);
+                city, phone, url[0]), HttpStatus.OK);
     }
 
     @Operation(summary = "Get detail user")

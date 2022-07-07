@@ -31,4 +31,5 @@ public interface ProductService {
     void saveProdductImage(Long productId, String productImageName, String url);
     Optional<ProductImage> deleteProductImage(Long productId);
     List<ProductImage> findAllData();
+
 }

@@ -2,6 +2,7 @@ package com.binar.dummyproject.repository.offer;
 
 import com.binar.dummyproject.model.offer.Offer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,4 +20,14 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
             "from offer inner join(select product_id from product where product.user_id =user_id)p on offer" +
                     ".product_id =p.product_id; ", nativeQuery = true)
     List<Offer> getOfferBySeller(Integer userId, Long productId);
+
+    @Modifying
+    @Query("update Offer set offerStatus ='Accepted' where offerId =:offerId")
+    void statusAccepted(Long offerId);
+
+    @Modifying
+    @Query("update Offer set offerStatus ='Rejected' where offerId =:offerId")
+    void statusRejected(Long offerId);
+
+
 }

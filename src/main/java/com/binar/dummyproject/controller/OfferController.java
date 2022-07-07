@@ -81,4 +81,28 @@ public class OfferController {
 
         return new ResponseEntity(new OfferResponse(offer), HttpStatus.OK);
     }
+
+    @PutMapping("/seller/accepted-status/{offerId}")
+    public ResponseEntity<OfferResponse> accStatus(
+            @PathVariable("offerId") Long offerId){
+        offerService.acceptedStatus(offerId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PutMapping("/seller/rejected-status/{offerId}")
+    public ResponseEntity<OfferResponse> rejectStatus(
+            @PathVariable("offerId") Long offerId){
+        offerService.rejectedStatus(offerId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+//    public ResponseEntity<OfferResponse> updateOfferStatus(
+//            @PathVariable("user_id")Integer userId,
+//            @PathVariable("product_id")Long productId,
+//            @PathVariable("offer_id")Long offerId,
+//            @RequestParam("offer_status") String offerStatus) {
+//
+//    }
+
 }

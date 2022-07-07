@@ -64,4 +64,9 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
 
     @Query(value = "select * from product p where p.product_id =:productId", nativeQuery = true)
     Product findProductById(Long productId);
+
+    @Modifying
+    @Query(value = "update product set product_status ='Sold' where product_id=:productId and user_id=:userId", nativeQuery = true)
+    void updateProductStatusSold (Long productId, Integer userId);
+
 }

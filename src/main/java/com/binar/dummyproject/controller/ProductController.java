@@ -37,6 +37,7 @@ public class ProductController{
             "api_key", "221166829538913",
             "api_secret", "5KfEb789PD2SosIE12zXehlidwM"));
 
+    @CrossOrigin(origins = "https://dummyprojectbinar.herokuapp.com", maxAge = 3600)
     @Operation(summary = "Add a new product by seller")
     @PostMapping("/seller/add-product/{userId}")
     public ResponseEntity<ProductResponse> addProduct(
@@ -83,7 +84,7 @@ public class ProductController{
                 productPrice, productCategory, productStatus, Arrays.asList(url)), HttpStatus.OK);
     }
 
-
+    @CrossOrigin(origins = "https://dummyprojectbinar.herokuapp.com", maxAge = 3600)
     @Operation(summary = "Update existing product by seller")
     @PutMapping("/seller/update-product/{userId}/{productId}")
     public ResponseEntity<ProductResponse> updateProduct (
@@ -150,6 +151,15 @@ public class ProductController{
                 products.stream().map(product1 -> new ProductDetailResponse(product1)).collect(
                         Collectors.toList());
         return new ResponseEntity(productDetailResponses, HttpStatus.OK);
+    }
+
+    @Operation(summary = "update product status to Sold")
+    @PutMapping(value = "/seller/product-status-sold/{userId}/{productId}")
+    public ResponseEntity<Map<String , Object>> getUpdateProductStatusSold(
+            @PathVariable("productId") Long productId,
+            @PathVariable("userId") Integer userId){
+        productService.updateStatusProductSold(productId, userId);
+        return new ResponseEntity("Status barang sudah berubah menjadi sold", HttpStatus.OK);
     }
 
 

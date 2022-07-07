@@ -98,6 +98,11 @@ public class ProductServiceImpl implements ProductService{
         return productRepository.findProductById(productId);
     }
 
+    @Override
+    public void updateStatusProductSold(Long productId, Integer userId) {
+        productRepository.updateProductStatusSold(productId, userId);
+    }
+
 
     /*
     Service untuk product image

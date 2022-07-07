@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface OfferService {
@@ -14,7 +15,14 @@ public interface OfferService {
                    String offerStatus, LocalDateTime localDateTime);
     List<Offer> getOfferBySeller(Integer userId, Long productId);
 
-    List<Offer> getOfferDetailByOfferId(Long offerId);
+    List<Offer> getOfferByStatusDiminati(Long offerId);
 
-    List<Offer> getOfferByStatusDiminatiAndUserId(Long userId);
+    List<Offer> getOfferByOfferStatusAndProductSold(Integer userId);
+
+    void acceptedStatus(Long offerId);
+    Optional<Offer> findOfferById(Long offerId);
+    void rejectedStatus(Long offerId);
+
+
+
 }

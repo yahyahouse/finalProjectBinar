@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -49,12 +50,29 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<Offer> getOfferDetailByOfferId(Long offerId) {
-        return offerRepository.getOfferDetailByOfferId(offerId);
+    public List<Offer> getOfferByStatusDiminati(Long offerId) {
+        return offerRepository.getOfferByStatusDiminati(offerId);
     }
 
     @Override
-    public List<Offer> getOfferByStatusDiminatiAndUserId(Long userId) {
-        return offerRepository.getOfferByStatusDiminatiAndUserId(userId);
+    public List<Offer> getOfferByOfferStatusAndProductSold(Integer userId) {
+        return offerRepository.getOfferByOfferStatusAndProductSold(userId);
     }
+
+    @Override
+    public void acceptedStatus(Long offerId) {
+        offerRepository.statusAccepted(offerId);
+    }
+
+    @Override
+    public Optional<Offer> findOfferById(Long offerId) {
+        return offerRepository.findById(offerId);
+    }
+
+    @Override
+    public void rejectedStatus(Long offerId) {
+        offerRepository.statusRejected(offerId);
+    }
+
+
 }

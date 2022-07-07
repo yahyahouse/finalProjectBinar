@@ -24,6 +24,7 @@ public interface ProductService {
     Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable);
     List<Product> getProductDetailByid (Long productId);
     Product getProductById(Long productId);
+    void updateStatusProductSold (Long productId, Integer userId);
 
     /*
     Service untuk productImage

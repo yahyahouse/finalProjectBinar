@@ -2,7 +2,9 @@ package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.offer.Offer;
 import com.binar.dummyproject.model.offer.OfferResponse;
+import com.binar.dummyproject.model.offer.OfferResponseNew;
 import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.service.offer.OfferService;
 import com.binar.dummyproject.service.product.ProductService;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Tag(name = "Offer", description = "API for processing various operations with Offer entity")
@@ -39,23 +40,23 @@ public class OfferController {
             @PathVariable("userId") Integer userId
     ){
         List<Offer> offers = offerService.getAllOfferByUser(userId);
-        List<OfferResponse> offerResponses =
-                offers.stream().map(offer -> new OfferResponse(offer)).collect(
+        List<OfferResponseNew> offerResponsesNew =
+                offers.stream().map(offer -> new OfferResponseNew(offer)).collect(
                         Collectors.toList());
-        return new ResponseEntity(offerResponses, HttpStatus.OK);
+        return new ResponseEntity(offerResponsesNew, HttpStatus.OK);
     }
 
     @Operation(summary = "Seller get all offer")
     @GetMapping("/seller/get-offer-history/{userId}")
-    public ResponseEntity<OfferResponse> getOfferBySeller(
+    public ResponseEntity<OfferResponseNew> getOfferBySeller(
             @PathVariable("userId") Integer userId,
             Long productId
     ){
         List<Offer> offers = offerService.getOfferBySeller(userId, productId);
-        List<OfferResponse> offerResponses =
-                offers.stream().map(offer -> new OfferResponse(offer)).collect(
+        List<OfferResponseNew> offerResponsesNew =
+                offers.stream().map(offer -> new OfferResponseNew(offer)).collect(
                         Collectors.toList());
-        return new ResponseEntity(offerResponses, HttpStatus.OK);
+        return new ResponseEntity(offerResponsesNew, HttpStatus.OK);
     }
 
     @Operation(summary = "Buyer add offer to product")
@@ -81,4 +82,43 @@ public class OfferController {
 
         return new ResponseEntity(new OfferResponse(offer), HttpStatus.OK);
     }
+
+    @Operation(summary = "Get product diminati by userId")
+    @GetMapping(value = "/buyer/get-diminati/{offerId}")
+    public ResponseEntity<ProductResponse> getDetailOfferById(
+            @PathVariable("offerId") Long offerId){
+        List<Offer> offer = offerService.getOfferByStatusDiminati(offerId);
+        List<OfferResponseNew> offerResponseNew =
+                offer.stream().map(offernew -> new OfferResponseNew(offernew))
+                        .collect(Collectors.toList());
+        return new ResponseEntity(offerResponseNew, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get product and offer with 'sold' status by Id")
+    @GetMapping(value = "/seller/get-product-sold/{userId}")
+    public ResponseEntity<ProductResponse> getOfferandProductSold(
+            @PathVariable("userId") Integer userId){
+        List<Offer> offer = offerService.getOfferByOfferStatusAndProductSold(userId);
+        List<OfferResponseNew> offerResponseNew =
+                offer.stream().map(offernew -> new OfferResponseNew(offernew))
+                        .collect(Collectors.toList());
+        return new ResponseEntity(offerResponseNew, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Update transaction status to accept the offer")
+    @PutMapping("/seller/accepted-status/{offerId}")
+    public ResponseEntity<OfferResponse> accStatus(
+            @PathVariable("offerId") Long offerId){
+        offerService.acceptedStatus(offerId);
+        return new ResponseEntity("Tawaran berhasil diterima!",HttpStatus.OK);
+    }
+
+    @Operation(summary = "Update transaction status to reject the offer")
+    @PutMapping("/seller/rejected-status/{offerId}")
+    public ResponseEntity<OfferResponse> rejectStatus(
+            @PathVariable("offerId") Long offerId){
+        offerService.rejectedStatus(offerId);
+        return new ResponseEntity("Tawaran ditolak!",HttpStatus.OK);
+    }
+
 }

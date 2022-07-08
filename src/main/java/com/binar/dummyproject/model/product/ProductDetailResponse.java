@@ -17,11 +17,17 @@ public class ProductDetailResponse {
     private Integer productPrice;
     private String productCategory;
     private String productStatus;
-    private List<String> url;
+    private String url;
+    private String url2;
+    private String url3;
+    private String url4;
 
     public ProductDetailResponse(){
 
     }
+
+
+
     public ProductDetailResponse(Product product){
         this.userId = product.getUserId().getUserId();
         this.city = product.getUserId().getCity();
@@ -32,10 +38,11 @@ public class ProductDetailResponse {
         this.productPrice = product.getProductPrice();
         this.productCategory = product.getProductCategory();
         this.productStatus = product.getProductStatus();
-        this.url = product.getProductImages()
-                .stream()
-                .map(ProductImage::getUrl)
-                .collect(Collectors.toList());
+        this.url = product.getUrl();
+        this.url2 = product.getUrl2();
+        this.url3 = product.getUrl3();
+        this.url4 = product.getUrl4();
+
     }
 
 }

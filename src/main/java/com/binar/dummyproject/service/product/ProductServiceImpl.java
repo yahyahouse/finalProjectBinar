@@ -27,14 +27,17 @@ public class ProductServiceImpl implements ProductService{
      */
     @Override
     public void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory,
-                            String productStatus, Integer userId, Long productId) {
+                            String productStatus, Integer userId, String url, String url2, String url3, String url4) {
         Product product = new Product();
-        product.setProductId(productId);
         product.setProductName(productName);
         product.setProductDescription(productDescription);
         product.setProductPrice(productPrice);
         product.setProductCategory(productCategory);
         product.setProductStatus(productStatus);
+        product.setUrl(url);
+        product.setUrl2(url2);
+        product.setUrl3(url3);
+        product.setUrl4(url4);
         Users users = new Users();
         users.setUserId(userId);
         product.setUserId(users);
@@ -89,7 +92,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getProductDetailByid(Long productId) {
+    public Product getProductDetailByid(Long productId) {
         return productRepository.getDetailProductById(productId);
     }
 

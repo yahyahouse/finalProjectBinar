@@ -100,7 +100,7 @@ public class UsersController {
         response.setMessage("Upload successful");
         String[] url = new String[1];
         url[0] = result.get("url").toString();
-        response.setUrl(url);
+        response.setUrl(url[0]);
 
         Users users = usersService.findByUserId(userId);
         users.getPassword();

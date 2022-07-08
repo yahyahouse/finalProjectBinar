@@ -4,8 +4,10 @@ import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.product.ProductDetailResponse;
 import com.binar.dummyproject.model.product.ProductImage;
 import com.binar.dummyproject.model.UploadResponse;
+import com.binar.dummyproject.model.users.UserDetailsImpl;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.model.product.ProductResponse;
+import com.binar.dummyproject.repository.product.ProductRepository;
 import com.binar.dummyproject.service.product.ProductService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -32,6 +34,9 @@ public class ProductController{
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ProductRepository productRepository;
+
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dummyprojectbinar",
             "api_key", "221166829538913",
@@ -47,12 +52,11 @@ public class ProductController{
             @RequestParam("product_description") String productDescription,
             @RequestParam("product_price") Integer productPrice,
             @RequestParam("product_category") String productCategory,
-            @RequestParam(defaultValue = "Available", required = false) String productStatus,
-            @RequestParam("productId") Long productId)
+            @RequestParam(defaultValue = "Available", required = false) String productStatus)
             throws IOException{
         Integer size = files.length;
         String[] url = new String[size];
-        for(int i = 0; i<size; i++){
+        for(int i = 0; i<size; i++) {
             File file = new File(files[i].getOriginalFilename());
             FileOutputStream os = new FileOutputStream(file);
             os.write(files[i].getBytes());
@@ -60,28 +64,30 @@ public class ProductController{
             Map result = cloudinary.uploader().upload(file,
                     ObjectUtils.asMap("product_image_id", "product_name"));
             url[i] = result.get("url").toString();
+        }
             UploadResponse responses = new UploadResponse();
             responses.setMessage("Success upload images");
-            responses.setUrl(url);
+            responses.setUrl(url[0]);
 
             Product product = new Product();
-            product.setProductId(productId);
             product.setProductName(productName);
             product.setProductDescription(productDescription);
             product.setProductPrice(productPrice);
             product.setProductCategory(productCategory);
-            ProductImage productImage = new ProductImage();
-            productImage.setProductImageName(files[i].getOriginalFilename());
-            productImage.setUrl(url[i]);
+            product.setUrl(url[0]);
+            product.setUrl2(url[1]);
+            product.setUrl3(url[2]);
+            product.setUrl4(url[3]);
+            product.setProductStatus(productStatus);
             Users users = new Users();
             users.setUserId(userId);
             product.setUserId(users);
-            productService.saveProduct(productName, productDescription, productPrice, productCategory, productStatus, userId, productId);
-            productService.saveProdductImage(productId, files[i].getOriginalFilename(), url[i]);
+//            productRepository.save(product);
+            productService.saveProduct(productName, productDescription, productPrice, productCategory, productStatus, userId, url[0], url[1],
+                    url[2], url[3]);
 
-        }
-        return new ResponseEntity(new ProductResponse(userId, productId, productName, productDescription,
-                productPrice, productCategory, productStatus, Arrays.asList(url)), HttpStatus.OK);
+        return new ResponseEntity(new ProductResponse(userId,product.getProductId(),productName,productDescription,productPrice,
+                productCategory,productStatus,url[0], url[1], url[2], url[3]), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "https://dummyprojectbinar.herokuapp.com", maxAge = 3600)
@@ -110,13 +116,13 @@ public class ProductController{
             url[i] = result.get("url").toString();
             UploadResponse responses = new UploadResponse();
             responses.setMessage("Success upload images");
-            responses.setUrl(url);
+            responses.setUrl(url[0]);
             productService.saveProdductImage(productId, files[i].getOriginalFilename(), url[i]);
             productService.updateProduct(productId, productName, productDescription, productPrice, productCategory,
                     productStatus);
         }
-        return new ResponseEntity(new ProductResponse(userId, productId, productName, productDescription,
-                productPrice, productCategory, productStatus, Arrays.asList(url)), HttpStatus.OK);
+        return new ResponseEntity(new ProductResponse(userId, productName, productDescription,
+                productPrice, productCategory, productStatus, url[0],url[1],url[2],url[3]), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete a product")
@@ -146,11 +152,8 @@ public class ProductController{
     @Operation(summary = "Get detail product")
     @GetMapping(value = "/buyer/get-detail-product/{productId}")
     public ResponseEntity<ProductResponse> getDetailProductById(@PathVariable("productId") Long productId){
-        List<Product> products = productService.getProductDetailByid(productId);
-        List<ProductDetailResponse> productDetailResponses =
-                products.stream().map(product1 -> new ProductDetailResponse(product1)).collect(
-                        Collectors.toList());
-        return new ResponseEntity(productDetailResponses, HttpStatus.OK);
+        Product products = productService.getProductDetailByid(productId);
+        return new ResponseEntity(new ProductDetailResponse(products), HttpStatus.OK);
     }
 
     @Operation(summary = "update product status to Sold")

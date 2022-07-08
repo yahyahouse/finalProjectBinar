@@ -17,7 +17,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository <Product, Long> {
 
     @Modifying
-    @Query(value = "select * from product p join product_image i on p.product_id=i.product_id", nativeQuery = true)
+    @Query(value = "select * from product ", nativeQuery = true)
     List<Product> getAllProductProp();
 
     @Modifying
@@ -57,10 +57,8 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
 
     Page<Product> findByProductNameContainingAndProductCategoryContaining(String productName, String productCategory, Pageable pageable);
 
-    @Modifying
-    @Query(value="select * from product p join product_image i " +
-            "on p.product_id=i.product_id where p.product_id=:productId", nativeQuery = true)
-    List<Product> getDetailProductById (Long productId);
+    @Query(value="select * from product where product_id=:productId", nativeQuery = true)
+    Product getDetailProductById (Long productId);
 
     @Query(value = "select * from product p where p.product_id =:productId", nativeQuery = true)
     Product findProductById(Long productId);

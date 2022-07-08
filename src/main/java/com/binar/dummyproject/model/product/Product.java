@@ -13,8 +13,8 @@ import java.util.List;
 @Entity(name = "product")
 public class Product implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    @Column(name = "product_id")
     private Long productId;
 
     @Column(name = "product_name")
@@ -32,10 +32,17 @@ public class Product implements Serializable {
     @Column(name = "product_status")
     private String productStatus;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    @JsonManagedReference
-    private List<ProductImage> productImages;
+    @Column(name ="url",columnDefinition="VARCHAR(10000)")
+    private String url;
+
+    @Column(name ="url2",columnDefinition="VARCHAR(10000)")
+    private String url2;
+
+    @Column(name ="url3",columnDefinition="VARCHAR(10000)")
+    private String url3;
+
+    @Column(name ="url4",columnDefinition="VARCHAR(10000)")
+    private String url4;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -83,7 +83,7 @@ public class ProductController{
 
 
     @Operation(summary = "Update existing product by seller")
-    @PutMapping("/seller/update-product/{userId}/{productId}")
+    @PostMapping("/seller/update-product/{userId}/{productId}")
     public ResponseEntity<ProductResponse> updateProduct (
             @PathVariable("userId") Integer userId,
             @PathVariable("productId") Long productId,

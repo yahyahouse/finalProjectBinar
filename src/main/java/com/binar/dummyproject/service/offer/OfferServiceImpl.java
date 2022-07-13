@@ -31,12 +31,11 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void saveOffer(Long offerId, Integer userId, Long productId, Double offerPrice, String offerStatus, LocalDateTime localDateTime) {
+    public void saveOffer(Integer userId, Long productId, Double offerPrice, String offerStatus, LocalDateTime localDateTime) {
         Offer offer = new Offer();
         Users users = usersService.findByUserId(userId);
         Product product = productService.getProductById(productId);
         offer.setProductId(product);
-        offer.setOfferId(offerId);
         offer.setUserId(users);
         offer.setOfferPrice(offerPrice);
         offer.setOfferStatus(offerStatus);

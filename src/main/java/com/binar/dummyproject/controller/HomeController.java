@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,18 +27,9 @@ public class HomeController {
     @Autowired
     ProductService productService;
 
-    @Operation(summary = "Show all products")
-    @GetMapping("/show-products")
-    public ResponseEntity<ProductResponse> allProduct(){
-        List<Product> product = productService.getAllProduct();
-        List<ProductResponse> productResponse =
-                product.stream().map(product1 -> new ProductResponse(product1)).collect(
-                        Collectors.toList());
-        return new ResponseEntity(productResponse, HttpStatus.OK);
-    }
 
     @Operation(summary = "Show all products sort and filter")
-    @GetMapping("/get-product-page")
+    @GetMapping
     public ResponseEntity<Map<String, Object>> getAllProductPage(
             @RequestParam(required = false) String productName,
             @RequestParam(required = false) String productCategory,
@@ -53,7 +43,7 @@ public class HomeController {
             List<Product> products = productPage.getContent();
             Map<String, Object> response = new HashMap<>();
             List<ProductResponse> productResponse =
-                    products.stream().map(product1 -> new ProductResponse(product1)).collect(
+                    products.stream().map(ProductResponse::new).collect(
                             Collectors.toList());
             response.put("products", productResponse);
             response.put("currentPage", productPage.getNumber() + 1);

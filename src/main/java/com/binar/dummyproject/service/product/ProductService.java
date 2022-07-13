@@ -1,7 +1,6 @@
 package com.binar.dummyproject.service.product;
 
 import com.binar.dummyproject.model.product.Product;
-import com.binar.dummyproject.model.product.ProductImage;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,22 +13,21 @@ public interface ProductService {
     /*
     Service untuk Product
      */
-    void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory, String productStatus, Integer userId, Long productId);
+    void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory,
+                     String productStatus, Integer userId, String url, String url2, String url3, String url4);
     Optional<Product> deleteProductById(Long productId);
-    void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory, String productStatus);
+    void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory,
+                        String productStatus, Integer userId, String url, String url2, String url3, String url4);
     List<Product> getAllProduct();
     List<Product> getAllProductProp();
     List<Product> getProductByProductId(Long productId);
     List<Product> getProductByUserId (Integer userId);
     Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable);
-    List<Product> getProductDetailByid (Long productId);
+    Product getProductDetailByid (Long productId);
     Product getProductById(Long productId);
     void updateStatusProductSold (Long productId, Integer userId);
 
-    /*
-    Service untuk productImage
-     */
-    void saveProdductImage(Long productId, String productImageName, String url);
-    Optional<ProductImage> deleteProductImage(Long productId);
-    List<ProductImage> findAllData();
+
+
+    Product findProductByName(String username, Integer userId);
 }

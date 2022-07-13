@@ -15,11 +15,11 @@ import java.util.List;
 public interface WishlistRepository extends JpaRepository<Wishlist, Long> {
     @Modifying
     @Query(value = "delete from wishlist where wishlist_id =:wishlist_id", nativeQuery = true)
-    void deleteWishlistByProductIdAndUserId(@Param("wishlist_id") Long wishlist_id);
+    void deleteWishlistByProductIdAndUserId(@Param("wishlist_id") Long wishlistId);
 
     @Modifying
     @Query(value = "select w.wishlist_id, u.user_id, p.product_id, p.product_name, p.product_price " +
             "from wishlist w join product p on p.product_id = w.product_id " +
             "join users u on u.user_id = w.user_id where w.user_id=:user_id", nativeQuery = true)
-    List<Wishlist> getWishlistsByUserId(@Param("user_id") Integer user_id);
+    List<Wishlist> getWishlistsByUserId(@Param("user_id") Integer userId);
 }

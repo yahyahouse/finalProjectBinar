@@ -41,7 +41,7 @@ public class OfferController {
     ){
         List<Offer> offers = offerService.getAllOfferByUser(userId);
         List<OfferResponseNew> offerResponsesNew =
-                offers.stream().map(offer -> new OfferResponseNew(offer)).collect(
+                offers.stream().map(OfferResponseNew::new).collect(
                         Collectors.toList());
         return new ResponseEntity(offerResponsesNew, HttpStatus.OK);
     }
@@ -54,7 +54,7 @@ public class OfferController {
     ){
         List<Offer> offers = offerService.getOfferBySeller(userId, productId);
         List<OfferResponseNew> offerResponsesNew =
-                offers.stream().map(offer -> new OfferResponseNew(offer)).collect(
+                offers.stream().map(OfferResponseNew::new).collect(
                         Collectors.toList());
         return new ResponseEntity(offerResponsesNew, HttpStatus.OK);
     }
@@ -64,7 +64,6 @@ public class OfferController {
     public ResponseEntity<OfferResponse> addOffer (
             @PathVariable("userId") Integer userId,
             @PathVariable("productId") Long productId,
-            @RequestParam("offerId") Long offerId,
             @RequestParam("offer_price") Double offerPrice,
             @RequestParam(defaultValue = "Diminati", required = false) String offerStatus) {
 
@@ -73,23 +72,22 @@ public class OfferController {
         Offer offer = new Offer();
         offer.setUserId(users);
         offer.setProductId(product);
-        offer.setOfferId(offerId);
         offer.setOfferPrice(offerPrice);
         offer.setOfferStatus(offerStatus);
         LocalDateTime dateTime = LocalDateTime.now();
         offer.setLocalDateTime(dateTime);
-        offerService.saveOffer(offerId, userId, productId, offerPrice, offerStatus, dateTime);
+        offerService.saveOffer(userId, productId, offerPrice, offerStatus, dateTime);
 
         return new ResponseEntity(new OfferResponse(offer), HttpStatus.OK);
     }
 
-    @Operation(summary = "Get product diminati by userId")
+    @Operation(summary = "Get product diminati by offerId")
     @GetMapping(value = "/buyer/get-diminati/{offerId}")
     public ResponseEntity<ProductResponse> getDetailOfferById(
             @PathVariable("offerId") Long offerId){
         List<Offer> offer = offerService.getOfferByStatusDiminati(offerId);
         List<OfferResponseNew> offerResponseNew =
-                offer.stream().map(offernew -> new OfferResponseNew(offernew))
+                offer.stream().map(OfferResponseNew::new)
                         .collect(Collectors.toList());
         return new ResponseEntity(offerResponseNew, HttpStatus.OK);
     }
@@ -100,13 +98,13 @@ public class OfferController {
             @PathVariable("userId") Integer userId){
         List<Offer> offer = offerService.getOfferByOfferStatusAndProductSold(userId);
         List<OfferResponseNew> offerResponseNew =
-                offer.stream().map(offernew -> new OfferResponseNew(offernew))
+                offer.stream().map(OfferResponseNew::new)
                         .collect(Collectors.toList());
         return new ResponseEntity(offerResponseNew, HttpStatus.OK);
     }
 
     @Operation(summary = "Update transaction status to accept the offer")
-    @PutMapping("/seller/accepted-status/{offerId}")
+    @PostMapping("/seller/accepted-status/{offerId}")
     public ResponseEntity<OfferResponse> accStatus(
             @PathVariable("offerId") Long offerId){
         offerService.acceptedStatus(offerId);
@@ -114,7 +112,7 @@ public class OfferController {
     }
 
     @Operation(summary = "Update transaction status to reject the offer")
-    @PutMapping("/seller/rejected-status/{offerId}")
+    @PostMapping("/seller/rejected-status/{offerId}")
     public ResponseEntity<OfferResponse> rejectStatus(
             @PathVariable("offerId") Long offerId){
         offerService.rejectedStatus(offerId);

@@ -1,11 +1,8 @@
 package com.binar.dummyproject.model.offer;
 
-import com.binar.dummyproject.model.product.ProductImage;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 public class OfferResponseNew {
@@ -32,10 +29,10 @@ public class OfferResponseNew {
         this.username = offer.getUserId().getUsername();
         this.city = offer.getUserId().getCity();
         this.phone = offer.getUserId().getPhone();
-        this.url2 = offer.getProductId().getUrl();
+        this.url = offer.getProductId().getUrl();
         this.url2 = offer.getProductId().getUrl2();
-        this.url3 = offer.getProductId().getUrl3();;
-        this.url4 = offer.getProductId().getUrl4();;
+        this.url3 = offer.getProductId().getUrl3();
+        this.url4 = offer.getProductId().getUrl4();
         this.productName = offer.getProductId().getProductName();
         this.productPrice = offer.getProductId().getProductPrice();
         this.productDescription = offer.getProductId().getProductDescription();

@@ -2,9 +2,7 @@ package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.product.ProductDetailResponse;
-import com.binar.dummyproject.model.product.ProductImage;
 import com.binar.dummyproject.model.UploadResponse;
-import com.binar.dummyproject.model.users.UserDetailsImpl;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.repository.product.ProductRepository;
@@ -29,7 +27,7 @@ import java.util.stream.Collectors;
 @Tag(name = "Product", description = "API for processing various operations with Product entity")
 @RestController
 @RequestMapping("/product")
-public class ProductController{
+public class ProductController {
 
     @Autowired
     private ProductService productService;
@@ -53,114 +51,151 @@ public class ProductController{
             @RequestParam("product_price") Integer productPrice,
             @RequestParam("product_category") String productCategory,
             @RequestParam(defaultValue = "Available", required = false) String productStatus)
-            throws IOException{
+            throws IOException {
         Integer size = files.length;
         String[] url = new String[size];
-        for(int i = 0; i<size; i++) {
-            File file = new File(files[i].getOriginalFilename());
-            FileOutputStream os = new FileOutputStream(file);
-            os.write(files[i].getBytes());
-            os.close();
-            Map result = cloudinary.uploader().upload(file,
-                    ObjectUtils.asMap("product_image_id", "product_name"));
-            url[i] = result.get("url").toString();
+        if (url.length >= 5) {
+            return new ResponseEntity("Maximum upload image not more than 4", HttpStatus.BAD_REQUEST);
         }
-            UploadResponse responses = new UploadResponse();
-            responses.setMessage("Success upload images");
-            responses.setUrl(url[0]);
+        for (int i = 0; i < size; i++) {
+            File file = new File(files[i].getOriginalFilename());
 
-            Product product = new Product();
-            product.setProductName(productName);
-            product.setProductDescription(productDescription);
-            product.setProductPrice(productPrice);
-            product.setProductCategory(productCategory);
-            product.setUrl(url[0]);
+            try (FileOutputStream os = new FileOutputStream(file)) {
+
+                os.write(files[i].getBytes());
+                Map result = cloudinary.uploader().upload(file,
+                        ObjectUtils.asMap("product_image_id", "product_name"));
+                url[i] = result.get("url").toString();
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        UploadResponse responses = new UploadResponse();
+        responses.setMessage("Success upload images");
+        responses.setUrl(url[0]);
+
+        Product product = new Product();
+        product.setProductName(productName);
+        product.setProductDescription(productDescription);
+        product.setProductPrice(productPrice);
+        product.setProductCategory(productCategory);
+        product.setUrl(url[0]);
+        if (url.length >= 2) {
+            product.setUrl2(url[1]);
+        }
+        if (url.length >= 3) {
+            product.setUrl2(url[1]);
+            product.setUrl3(url[2]);
+        }
+        if (url.length >= 4) {
             product.setUrl2(url[1]);
             product.setUrl3(url[2]);
             product.setUrl4(url[3]);
-            product.setProductStatus(productStatus);
-            Users users = new Users();
-            users.setUserId(userId);
-            product.setUserId(users);
-//            productRepository.save(product);
-            productService.saveProduct(productName, productDescription, productPrice, productCategory, productStatus, userId, url[0], url[1],
-                    url[2], url[3]);
+        }
+        product.setProductStatus(productStatus);
+        Users users = new Users();
+        users.setUserId(userId);
+        product.setUserId(users);
+        productService.saveProduct(productName, productDescription, productPrice, productCategory, productStatus, userId, product.getUrl(), product.getUrl2(),
+                product.getUrl3(), product.getUrl4());
 
-        return new ResponseEntity(new ProductResponse(userId,product.getProductId(),productName,productDescription,productPrice,
-                productCategory,productStatus,url[0], url[1], url[2], url[3]), HttpStatus.OK);
+        return new ResponseEntity(new ProductResponse(userId, productName, productDescription, productPrice,
+                productCategory, productStatus, product.getUrl(), product.getUrl2(),
+                product.getUrl3(), product.getUrl4()), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "https://dummyprojectbinar.herokuapp.com", maxAge = 3600)
     @Operation(summary = "Update existing product by seller")
-    @PutMapping("/seller/update-product/{userId}/{productId}")
-    public ResponseEntity<ProductResponse> updateProduct (
+    @PostMapping("/seller/update-product/{userId}/{productId}")
+    public ResponseEntity<ProductResponse> updateProduct(
             @PathVariable("userId") Integer userId,
             @PathVariable("productId") Long productId,
             @RequestParam("files") MultipartFile[] files,
             @RequestParam("product_name") String productName,
             @RequestParam("product_description") String productDescription,
-            @RequestParam("product_status") String productStatus,
+            @RequestParam(defaultValue = "Available", required = false) String productStatus,
             @RequestParam("product_price") Integer productPrice,
             @RequestParam("product_category") String productCategory)
-        throws IOException{
+            throws IOException {
 
         Integer size = files.length;
         String[] url = new String[size];
-        for(int i = 0; i<size;i++){
-            File file = new File(files[i].getOriginalFilename());
-            FileOutputStream os = new FileOutputStream(file);
-            os.write(files[i].getBytes());
-            os.close();
-            Map result = cloudinary.uploader().upload(file,
-                    ObjectUtils.asMap("product_image_id", "product_name"));
-            url[i] = result.get("url").toString();
-            UploadResponse responses = new UploadResponse();
-            responses.setMessage("Success upload images");
-            responses.setUrl(url[0]);
-            productService.saveProdductImage(productId, files[i].getOriginalFilename(), url[i]);
-            productService.updateProduct(productId, productName, productDescription, productPrice, productCategory,
-                    productStatus);
+        if (url.length >= 5) {
+            return new ResponseEntity("Maximum upload image not more than 4", HttpStatus.BAD_REQUEST);
         }
+        for (int i = 0; i < size; i++) {
+            File file = new File(files[i].getOriginalFilename());
+
+            try(FileOutputStream os = new FileOutputStream(file)) {
+                os.write(files[i].getBytes());
+                Map result = cloudinary.uploader().upload(file,
+                        ObjectUtils.asMap("product_image_id", "product_name"));
+                url[i] = result.get("url").toString();
+                UploadResponse responses = new UploadResponse();
+                responses.setMessage("Success upload images");
+                responses.setUrl(url[i]);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        Product product = productService.getProductById(productId);
+        product.setUrl(url[0]);
+        if (url.length >= 2) {
+            product.setUrl2(url[1]);
+        }
+        if (url.length >= 3) {
+            product.setUrl2(url[1]);
+            product.setUrl3(url[2]);
+        }
+        if (url.length >= 4) {
+            product.setUrl2(url[1]);
+            product.setUrl3(url[2]);
+            product.setUrl4(url[3]);
+        }
+
+        productService.updateProduct(productId, productName, productDescription, productPrice, productCategory,
+                productStatus, userId, product.getUrl(), product.getUrl2(),
+                product.getUrl3(), product.getUrl4());
         return new ResponseEntity(new ProductResponse(userId, productName, productDescription,
-                productPrice, productCategory, productStatus, url[0],url[1],url[2],url[3]), HttpStatus.OK);
+                productPrice, productCategory, productStatus, product.getUrl(), product.getUrl2(),
+                product.getUrl3(), product.getUrl4()), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete a product")
     @DeleteMapping("/seller/delete-product/{productId}")
     public ResponseEntity<Product> deleteProductById(
             @Parameter(description = "add id to delete the product item")
-            @PathVariable("productId") Long productId){
-        Optional<ProductImage> product = productService.deleteProductImage(productId);
+            @PathVariable("productId") Long productId) {
         Optional<Product> productImage = productService.deleteProductById(productId);
-        if(productImage.isPresent()){
+        if (productImage.isPresent()) {
             return new ResponseEntity<>(HttpStatus.OK);
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
     @Operation(summary = "Get product by seller userId")
     @GetMapping(value = "/seller/get-product-seller/{userId}")
-    public ResponseEntity<ProductResponse> getProductByUserId(@PathVariable("userId") Integer userId){
+    public ResponseEntity<ProductResponse> getProductByUserId(@PathVariable("userId") Integer userId) {
         List<Product> product = productService.getProductByUserId(userId);
         List<ProductResponse> productResponse =
-                product.stream().map(product1 -> new ProductResponse(product1)).collect(
+                product.stream().map(ProductResponse::new).collect(
                         Collectors.toList());
         return new ResponseEntity(productResponse, HttpStatus.OK);
     }
 
     @Operation(summary = "Get detail product")
     @GetMapping(value = "/buyer/get-detail-product/{productId}")
-    public ResponseEntity<ProductResponse> getDetailProductById(@PathVariable("productId") Long productId){
+    public ResponseEntity<ProductDetailResponse> getDetailProductById(@PathVariable("productId") Long productId) {
         Product products = productService.getProductDetailByid(productId);
         return new ResponseEntity(new ProductDetailResponse(products), HttpStatus.OK);
     }
 
     @Operation(summary = "update product status to Sold")
-    @PutMapping(value = "/seller/product-status-sold/{userId}/{productId}")
-    public ResponseEntity<Map<String , Object>> getUpdateProductStatusSold(
+    @PostMapping(value = "/seller/product-status-sold/{userId}/{productId}")
+    public ResponseEntity<ProductResponse> getUpdateProductStatusSold(
             @PathVariable("productId") Long productId,
-            @PathVariable("userId") Integer userId){
+            @PathVariable("userId") Integer userId) {
         productService.updateStatusProductSold(productId, userId);
         return new ResponseEntity("Status barang sudah berubah menjadi sold", HttpStatus.OK);
     }

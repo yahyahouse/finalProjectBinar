@@ -2,8 +2,7 @@ package com.binar.dummyproject.model.product;
 
 import lombok.Data;
 
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Data
 public class ProductDetailResponse {

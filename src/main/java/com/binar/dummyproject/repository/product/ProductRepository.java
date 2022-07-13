@@ -22,14 +22,18 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
 
     @Modifying
     @Query(value = "update product set product_name=:product_name, product_description=:product_description," +
-            "product_price=:product_price, product_category=:product_category, product_status=:product_status " +
-            "where product_id=:product_id", nativeQuery = true)
+            "product_price=:product_price, product_category=:product_category, product_status=:product_status, " +
+            "url=:url, url2=:url2, url3=:url3, url4=:url4 where product_id=:product_id", nativeQuery = true)
     void updateProduct (@Param("product_name") String productName,
                         @Param("product_description") String productDescription,
                         @Param("product_price") Integer productPrice,
                         @Param("product_category") String productCategory,
                         @Param("product_status") String productStatus,
-                        @Param("product_id") Long productId);
+                        @Param("product_id") Long productId,
+                        @Param("url")String url,
+                        @Param("url2")String url2,
+                        @Param("url3")String url3,
+                        @Param("url4")String url4);
 
     @Modifying
     @Query(value = "delete from product where product_id =:product_id", nativeQuery = true)
@@ -66,5 +70,8 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
     @Modifying
     @Query(value = "update product set product_status ='Sold' where product_id=:productId and user_id=:userId", nativeQuery = true)
     void updateProductStatusSold (Long productId, Integer userId);
+
+    @Query(value = "select * from product where product_name=:productName and user_id=:userId", nativeQuery=true)
+    Product findByProductName (String productName, Integer userId);
 
 }

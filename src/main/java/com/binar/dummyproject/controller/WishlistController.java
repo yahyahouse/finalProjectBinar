@@ -26,6 +26,9 @@ public class WishlistController {
     @Autowired
     private WishlistService wishlistService;
 
+    private static final String PRODUCTID = "productId";
+    private static final String USERID = "userId";
+
     @Operation(summary = "add a wishlist when a buyer is interested in a product")
     @PostMapping("/add-wishlist/")
     public ResponseEntity<Map<String, Object>> addWishlistByProductIdAndUserId (
@@ -34,11 +37,11 @@ public class WishlistController {
                     "\"userId\":\"1\"" +
                     "}")
             @RequestBody Map<String, Object> wishlist){
-        wishlistService.saveWishlist(Long.valueOf(wishlist.get("productId").toString()),Integer.valueOf(wishlist.get("userId").toString()));
+        wishlistService.saveWishlist(Long.valueOf(wishlist.get(PRODUCTID).toString()),Integer.valueOf(wishlist.get(USERID).toString()));
 
         Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("productId", wishlist.get("productId"));
-        responseBody.put("userId", wishlist.get("userId"));
+        responseBody.put(PRODUCTID, wishlist.get(PRODUCTID));
+        responseBody.put(USERID, wishlist.get(USERID));
 
         MultiValueMap<String, String> headers = new HttpHeaders();
         headers.put("dummyProject", Arrays.asList("halo"));
@@ -65,7 +68,7 @@ public class WishlistController {
             response.put("deletedData", wishlist);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else {
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 

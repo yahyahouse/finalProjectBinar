@@ -2,7 +2,7 @@ package com.binar.dummyproject.model;
 
 import lombok.Data;
 
-import java.util.List;
+
 
 @Data
 public class UsersResponse {

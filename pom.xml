@@ -54,18 +54,6 @@
             <version>1.6.4</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>net.sf.jasperreports</groupId>-->
-<!--            <artifactId>jasperreports</artifactId>-->
-<!--            <version>6.18.1</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports-fonts &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>net.sf.jasperreports</groupId>-->
-<!--            <artifactId>jasperreports-fonts</artifactId>-->
-<!--            <version>6.0.0</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -96,23 +84,6 @@
             <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.data</groupId>-->
-<!--            <artifactId>spring-data-mongodb</artifactId>-->
-<!--            <version>3.0.3.RELEASE</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.quartz-scheduler</groupId>-->
-<!--            <artifactId>quartz</artifactId>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-quartz &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-quartz</artifactId>-->
-<!--            <version>2.7.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>

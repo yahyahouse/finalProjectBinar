@@ -1,9 +1,7 @@
 package com.binar.dummyproject.service.product;
 
 import com.binar.dummyproject.model.product.Product;
-import com.binar.dummyproject.model.product.ProductImage;
 import com.binar.dummyproject.model.users.Users;
-import com.binar.dummyproject.repository.product.ProductImageRepository;
 import com.binar.dummyproject.repository.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,22 +17,23 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductRepository productRepository;
 
-    @Autowired
-    private ProductImageRepository productImageRepository;
 
     /*
     Service untuk Product
      */
     @Override
     public void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory,
-                            String productStatus, Integer userId, Long productId) {
+                            String productStatus, Integer userId, String url, String url2, String url3, String url4) {
         Product product = new Product();
-        product.setProductId(productId);
         product.setProductName(productName);
         product.setProductDescription(productDescription);
         product.setProductPrice(productPrice);
         product.setProductCategory(productCategory);
         product.setProductStatus(productStatus);
+        product.setUrl(url);
+        product.setUrl2(url2);
+        product.setUrl3(url3);
+        product.setUrl4(url4);
         Users users = new Users();
         users.setUserId(userId);
         product.setUserId(users);
@@ -49,9 +48,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void updateProduct(Long productId, String productName, String productDescription, Integer productPrice, String productCategory,
-                              String productStatus) {
-        productRepository.updateProduct(productName, productDescription, productPrice, productCategory, productStatus, productId);
+    public void updateProduct(Long productId,String productName, String productDescription, Integer productPrice, String productCategory,
+                              String productStatus, Integer userId, String url, String url2, String url3, String url4) {
+        productRepository.updateProduct(productName, productDescription, productPrice, productCategory, productStatus, productId,url, url2,url3,url4);
     }
 
     @Override
@@ -89,7 +88,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getProductDetailByid(Long productId) {
+    public Product getProductDetailByid(Long productId) {
         return productRepository.getDetailProductById(productId);
     }
 
@@ -104,29 +103,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
 
-    /*
-    Service untuk product image
-     */
     @Override
-    public void saveProdductImage(Long productId, String productImageName, String url) {
-        ProductImage productImage = new ProductImage();
-        productImage.setProductImageName(productImageName);
-        productImage.setUrl(url);
-        Product product = new Product();
-        product.setProductId(productId);
-        productImage.setProductId(product);
-        productImageRepository.save(productImage);
-    }
-
-    @Override
-    public Optional<ProductImage> deleteProductImage(Long id) {
-        Optional<ProductImage> delImage = productImageRepository.findById(id);
-        productImageRepository.deleteProductImage(id);
-        return delImage;
-    }
-
-    @Override
-    public List<ProductImage> findAllData() {
-        return productImageRepository.findAll();
+    public Product findProductByName(String username, Integer userId) {
+        return productRepository.findByProductName(username,userId);
     }
 }

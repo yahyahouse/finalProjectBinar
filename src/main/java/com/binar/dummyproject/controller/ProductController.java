@@ -200,5 +200,14 @@ public class ProductController {
         return new ResponseEntity("Status barang sudah berubah menjadi sold", HttpStatus.OK);
     }
 
+    @Operation(summary = "update product status to Sold")
+    @PutMapping(value = "/seller/product-status-sold/{userId}/{productId}")
+    public ResponseEntity<Map<String , Object>> getUpdateProductStatusSold(
+            @PathVariable("productId") Long productId,
+            @PathVariable("userId") Integer userId){
+        productService.updateStatusProductSold(productId, userId);
+        return new ResponseEntity("Status barang sudah berubah menjadi sold", HttpStatus.OK);
+    }
+
 
 }

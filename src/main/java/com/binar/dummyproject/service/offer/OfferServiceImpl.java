@@ -49,8 +49,8 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<Offer> getOfferByStatusDiminati(Long offerId) {
-        return offerRepository.getOfferByStatusDiminati(offerId);
+    public List<Offer> getOfferByStatusDiminati(Long userId) {
+        return offerRepository.getOfferByStatusDiminati(userId);
     }
 
     @Override
@@ -64,8 +64,8 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public Optional<Offer> findOfferById(Long offerId) {
-        return offerRepository.findById(offerId);
+    public Offer findOfferById(Long offerId) {
+        return offerRepository.getById(offerId);
     }
 
     @Override
@@ -73,5 +73,9 @@ public class OfferServiceImpl implements OfferService {
         offerRepository.statusRejected(offerId);
     }
 
+    @Override
+    public List<Offer> getOfferDiminati() {
+        return offerRepository.getOfferDiminati();
+    }
 
 }

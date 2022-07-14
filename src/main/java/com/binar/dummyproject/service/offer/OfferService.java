@@ -15,13 +15,15 @@ public interface OfferService {
                    String offerStatus, LocalDateTime localDateTime);
     List<Offer> getOfferBySeller(Integer userId);
 
-    List<Offer> getOfferByStatusDiminati(Long offerId);
+    List<Offer> getOfferByStatusDiminati(Long userId);
 
     List<Offer> getOfferByOfferStatusAndProductSold(Integer userId);
 
     void acceptedStatus(Long offerId);
-    Optional<Offer> findOfferById(Long offerId);
+    Offer findOfferById(Long offerId);
     void rejectedStatus(Long offerId);
+
+    List<Offer> getOfferDiminati();
 
 
 

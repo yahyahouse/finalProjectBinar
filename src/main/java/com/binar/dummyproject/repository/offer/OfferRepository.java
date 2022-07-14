@@ -21,12 +21,15 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                     ".product_id =p.product_id", nativeQuery = true)
     List<Offer> getOfferBySeller(Integer userId);
 
-    @Query(value = "select * from offer where offer_status like 'Diminati%' and offer_id=:offerId",nativeQuery = true)
-    List<Offer> getOfferByStatusDiminati(Long offerId);
+    @Query(value = "select * from offer where offer_status like 'Diminati%' and user_id=:userId",nativeQuery = true)
+    List<Offer> getOfferByStatusDiminati(Long userId);
 
     @Query(value = "select * from offer o join product p on o.product_id=p.product_id " +
             "where o.offer_status like 'Sold%' and p.product_status like 'Sold%' and o.user_id=p.user_id", nativeQuery = true)
     List<Offer> getOfferByOfferStatusAndProductSold(Integer userId);
+
+    @Query(value = "select * from offer where offer_status like 'Diminati%'",nativeQuery = true)
+    List<Offer> getOfferDiminati();
 
     @Modifying
     @Query("update Offer set offerStatus ='Diterima' where offerId =:offerId")

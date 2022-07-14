@@ -46,7 +46,7 @@ public class OfferController {
         return new ResponseEntity(offerResponsesNew, HttpStatus.OK);
     }
 
-    @Operation(summary = "Seller get all offer")
+    @Operation(summary = "Seller get all offer by id")
     @GetMapping("/seller/get-offer-history/{userId}")
     public ResponseEntity<OfferResponseNew> getOfferBySeller(
             @PathVariable("userId") Integer userId
@@ -80,11 +80,11 @@ public class OfferController {
         return new ResponseEntity(new OfferResponse(offer), HttpStatus.OK);
     }
 
-    @Operation(summary = "Get product diminati by offerId")
-    @GetMapping(value = "/buyer/get-diminati/{offerId}")
-    public ResponseEntity<ProductResponse> getDetailOfferById(
-            @PathVariable("offerId") Long offerId){
-        List<Offer> offer = offerService.getOfferByStatusDiminati(offerId);
+    @Operation(summary = "Get product diminati by UserId")
+    @GetMapping(value = "/buyer/get-diminati/{userId}")
+    public ResponseEntity<ProductResponse> getDetailOfferDiminatiById(
+            @PathVariable("userId") Long userId){
+        List<Offer> offer = offerService.getOfferByStatusDiminati(userId);
         List<OfferResponseNew> offerResponseNew =
                 offer.stream().map(OfferResponseNew::new)
                         .collect(Collectors.toList());
@@ -118,4 +118,10 @@ public class OfferController {
         return new ResponseEntity("Tawaran ditolak!",HttpStatus.OK);
     }
 
+    @Operation(summary = "Get detail product By offer Id")
+    @GetMapping("/get-detail-offer/{offerId}")
+    public ResponseEntity<OfferResponseNew> getDetailOfferById(@PathVariable ("offerId") Long offerId){
+        Offer offer = offerService.findOfferById(offerId);
+        return new ResponseEntity<>(new OfferResponseNew(offer),HttpStatus.OK);
+    }
 }

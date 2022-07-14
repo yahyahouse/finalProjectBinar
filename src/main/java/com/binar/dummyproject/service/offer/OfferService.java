@@ -13,7 +13,7 @@ public interface OfferService {
     List<Offer> getAllOfferByUser(Integer userId);
     void saveOffer(Integer userId, Long productId, Double offerPrice,
                    String offerStatus, LocalDateTime localDateTime);
-    List<Offer> getOfferBySeller(Integer userId, Long productId);
+    List<Offer> getOfferBySeller(Integer userId);
 
     List<Offer> getOfferByStatusDiminati(Long offerId);
 

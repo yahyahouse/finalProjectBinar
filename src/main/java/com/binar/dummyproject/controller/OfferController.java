@@ -49,10 +49,9 @@ public class OfferController {
     @Operation(summary = "Seller get all offer")
     @GetMapping("/seller/get-offer-history/{userId}")
     public ResponseEntity<OfferResponseNew> getOfferBySeller(
-            @PathVariable("userId") Integer userId,
-            Long productId
+            @PathVariable("userId") Integer userId
     ){
-        List<Offer> offers = offerService.getOfferBySeller(userId, productId);
+        List<Offer> offers = offerService.getOfferBySeller(userId);
         List<OfferResponseNew> offerResponsesNew =
                 offers.stream().map(OfferResponseNew::new).collect(
                         Collectors.toList());

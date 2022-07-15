@@ -2,6 +2,8 @@ package com.binar.dummyproject.model.product;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 
 @Data
 public class ProductResponse {
@@ -17,6 +19,7 @@ public class ProductResponse {
     private String url2;
     private String url3;
     private String url4;
+    private LocalDateTime localDateTime;
 
     public ProductResponse() {
 
@@ -25,7 +28,7 @@ public class ProductResponse {
 
     public ProductResponse(Integer userId, String productName, String productDescription,
                            Integer productPrice, String productCategory, String productStatus, String url,
-                           String url2, String url3, String url4) {
+                           String url2, String url3, String url4, LocalDateTime localDateTime) {
         this.userId = userId;
         this.productName = productName;
         this.productDescription = productDescription;
@@ -36,6 +39,7 @@ public class ProductResponse {
         this.url2 = url2;
         this.url3 = url3;
         this.url4 = url4;
+        this.localDateTime = localDateTime;
 
     }
 

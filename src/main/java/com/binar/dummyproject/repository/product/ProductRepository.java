@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -23,7 +24,7 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
     @Modifying
     @Query(value = "update product set product_name=:product_name, product_description=:product_description," +
             "product_price=:product_price, product_category=:product_category, product_status=:product_status, " +
-            "url=:url, url2=:url2, url3=:url3, url4=:url4 where product_id=:product_id", nativeQuery = true)
+            "url=:url, url2=:url2, url3=:url3, url4=:url4 , local_date_time=:local_date_time where product_id=:product_id", nativeQuery = true)
     void updateProduct (@Param("product_name") String productName,
                         @Param("product_description") String productDescription,
                         @Param("product_price") Integer productPrice,
@@ -33,7 +34,8 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
                         @Param("url")String url,
                         @Param("url2")String url2,
                         @Param("url3")String url3,
-                        @Param("url4")String url4);
+                        @Param("url4")String url4,
+                        @Param("local_date_time") LocalDateTime localDateTime);
 
     @Modifying
     @Query(value = "delete from product where product_id =:product_id", nativeQuery = true)

@@ -5,7 +5,6 @@ import com.binar.dummyproject.model.product.ProductDetailResponse;
 import com.binar.dummyproject.model.UploadResponse;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.model.product.ProductResponse;
-import com.binar.dummyproject.repository.product.ProductRepository;
 import com.binar.dummyproject.service.product.ProductService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -21,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,9 +31,6 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
-    @Autowired
-    private ProductRepository productRepository;
 
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dummyprojectbinar",
@@ -93,15 +90,17 @@ public class ProductController {
             product.setUrl4(url[3]);
         }
         product.setProductStatus(productStatus);
+        LocalDateTime dateTime = LocalDateTime.now();
+        product.setLocalDateTime(dateTime);
         Users users = new Users();
         users.setUserId(userId);
         product.setUserId(users);
         productService.saveProduct(productName, productDescription, productPrice, productCategory, productStatus, userId, product.getUrl(), product.getUrl2(),
-                product.getUrl3(), product.getUrl4());
+                product.getUrl3(), product.getUrl4(), dateTime);
 
         return new ResponseEntity(new ProductResponse(userId, productName, productDescription, productPrice,
                 productCategory, productStatus, product.getUrl(), product.getUrl2(),
-                product.getUrl3(), product.getUrl4()), HttpStatus.OK);
+                product.getUrl3(), product.getUrl4(), dateTime), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "https://dummyprojectbinar.herokuapp.com", maxAge = 3600)
@@ -139,6 +138,8 @@ public class ProductController {
             }
         }
         Product product = productService.getProductById(productId);
+        LocalDateTime dateTime = LocalDateTime.now();
+        product.setLocalDateTime(dateTime);
         product.setUrl(url[0]);
         if (url.length >= 2) {
             product.setUrl2(url[1]);
@@ -155,10 +156,10 @@ public class ProductController {
 
         productService.updateProduct(productId, productName, productDescription, productPrice, productCategory,
                 productStatus, userId, product.getUrl(), product.getUrl2(),
-                product.getUrl3(), product.getUrl4());
+                product.getUrl3(), product.getUrl4(), dateTime);
         return new ResponseEntity(new ProductResponse(userId, productName, productDescription,
                 productPrice, productCategory, productStatus, product.getUrl(), product.getUrl2(),
-                product.getUrl3(), product.getUrl4()), HttpStatus.OK);
+                product.getUrl3(), product.getUrl4(), dateTime), HttpStatus.OK);
     }
 
     @Operation(summary = "Delete a product")

@@ -4,6 +4,7 @@ import com.binar.dummyproject.model.offer.Offer;
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.repository.offer.OfferRepository;
+import com.binar.dummyproject.service.notification.NotificationService;
 import com.binar.dummyproject.service.product.ProductService;
 import com.binar.dummyproject.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
+import static com.binar.dummyproject.model.InfoConst.*;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -24,6 +26,9 @@ public class OfferServiceImpl implements OfferService {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public List<Offer> getAllOfferByUser(Integer userId) {
@@ -41,6 +46,12 @@ public class OfferServiceImpl implements OfferService {
         offer.setOfferStatus(offerStatus);
         offer.setLocalDateTime(localDateTime);
         offerRepository.save(offer);
+
+        Integer sellerId = product.getUserId().getUserId();
+        Product product1 = productService.getProductById(productId);
+        Offer offerId = findOfferById(offer.getOfferId());
+        notificationService.saveNotification(PRODUCT_TAWAR, offerId, product1, userId);
+        notificationService.saveNotification(DAPAT_TAWARAN, offerId, product1, sellerId);
     }
 
     @Override
@@ -49,7 +60,7 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public List<Offer> getOfferByStatusDiminati(Long userId) {
+    public List<Offer> getOfferByStatusDiminati(Integer userId) {
         return offerRepository.getOfferByStatusDiminati(userId);
     }
 

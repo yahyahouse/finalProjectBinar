@@ -20,6 +20,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.binar.dummyproject.model.InfoConst.*;
+
 @Tag(name = "Offer", description = "API for processing various operations with Offer entity")
 @RestController
 @RequestMapping("/offer")
@@ -81,9 +83,9 @@ public class OfferController {
     }
 
     @Operation(summary = "Get product diminati by UserId")
-    @GetMapping(value = "/buyer/get-diminati/{userId}")
+    @GetMapping(value = "/seller/get-diminati/{userId}")
     public ResponseEntity<ProductResponse> getDetailOfferDiminatiById(
-            @PathVariable("userId") Long userId){
+            @PathVariable("userId") Integer userId){
         List<Offer> offer = offerService.getOfferByStatusDiminati(userId);
         List<OfferResponseNew> offerResponseNew =
                 offer.stream().map(OfferResponseNew::new)
@@ -107,7 +109,7 @@ public class OfferController {
     public ResponseEntity<OfferResponse> accStatus(
             @PathVariable("offerId") Long offerId){
         offerService.acceptedStatus(offerId);
-        return new ResponseEntity("Tawaran berhasil diterima!",HttpStatus.OK);
+        return new ResponseEntity(TERIMA_PENAWARAN,HttpStatus.OK);
     }
 
     @Operation(summary = "Update transaction status to reject the offer")
@@ -115,7 +117,7 @@ public class OfferController {
     public ResponseEntity<OfferResponse> rejectStatus(
             @PathVariable("offerId") Long offerId){
         offerService.rejectedStatus(offerId);
-        return new ResponseEntity("Tawaran ditolak!",HttpStatus.OK);
+        return new ResponseEntity(TOLAK_PENAWARAN,HttpStatus.OK);
     }
 
     @Operation(summary = "Get detail product By offer Id")

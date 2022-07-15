@@ -6,6 +6,7 @@ import com.binar.dummyproject.model.users.Users;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -14,8 +15,10 @@ public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "notif_id")
     Long notifId;
+
+    private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "offer_id", nullable = true)
@@ -28,6 +31,9 @@ public class Notification {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = true)
     private Users userId;
+
+    @Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
+    private LocalDateTime localDateTime;
 
     private Boolean isRead = false;
 }

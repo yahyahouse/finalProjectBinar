@@ -10,9 +10,9 @@ import java.util.List;
 @Service
 public interface NotificationService {
 
-    void saveNotification (Offer offer, Product product, Integer userId);
+    void saveNotification (String tittle, Offer offer, Product product, Integer userId);
 
-    void saveNotification(Product product, Integer userId);
+    void saveNotification(String tittle, Product product, Integer userId);
 
     void updateIsRead(Long notifId);
 

@@ -5,10 +5,12 @@ import com.binar.dummyproject.model.offer.Offer;
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.repository.notification.NotificationRepository;
+import com.binar.dummyproject.service.product.ProductService;
 import com.binar.dummyproject.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,27 +18,32 @@ import java.util.Optional;
 public class NotificationServiceImpl implements NotificationService{
 
     @Autowired
-    NotificationRepository notificationRepository;
+    private NotificationRepository notificationRepository;
 
     @Autowired
-    UsersService usersService;
+    private UsersService usersService;
+
 
     @Override
-    public void saveNotification(Offer offer, Product product, Integer userId) {
+    public void saveNotification(String title, Offer offer, Product product, Integer userId) {
         Notification notification = new Notification();
         Users users = usersService.findByUserId(userId);
+        notification.setTitle(title);
         notification.setOfferId(offer);
         notification.setUserId(users);
         notification.setProductId(product);
+        notification.setLocalDateTime(offer.getLocalDateTime());
         notificationRepository.save(notification);
     }
 
     @Override
-    public void saveNotification(Product product, Integer userId) {
+    public void saveNotification(String title, Product product, Integer userId) {
         Notification notification = new Notification();
         Users users = usersService.findByUserId(userId);
+        notification.setTitle(title);
         notification.setProductId(product);
         notification.setUserId(users);
+        notification.setLocalDateTime(product.getLocalDateTime());
         notificationRepository.save(notification);
     }
 

@@ -21,8 +21,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
                     ".product_id =p.product_id", nativeQuery = true)
     List<Offer> getOfferBySeller(Integer userId);
 
-    @Query(value = "select * from offer where offer_status like 'Diminati%' and user_id=:userId",nativeQuery = true)
-    List<Offer> getOfferByStatusDiminati(Long userId);
+    @Query(value = "select * from offer o join product p on o.product_id=p.product_id \n" +
+            "where o.offer_status like 'Diminati%' and p.user_id=:userId",nativeQuery = true)
+    List<Offer> getOfferByStatusDiminati(Integer userId);
 
     @Query(value = "select * from offer o join product p on o.product_id=p.product_id " +
             "where o.offer_status like 'Sold%' and p.product_status like 'Sold%' and o.user_id=p.user_id", nativeQuery = true)

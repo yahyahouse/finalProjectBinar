@@ -7,6 +7,7 @@ import com.binar.dummyproject.model.users.Users;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -43,6 +44,9 @@ public class Product implements Serializable {
 
     @Column(name ="url4",columnDefinition="VARCHAR(10000)")
     private String url4;
+
+    @Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
+    private LocalDateTime localDateTime;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -3,11 +3,15 @@ package com.binar.dummyproject.service.product;
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.repository.product.ProductRepository;
+import com.binar.dummyproject.service.notification.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import static com.binar.dummyproject.model.InfoConst.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +21,16 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
 
     /*
     Service untuk Product
      */
     @Override
     public void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory,
-                            String productStatus, Integer userId, String url, String url2, String url3, String url4) {
+                            String productStatus, Integer userId, String url, String url2, String url3, String url4, LocalDateTime localDateTime) {
         Product product = new Product();
         product.setProductName(productName);
         product.setProductDescription(productDescription);
@@ -34,10 +41,15 @@ public class ProductServiceImpl implements ProductService{
         product.setUrl2(url2);
         product.setUrl3(url3);
         product.setUrl4(url4);
+        product.setLocalDateTime(localDateTime);
         Users users = new Users();
         users.setUserId(userId);
         product.setUserId(users);
         productRepository.save(product);
+
+        if(productStatus.equals("Available")){
+            notificationService.saveNotification(PRODUCT_TERBIT, product, userId);
+        }
     }
 
     @Override
@@ -49,8 +61,9 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void updateProduct(Long productId,String productName, String productDescription, Integer productPrice, String productCategory,
-                              String productStatus, Integer userId, String url, String url2, String url3, String url4) {
-        productRepository.updateProduct(productName, productDescription, productPrice, productCategory, productStatus, productId,url, url2,url3,url4);
+                              String productStatus, Integer userId, String url, String url2, String url3, String url4, LocalDateTime localDateTime) {
+        productRepository.updateProduct(productName, productDescription, productPrice, productCategory, productStatus, productId,url, url2,url3,url4,
+                localDateTime);
     }
 
     @Override

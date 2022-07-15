@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +15,10 @@ public interface ProductService {
     Service untuk Product
      */
     void saveProduct(String productName, String productDescription, Integer productPrice, String productCategory,
-                     String productStatus, Integer userId, String url, String url2, String url3, String url4);
+                     String productStatus, Integer userId, String url, String url2, String url3, String url4, LocalDateTime localDateTime);
     Optional<Product> deleteProductById(Long productId);
     void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory,
-                        String productStatus, Integer userId, String url, String url2, String url3, String url4);
+                        String productStatus, Integer userId, String url, String url2, String url3, String url4, LocalDateTime localDateTime);
     List<Product> getAllProduct();
     List<Product> getAllProductProp();
     List<Product> getProductByProductId(Long productId);
@@ -26,8 +27,6 @@ public interface ProductService {
     Product getProductDetailByid (Long productId);
     Product getProductById(Long productId);
     void updateStatusProductSold (Long productId, Integer userId);
-
-
 
     Product findProductByName(String username, Integer userId);
 }

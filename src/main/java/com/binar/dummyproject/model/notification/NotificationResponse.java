@@ -16,6 +16,7 @@ public class NotificationResponse {
     private Double offerPrice;
     private String productName;
     private Integer productPrice;
+    private String offerStatus;
     private String url;
     private Integer userId;
     private LocalDateTime localDateTime;
@@ -29,6 +30,7 @@ public class NotificationResponse {
         this.isRead = notification.getIsRead();
         this.title = notification.getTitle();
         this.offerPrice = offer.getOfferPrice();
+        this.offerStatus = offer.getOfferStatus();
         this.productName = product.getProductName();
         this.productPrice = product.getProductPrice();
         this.url = product.getUrl();

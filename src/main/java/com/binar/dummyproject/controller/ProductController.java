@@ -5,15 +5,20 @@ import com.binar.dummyproject.model.product.ProductDetailResponse;
 import com.binar.dummyproject.model.UploadResponse;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.model.product.ProductResponse;
+import com.binar.dummyproject.repository.users.UsersRepository;
 import com.binar.dummyproject.service.product.ProductService;
+import com.binar.dummyproject.service.users.UsersService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,8 +34,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/product")
 public class ProductController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ProductController.class);
+
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UsersService usersService;
 
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dummyprojectbinar",
@@ -47,8 +57,11 @@ public class ProductController {
             @RequestParam("product_description") String productDescription,
             @RequestParam("product_price") Integer productPrice,
             @RequestParam("product_category") String productCategory,
-            @RequestParam(defaultValue = "Available", required = false) String productStatus)
+            @RequestParam(defaultValue = "Available", required = false) String productStatus,
+            Authentication authentication)
             throws IOException {
+        Users users = usersService.findByUsername(authentication.getName());
+        users.setUserId(userId);
         Integer size = files.length;
         String[] url = new String[size];
         if (url.length >= 5) {
@@ -92,13 +105,10 @@ public class ProductController {
         product.setProductStatus(productStatus);
         LocalDateTime dateTime = LocalDateTime.now();
         product.setLocalDateTime(dateTime);
-        Users users = new Users();
-        users.setUserId(userId);
-        product.setUserId(users);
-        productService.saveProduct(productName, productDescription, productPrice, productCategory, productStatus, userId, product.getUrl(), product.getUrl2(),
+        productService.saveProduct(productName, productDescription, productPrice, productCategory, productStatus, users.getUserId(), product.getUrl(), product.getUrl2(),
                 product.getUrl3(), product.getUrl4(), dateTime);
 
-        return new ResponseEntity(new ProductResponse(userId, productName, productDescription, productPrice,
+        return new ResponseEntity(new ProductResponse(users.getUserId(), productName, productDescription, productPrice,
                 productCategory, productStatus, product.getUrl(), product.getUrl2(),
                 product.getUrl3(), product.getUrl4(), dateTime), HttpStatus.OK);
     }
@@ -114,7 +124,8 @@ public class ProductController {
             @RequestParam("product_description") String productDescription,
             @RequestParam(defaultValue = "Available", required = false) String productStatus,
             @RequestParam("product_price") Integer productPrice,
-            @RequestParam("product_category") String productCategory)
+            @RequestParam("product_category") String productCategory,
+            Authentication authentication)
             throws IOException {
 
         Integer size = files.length;

@@ -17,4 +17,5 @@ public interface UsersService {
     public void updateUsersPassword(String password, Integer userId);
     public List<Users> getUsersByUserId (Integer userId);
     Users findByUserId (Integer userId);
+    Users findByUsername (String username);
 }

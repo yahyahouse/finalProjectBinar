@@ -1,5 +1,7 @@
 package com.binar.dummyproject.controller;
 
+import com.binar.dummyproject.model.offer.Offer;
+import com.binar.dummyproject.model.offer.OfferResponseNew;
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.product.ProductDetailResponse;
 import com.binar.dummyproject.model.UploadResponse;
@@ -198,6 +200,16 @@ public class ProductController {
             @PathVariable("userId") Integer userId) {
         productService.updateStatusProductSold(productId, userId);
         return new ResponseEntity("Status barang sudah berubah menjadi sold", HttpStatus.OK);
+    }
+    @Operation(summary = "Get product with status 'sold' by Id")
+    @GetMapping(value = "/seller/get-product-sold/{userId}")
+    public ResponseEntity<ProductResponse> getProductSold(
+            @PathVariable("userId") Integer userId){
+        List<Product> product = productService.getProdutSold(userId);
+        List<ProductResponse> ProductResponse =
+                product.stream().map(ProductResponse::new)
+                        .collect(Collectors.toList());
+        return new ResponseEntity(ProductResponse, HttpStatus.OK);
     }
 
 }

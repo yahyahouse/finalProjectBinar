@@ -1,5 +1,6 @@
 package com.binar.dummyproject.service.product;
 
+import com.binar.dummyproject.model.offer.Offer;
 import com.binar.dummyproject.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,7 @@ public interface ProductService {
     Product getProductById(Long productId);
     void updateStatusProductSold (Long productId, Integer userId);
 
-
+    List<Product> getProdutSold (Integer userId);
 
     Product findProductByName(String username, Integer userId);
 }

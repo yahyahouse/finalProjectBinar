@@ -4,6 +4,7 @@ import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.repository.product.ProductRepository;
 import com.binar.dummyproject.service.notification.NotificationService;
+import com.binar.dummyproject.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,9 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private NotificationService notificationService;
 
+    @Autowired
+    private UsersService usersService;
+
 
     /*
     Service untuk Product
@@ -42,8 +46,7 @@ public class ProductServiceImpl implements ProductService{
         product.setUrl3(url3);
         product.setUrl4(url4);
         product.setLocalDateTime(localDateTime);
-        Users users = new Users();
-        users.setUserId(userId);
+        Users users = usersService.findByUserId(userId);
         product.setUserId(users);
         productRepository.save(product);
 

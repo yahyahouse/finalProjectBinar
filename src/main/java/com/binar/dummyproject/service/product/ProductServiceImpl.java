@@ -115,9 +115,13 @@ public class ProductServiceImpl implements ProductService{
         productRepository.updateProductStatusSold(productId, userId);
     }
 
-
     @Override
     public Product findProductByName(String username, Integer userId) {
         return productRepository.findByProductName(username,userId);
+    }
+
+    @Override
+    public List<Product> getProdutSold(Integer userId) {
+        return productRepository.getProductSold(userId);
     }
 }

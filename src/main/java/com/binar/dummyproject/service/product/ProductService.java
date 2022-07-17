@@ -29,4 +29,6 @@ public interface ProductService {
     void updateStatusProductSold (Long productId, Integer userId);
 
     Product findProductByName(String username, Integer userId);
+
+    List<Product> getProdutSold (Integer userId);
 }

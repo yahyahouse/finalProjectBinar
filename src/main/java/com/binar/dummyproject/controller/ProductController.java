@@ -58,8 +58,7 @@ public class ProductController {
             @RequestParam("product_price") Integer productPrice,
             @RequestParam("product_category") String productCategory,
             @RequestParam(defaultValue = "Available", required = false) String productStatus,
-            Authentication authentication)
-            throws IOException {
+            Authentication authentication) {
         Users users = usersService.findByUsername(authentication.getName());
         users.setUserId(userId);
         Integer size = files.length;
@@ -126,9 +125,9 @@ public class ProductController {
             @RequestParam(defaultValue = "Available", required = false) String productStatus,
             @RequestParam("product_price") Integer productPrice,
             @RequestParam("product_category") String productCategory,
-            Authentication authentication)
-            throws IOException {
-
+            Authentication authentication) {
+        Users users = usersService.findByUsername(authentication.getName());
+        users.setUserId(userId);
         Integer size = files.length;
         String[] url = new String[size];
         if (url.length >= 5) {
@@ -167,9 +166,9 @@ public class ProductController {
         }
 
         productService.updateProduct(productId, productName, productDescription, productPrice, productCategory,
-                productStatus, userId, product.getUrl(), product.getUrl2(),
+                productStatus, users.getUserId(), product.getUrl(), product.getUrl2(),
                 product.getUrl3(), product.getUrl4(), dateTime);
-        return new ResponseEntity(new ProductResponse(userId, productName, productDescription,
+        return new ResponseEntity(new ProductResponse(users.getUserId(), productName, productDescription,
                 productPrice, productCategory, productStatus, product.getUrl(), product.getUrl2(),
                 product.getUrl3(), product.getUrl4(), dateTime), HttpStatus.OK);
     }
@@ -178,7 +177,9 @@ public class ProductController {
     @DeleteMapping("/seller/delete-product/{productId}")
     public ResponseEntity<Product> deleteProductById(
             @Parameter(description = "add id to delete the product item")
-            @PathVariable("productId") Long productId) {
+            @PathVariable("productId") Long productId,
+            Authentication authentication) {
+        Users users = usersService.findByUsername(authentication.getName());
         Optional<Product> productImage = productService.deleteProductById(productId);
         if (productImage.isPresent()) {
             return new ResponseEntity<>(HttpStatus.OK);

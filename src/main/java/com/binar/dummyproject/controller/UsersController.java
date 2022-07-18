@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,7 +62,10 @@ public class UsersController {
             @PathVariable("userId") Integer userId,
             @RequestParam String oldPassword,
             @RequestParam String password,
-            @RequestParam String retypePassword) {
+            @RequestParam String retypePassword,
+            Authentication authentication) {
+        Users user = usersService.findByUsername(authentication.getName());
+        user.setUserId(userId);
         Users users = usersRepository.findByUserId(userId);
         if (password.equals(retypePassword)) {
             if (passwordEncoder.matches(oldPassword, users.getPassword())) {
@@ -83,8 +87,10 @@ public class UsersController {
             @RequestParam("users_image") MultipartFile usersImage,
             @RequestParam("address") String address,
             @RequestParam("city") String city,
-            @RequestParam("phone") String phone
-    ) throws IOException {
+            @RequestParam("phone") String phone,
+            Authentication authentication) {
+        Users user = usersService.findByUsername(authentication.getName());
+        user.setUserId(userId);
         UploadResponse response = new UploadResponse();
         File file = new File(usersImage.getOriginalFilename());
 
@@ -106,7 +112,7 @@ public class UsersController {
             users.setPhone(phone);
             users.setUrl(url[0]);
             usersRepository.save(users);
-            return new ResponseEntity(new UsersResponse(userId, username, url, address, city, phone), HttpStatus.OK);
+            return new ResponseEntity(new UsersResponse(user.getUserId(), username, url, address, city, phone), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

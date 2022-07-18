@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 public class NotificationResponse {
 
     private Long notifId;
+    private Long productId;
+    private Long offerId;
     private Boolean isRead;
     private String title;
     private Double offerPrice;
@@ -29,6 +31,8 @@ public class NotificationResponse {
         this.notifId = notification.getNotifId();
         this.isRead = notification.getIsRead();
         this.title = notification.getTitle();
+        this.productId = product.getProductId();
+        this.offerId = offer.getOfferId();
         this.offerPrice = offer.getOfferPrice();
         this.offerStatus = offer.getOfferStatus();
         this.productName = product.getProductName();
@@ -41,6 +45,7 @@ public class NotificationResponse {
 
     public NotificationResponse(Notification notification, Product product) {
         this.notifId = notification.getNotifId();
+        this.productId = product.getProductId();
         this.isRead = notification.getIsRead();
         this.title = notification.getTitle();
         this.productName = product.getProductName();

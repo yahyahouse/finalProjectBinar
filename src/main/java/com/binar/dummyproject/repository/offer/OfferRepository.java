@@ -4,6 +4,7 @@ import com.binar.dummyproject.model.offer.Offer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +40,9 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
     @Modifying
     @Query("update Offer set offerStatus ='Ditolak' where offerId =:offerId")
     void statusRejected(Long offerId);
+
+    @Modifying
+    @Query(value = "delete from notification where product_id =:product_id", nativeQuery = true)
+    void deleteOfferById(@Param("product_id") Long productId);
 
 }

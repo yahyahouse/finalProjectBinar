@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService{
     public Optional<Product> deleteProductById(Long id) {
         Optional<Product> delProduct = productRepository.findById(id);
         productRepository.deleteProductById(id);
-        return  delProduct;
+        return delProduct;
     }
 
     @Override

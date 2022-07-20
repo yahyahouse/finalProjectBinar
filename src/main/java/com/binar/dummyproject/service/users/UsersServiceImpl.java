@@ -22,8 +22,8 @@ public class UsersServiceImpl implements UsersService{
     PasswordEncoder passwordEncoder;
 
     @Override
-    public void updateUsersProfile(Integer userId, String username, String address, String phone, String city) {
-        usersRepository.updateUser(username, address, phone, city, userId);
+    public void updateUsersProfile(Integer userId, String fullNameUser, String address, String phone, String city) {
+        usersRepository.updateUser(fullNameUser, address, phone, city, userId);
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.binar.dummyproject.model.product.ProductDetailResponse;
 import com.binar.dummyproject.model.UploadResponse;
 import com.binar.dummyproject.model.users.Users;
 import com.binar.dummyproject.model.product.ProductResponse;
-import com.binar.dummyproject.repository.product.ProductRepository;
 import com.binar.dummyproject.service.notification.NotificationService;
 import com.binar.dummyproject.service.offer.OfferService;
 import com.binar.dummyproject.service.product.ProductService;
@@ -53,9 +52,6 @@ public class ProductController {
     @Autowired
     private OfferService offerService;
 
-    @Autowired
-    private ProductRepository productRepository;
-
     Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dummyprojectbinar",
             "api_key", "221166829538913",
@@ -73,10 +69,6 @@ public class ProductController {
             @RequestParam("product_category") String productCategory,
             @RequestParam(defaultValue = "Available", required = false) String productStatus,
             Authentication authentication){
-        Long countProduct = productRepository.countByUserId(userId);
-        if(countProduct >= 4){
-            return new ResponseEntity("Maximum limit product reached", HttpStatus.BAD_REQUEST);
-        }
         Users users = usersService.findByUsername(authentication.getName());
         users.setUserId(userId);
         Integer size = files.length;

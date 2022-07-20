@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 
 @Tag(name = "Product", description = "API for processing various operations with Product entity")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/product")
 public class ProductController {
 

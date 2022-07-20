@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +29,7 @@ import static com.binar.dummyproject.model.InfoConst.*;
 
 @Tag(name = "Users", description = "API for processing various operations with Users entity")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/users")
 public class UsersController {
 

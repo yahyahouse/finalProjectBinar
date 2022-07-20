@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Tag(name = "Home", description = "API for access homepage")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/home-page")
 public class HomeController {
 

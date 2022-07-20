@@ -2,7 +2,7 @@ package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.UploadResponse;
 import com.binar.dummyproject.model.users.Users;
-import com.binar.dummyproject.model.UsersResponse;
+import com.binar.dummyproject.model.users.UsersResponse;
 import com.binar.dummyproject.repository.role.RoleRepository;
 import com.binar.dummyproject.repository.users.UsersRepository;
 import com.binar.dummyproject.service.users.UsersService;
@@ -83,7 +83,7 @@ public class UsersController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UploadResponse> updateUsersProfile(
             @RequestParam("userId") Integer userId,
-            @RequestParam("username") String username,
+            @RequestParam("full_name_user") String fullNameUser,
             @RequestParam("users_image") MultipartFile usersImage,
             @RequestParam("address") String address,
             @RequestParam("city") String city,
@@ -107,13 +107,14 @@ public class UsersController {
             Users users = usersService.findByUserId(userId);
             users.getPassword();
             users.getEmail();
-            users.setUsername(username);
+            users.getUsername();
+            users.setFullNameUser(fullNameUser);
             users.setAddress(address);
             users.setCity(city);
             users.setPhone(phone);
             users.setUrl(url[0]);
             usersRepository.save(users);
-            return new ResponseEntity(new UsersResponse(user.getUserId(), username, url, address, city, phone), HttpStatus.OK);
+            return new ResponseEntity(new UsersResponse(users.getUserId(), fullNameUser, url, address, city, phone), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

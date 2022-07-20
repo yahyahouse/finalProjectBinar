@@ -16,10 +16,10 @@ import java.util.List;
 public interface UsersRepository extends JpaRepository <Users, Integer> {
 
     @Modifying
-    @Query(value = "update users set username= :username, address= :address, phone= :phone, city= :city " +
+    @Query(value = "update users set full_name_user=:full_name_user, address= :address, phone= :phone, city= :city " +
             "where user_id= :user_id", nativeQuery = true)
     void updateUser(
-            @Param("username") String username,
+            @Param("full_name_user") String fullNameUser,
             @Param("address") String address,
             @Param("phone") String noHP,
             @Param("city") String city,

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.binar.dummyproject.model.InfoConst.*;
 
@@ -87,6 +88,13 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public List<Offer> getOfferDiminati() {
         return offerRepository.getOfferDiminati();
+    }
+
+    @Override
+    public Optional<Offer> deleteOfferById(Long id) {
+        Optional<Offer> delOffer = offerRepository.findById(id);
+        offerRepository.deleteOfferById(id);
+        return delOffer;
     }
 
 }

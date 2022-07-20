@@ -20,6 +20,7 @@ import java.util.*;
 
 @Tag(name = "Wishlist", description = "API for processing various operations with Wishlist entity")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/wishlist")
 public class WishlistController {
 

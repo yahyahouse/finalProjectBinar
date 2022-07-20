@@ -24,6 +24,7 @@ import static com.binar.dummyproject.model.InfoConst.*;
 
 @Tag(name = "Offer", description = "API for processing various operations with Offer entity")
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/offer")
 public class OfferController {
 

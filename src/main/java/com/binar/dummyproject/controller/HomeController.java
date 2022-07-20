@@ -1,6 +1,7 @@
 package com.binar.dummyproject.controller;
 
 import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.product.ProductDetailResponse;
 import com.binar.dummyproject.model.product.ProductResponse;
 import com.binar.dummyproject.service.product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +28,12 @@ public class HomeController {
     @Autowired
     ProductService productService;
 
+    @Operation(summary = "Get detail product no auth")
+    @GetMapping(value = "/get-detail-product/{productId}")
+    public ResponseEntity<ProductDetailResponse> getDetailProductById(@PathVariable("productId") Long productId) {
+        Product products = productService.getProductDetailByid(productId);
+        return new ResponseEntity(new ProductDetailResponse(products), HttpStatus.OK);
+    }
 
     @Operation(summary = "Show all products sort and filter")
     @GetMapping

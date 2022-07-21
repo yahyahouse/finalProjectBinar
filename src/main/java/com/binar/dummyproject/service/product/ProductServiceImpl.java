@@ -70,35 +70,20 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProduct() {
-        return productRepository.findAll();
-    }
-
-    @Override
-    public List<Product> getAllProductProp() {
-        return productRepository.getAllProductProp();
-    }
-
-    @Override
-    public List<Product> getProductByProductId(Long productId){
-        return productRepository.findProductByProductId(productId);
-    }
-
-    @Override
     public List<Product> getProductByUserId(Integer userId) {
         return productRepository.findProductByUserId(userId);
     }
 
     @Override
-    public Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable) {
-        if (productName == null && productCategory == null){
+    public Page<Product> getAllProductPageByProductNameAndProductCategoryAndProductStatus(String productName, String productCategory, String productStatus, Pageable pageable) {
+        if (productName == null && productCategory == null && productStatus.equals("Available")){
             return productRepository.findAll(pageable);
-        } else if (productName == null) {
+        } else if (productName == null && productStatus.equals("Available")) {
             return productRepository.findByProductCategoryContaining(productCategory, pageable);
-        } else if (productCategory == null) {
+        } else if (productCategory == null && productStatus.equals("Available")) {
             return productRepository.findByProductNameContaining(productName, pageable);
         } else {
-            return productRepository.findByProductNameContainingAndProductCategoryContaining(productName, productCategory, pageable);
+            return productRepository.findByProductNameContainingAndProductCategoryContainingAndProductStatus(productName, productStatus, productCategory, pageable);
         }
 
     }
@@ -116,11 +101,6 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void updateStatusProductSold(Long productId, Integer userId) {
         productRepository.updateProductStatusSold(productId, userId);
-    }
-
-    @Override
-    public Product findProductByName(String username, Integer userId) {
-        return productRepository.findByProductName(username,userId);
     }
 
     @Override

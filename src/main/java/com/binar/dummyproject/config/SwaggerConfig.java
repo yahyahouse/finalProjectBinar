@@ -27,10 +27,9 @@ public class SwaggerConfig {
                         )
                 )
                 .info(new Info()
-                        .title("dummyProject")
-                        .description("dummyProject API is an API for final project. This API can perform various operations for 'second hand' things." +
-                                "The dummyProject API is still under development so if you find any bugs, please report them at the contact below." +
-                                "Your support means a lot to us.")
+                        .title("Secondpedia")
+                        .description("Secondpedia API is an API for final project at Binar Academy. " +
+                                "Secondpedia can help you in performing functions where users can make product transactions between one another.")
                         .version("1.0")
                         .contact(new Contact()
                                 .email("lukyganteng77@gmail.com"))

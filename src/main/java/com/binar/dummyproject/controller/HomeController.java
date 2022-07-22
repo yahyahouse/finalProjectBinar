@@ -42,12 +42,13 @@ public class HomeController {
             @RequestParam(required = false) String productName,
             @RequestParam(required = false) String productCategory,
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "5") int size
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "Available") String productStatus
     ) {
         try {
             Pageable paging = PageRequest.of(page - 1, size, Sort.by("productPrice"));
 
-            Page<Product> productPage = productService.getAllProductPageByProductNameAndProductCategory(productName, productCategory, paging);
+            Page<Product> productPage = productService.getAllProductPageByProductNameAndProductCategoryAndProductStatus(productName, productStatus, productCategory, paging);
             List<Product> products = productPage.getContent();
             Map<String, Object> response = new HashMap<>();
             List<ProductResponse> productResponse =

@@ -19,16 +19,11 @@ public interface ProductService {
     Optional<Product> deleteProductById(Long productId);
     void updateProduct (Long productId, String productName, String productDescription, Integer productPrice, String productCategory,
                         String productStatus, Integer userId, String url, String url2, String url3, String url4, LocalDateTime localDateTime);
-    List<Product> getAllProduct();
-    List<Product> getAllProductProp();
-    List<Product> getProductByProductId(Long productId);
     List<Product> getProductByUserId (Integer userId);
-    Page<Product> getAllProductPageByProductNameAndProductCategory(String productName, String productCategory, Pageable pageable);
+    Page<Product> getAllProductPageByProductNameAndProductCategoryAndProductStatus(String productName, String productCategory, String productStatus, Pageable pageable);
     Product getProductDetailByid (Long productId);
     Product getProductById(Long productId);
     void updateStatusProductSold (Long productId, Integer userId);
-
-    Product findProductByName(String username, Integer userId);
 
     List<Product> getProdutSold (Integer userId);
 }

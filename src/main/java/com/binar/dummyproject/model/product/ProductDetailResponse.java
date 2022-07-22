@@ -12,6 +12,7 @@ public class ProductDetailResponse {
     private String city;
     private String username;
     private String productName;
+    private String urlSeller;
     private String productDescription;
     private Integer productPrice;
     private String productCategory;
@@ -31,6 +32,7 @@ public class ProductDetailResponse {
         this.userId = product.getUserId().getUserId();
         this.city = product.getUserId().getCity();
         this.username = product.getUserId().getUsername();
+        this.urlSeller = product.getUserId().getUrlUser();
         this.productId = product.getProductId();
         this.productName = product.getProductName();
         this.productDescription = product.getProductDescription();

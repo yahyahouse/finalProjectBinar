@@ -47,7 +47,7 @@ public class Users implements Serializable {
 
 
     @Column(name ="url",columnDefinition="VARCHAR(10000)")
-    private String url;
+    private String urlUser;
 
     public Users(String username, String email, String password) {
         this.username = username;

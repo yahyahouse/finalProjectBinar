@@ -112,7 +112,7 @@ public class UsersController {
             users.setAddress(address);
             users.setCity(city);
             users.setPhone(phone);
-            users.setUrl(url[0]);
+            users.setUrlUser(url[0]);
             usersRepository.save(users);
             return new ResponseEntity(new UsersResponse(users.getUserId(), fullNameUser, url, address, city, phone), HttpStatus.OK);
         } catch (Exception e) {

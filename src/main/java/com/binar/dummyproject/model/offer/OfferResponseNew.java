@@ -10,6 +10,7 @@ public class OfferResponseNew {
     private String username;
     private String city;
     private String phone;
+    private String urlUser;
     private String productName;
     private Integer productPrice;
     private String productDescription;
@@ -29,6 +30,7 @@ public class OfferResponseNew {
         this.username = offer.getUserId().getUsername();
         this.city = offer.getUserId().getCity();
         this.phone = offer.getUserId().getPhone();
+        this.urlUser = offer.getUserId().getUrlUser();
         this.url = offer.getProductId().getUrl();
         this.url2 = offer.getProductId().getUrl2();
         this.url3 = offer.getProductId().getUrl3();

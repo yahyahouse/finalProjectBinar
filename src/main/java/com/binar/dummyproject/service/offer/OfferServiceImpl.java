@@ -31,6 +31,11 @@ public class OfferServiceImpl implements OfferService {
     @Autowired
     private NotificationService notificationService;
 
+    public OfferServiceImpl() {
+
+    }
+
+
     @Override
     public List<Offer> getAllOfferByUser(Integer userId) {
         return offerRepository.getAllByUserId(userId);

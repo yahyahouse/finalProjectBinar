@@ -23,6 +23,9 @@ public class NotificationServiceImpl implements NotificationService{
     @Autowired
     private UsersService usersService;
 
+    public NotificationServiceImpl() {
+
+    }
 
     @Override
     public void saveNotification(String title, Offer offer, Product product, Integer userId) {

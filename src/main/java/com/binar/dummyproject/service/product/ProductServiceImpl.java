@@ -79,11 +79,11 @@ public class ProductServiceImpl implements ProductService{
         if (productName == null && productCategory == null && productStatus.equals("Available")){
             return productRepository.findAll(pageable);
         } else if (productName == null && productStatus.equals("Available")) {
-            return productRepository.findByProductCategoryContaining(productCategory, pageable);
+            return productRepository.findByProductCategoryContainingIgnoreCase(productCategory, pageable);
         } else if (productCategory == null && productStatus.equals("Available")) {
-            return productRepository.findByProductNameContaining(productName, pageable);
+            return productRepository.findByProductNameContainingIgnoreCase(productName, pageable);
         } else {
-            return productRepository.findByProductNameContainingAndProductCategoryContainingAndProductStatus(productName, productStatus, productCategory, pageable);
+            return productRepository.findByProductNameContainingIgnoreCaseAndProductCategoryContainingIgnoreCaseAndProductStatus(productName, productStatus, productCategory, pageable);
         }
 
     }

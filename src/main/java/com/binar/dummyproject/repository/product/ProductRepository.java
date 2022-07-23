@@ -49,11 +49,11 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
     @Query(value = "select * from product p where p.user_id=:user_id", nativeQuery = true)
     List<Product> findProductByUserId (@Param("user_id") Integer userId);
 
-    Page<Product> findByProductNameContaining(String productName, Pageable pageable);
+    Page<Product> findByProductNameContainingIgnoreCase(String productName, Pageable pageable);
 
-    Page<Product> findByProductCategoryContaining(String productCategory, Pageable pageable);
+    Page<Product> findByProductCategoryContainingIgnoreCase(String productCategory, Pageable pageable);
 
-    Page<Product> findByProductNameContainingAndProductCategoryContainingAndProductStatus(String productName, String productStatus, String productCategory, Pageable pageable);
+    Page<Product> findByProductNameContainingIgnoreCaseAndProductCategoryContainingIgnoreCaseAndProductStatus(String productName, String productStatus, String productCategory, Pageable pageable);
 
     @Query(value="select * from product where product_id=:productId", nativeQuery = true)
     Product getDetailProductById (Long productId);

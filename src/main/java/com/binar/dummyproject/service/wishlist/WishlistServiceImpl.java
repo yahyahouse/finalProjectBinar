@@ -1,7 +1,7 @@
 package com.binar.dummyproject.service.wishlist;
 
 import com.binar.dummyproject.model.users.Users;
-import com.binar.dummyproject.model.Wishlist;
+import com.binar.dummyproject.model.wishlist.Wishlist;
 import com.binar.dummyproject.model.product.Product;
 import com.binar.dummyproject.repository.wishlist.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;

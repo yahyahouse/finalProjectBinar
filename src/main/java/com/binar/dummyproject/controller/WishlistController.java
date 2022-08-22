@@ -1,13 +1,16 @@
 package com.binar.dummyproject.controller;
 
-import com.binar.dummyproject.model.Wishlist;
+import com.binar.dummyproject.model.offer.OfferResponseNew;
+import com.binar.dummyproject.model.product.Product;
+import com.binar.dummyproject.model.users.Users;
+import com.binar.dummyproject.model.wishlist.WishlishResponses;
+import com.binar.dummyproject.model.wishlist.Wishlist;
+import com.binar.dummyproject.service.product.ProductService;
+import com.binar.dummyproject.service.users.UsersService;
 import com.binar.dummyproject.service.wishlist.WishlistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,35 +30,27 @@ public class WishlistController {
     @Autowired
     private WishlistService wishlistService;
 
-    private static final String PRODUCTID = "productId";
-    private static final String USERID = "userId";
+    @Autowired
+    private UsersService usersService;
+
+    @Autowired
+    private ProductService productService;
 
     @Operation(summary = "add a wishlist when a buyer is interested in a product")
     @PostMapping("/add-wishlist/")
-    public ResponseEntity<Map<String, Object>> addWishlistByProductIdAndUserId (
-            @Schema(example = "{" +
-                    "\"productId\":\"1\"," +
-                    "\"userId\":\"1\"" +
-                    "}")
-            @RequestBody Map<String, Object> wishlist){
-        wishlistService.saveWishlist(Long.valueOf(wishlist.get(PRODUCTID).toString()),Integer.valueOf(wishlist.get(USERID).toString()));
-
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put(PRODUCTID, wishlist.get(PRODUCTID));
-        responseBody.put(USERID, wishlist.get(USERID));
-
-        MultiValueMap<String, String> headers = new HttpHeaders();
-        headers.put("dummyProject", Arrays.asList("halo"));
-        return ResponseEntity.ok()
-                .header("dummyProject", "Test")
-                .body(responseBody);
+    public ResponseEntity<WishlishResponses> addWishlistByProductIdAndUserId (
+            @PathVariable("userId") Integer userId,
+            @PathVariable("productId") Long productId
+    ){
+        Users users = usersService.findByUserId(userId);
+        Product product = productService.getProductById(productId);
+        Wishlist wishlist = new Wishlist();
+        wishlist.setUserId(users);
+        wishlist.setProductId(product);
+        wishlistService.saveWishlist(productId, userId);
+        return new ResponseEntity<>(new WishlishResponses(users, product, wishlist),HttpStatus.OK);
     }
 
-    @ApiResponses(value = {
-            @ApiResponse( content = {
-                    @Content(examples = {})
-            }, responseCode = "204", description = "Success deleted wishlist")
-    })
     @Operation(summary = "Delete wishlist")
     @DeleteMapping("/delete-wishlist/{wishlistId}")
     public ResponseEntity<Map<String, Object>> deleteWishlistByID(
@@ -73,11 +68,7 @@ public class WishlistController {
         }
     }
 
-    @ApiResponses(value = {
-            @ApiResponse(content = {
-                    @Content(examples = {})
-            }, responseCode = "202", description = "Success show wishlist by user id")
-    })
+
     @Operation(summary = "Get wishlist by user id")
     @GetMapping(value = "/get-wishlist-user/{userId}")
     public ResponseEntity<List<Wishlist>> getProductByUserId(@PathVariable("userId") Integer userId){

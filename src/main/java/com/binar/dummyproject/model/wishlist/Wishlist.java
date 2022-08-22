@@ -1,4 +1,4 @@
-package com.binar.dummyproject.model;
+package com.binar.dummyproject.model.wishlist;
 
 
 import com.binar.dummyproject.model.product.Product;

@@ -38,7 +38,7 @@ public class WishlistController {
 
     @Operation(summary = "add a wishlist when a buyer is interested in a product")
     @PostMapping("/add-wishlist/")
-    public ResponseEntity<WishlishResponses> addWishlistByProductIdAndUserId (
+    public ResponseEntity<WishlishResponses> addWishlist(
             @PathVariable("userId") Integer userId,
             @PathVariable("productId") Long productId
     ){
